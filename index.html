@@ -193,6 +193,33 @@
     }
     .res-cta:hover { background: #1a5fd4; }
 
+    /* COACH MATCH CARD */
+    .coach-match-card {
+      background: white; border-radius: 16px; padding: 28px 28px 24px;
+      border: 2px solid #2979ff; box-shadow: 0 4px 24px rgba(41,121,255,0.12);
+      margin-bottom: 24px; position: relative; overflow: hidden;
+    }
+    .coach-match-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, #2979ff, #5b9bff);
+    }
+    .coach-match-label {
+      font-size: 11px; font-weight: 700; color: #2979ff; text-transform: uppercase;
+      letter-spacing: 1.5px; margin-bottom: 12px;
+    }
+    .coach-match-name { font-size: 22px; font-weight: 800; color: #1a1a2e; margin-bottom: 4px; }
+    .coach-match-credential { font-size: 14px; color: #666; margin-bottom: 14px; }
+    .coach-match-reason {
+      font-size: 15px; color: #333; line-height: 1.65; background: #f0f4ff;
+      border-radius: 10px; padding: 14px 16px; margin-bottom: 18px;
+    }
+    .coach-match-btn {
+      display: inline-block; padding: 13px 30px; font-size: 15px; font-weight: 700;
+      border-radius: 8px; background: #2979ff; color: white; cursor: pointer;
+      border: none; text-decoration: none; font-family: inherit; transition: background 0.2s;
+    }
+    .coach-match-btn:hover { background: #1a5fd4; }
+
     footer { background: #0a0f2e; color: rgba(255,255,255,0.45); text-align: center; padding: 28px 20px; font-size: 14px; }
     footer a { color: rgba(255,255,255,0.6); margin: 0 10px; text-decoration: none; }
 
@@ -214,7 +241,7 @@
     <div class="badge">Free Creator Skills Assessment</div>
     <h1>Feeling frustrated that your YouTube channel isn't growing</h1>
     <h3 class="hook-sub">even though you're posting consistently?</h3>
-    <p class="subhead">Answer 15 questions to discover the highest-leverage creator skill you should develop next — and why it'll change everything.</p>
+    <p class="subhead">You've watched the tutorials. You know the tips. But knowing what to do and being able to do it are two different things. Find out what's really holding your channel back.</p>
     <button class="cta-btn" onclick="startQuiz()">Discover Your #1 Growth Skill</button>
     <div class="cta-meta">
       <span>⏱ 3 minutes</span>
@@ -247,9 +274,8 @@
 
   <div class="why-skills">
     <h2>Why skills, not just data?</h2>
-    <p>Most creators look at their analytics after a video underperforms and think, <em>"I need to try harder next time."</em> But trying harder with the same skills produces the same results.</p>
-    <p>It's like looking at a soccer scoreboard. The score tells you who's winning — it doesn't teach you how to dribble. <span class="highlight">You need someone who can watch you play and coach you in real time.</span></p>
-    <p>This assessment identifies which creator skill, once developed, will have the biggest compounding impact on your channel's growth.</p>
+    <p>If you want to learn to pitch a baseball, you can watch YouTube videos about technique. You'll probably improve a little. But if you want to develop the skills that make you a professional pitcher, you need a coach — someone who watches you throw, spots what you can't see, and works with you until the mechanics become second nature.</p>
+    <p>YouTube growth works the same way. There's no shortage of tips and tutorials. The gap isn't information — it's the ability to execute. <span class="highlight">This assessment reveals the specific creator skills you need to develop to go pro on YouTube.</span></p>
   </div>
 
   <div class="results-proof">
@@ -345,6 +371,8 @@
         <p id="coaching-insight-text"></p>
       </div>
     </div>
+
+    <div id="coach-match-container"></div>
 
     <div class="next-steps">
       <h3 id="cta-headline"></h3>
@@ -559,13 +587,17 @@
 
   function saveYesNo(val) {
     answers[questions[current].key] = val;
-    setTimeout(() => { current++; renderQuestion(); window.scrollTo(0, 0); }, 280);
+    current++;
+    renderQuestion();
+    window.scrollTo(0, 0);
   }
 
   function saveChoice(key, idx, encodedText) {
     answers[key] = idx;
     answers[key + '_text'] = decodeURIComponent(encodedText);
-    setTimeout(() => { current++; renderQuestion(); window.scrollTo(0, 0); }, 280);
+    current++;
+    renderQuestion();
+    window.scrollTo(0, 0);
   }
 
   function saveOpen() {
@@ -754,7 +786,193 @@
         document.getElementById('cta-button').onclick = () => window.open('https://vidiq.com/coaching','_blank');
       }
     }
+
+    // Render coach match card above CTA (always shown)
+    renderCoachCard(score, tier, answers);
   }
+  // ======= COACH MATCHING =======
+  function getCoachMatch(score, tier, ans) {
+    const situationIdx = ans.situation !== undefined ? ans.situation : 1;
+    const bpKeys = ['storytelling','connection','thumbnail_psych','copywriting','analytics','audience','structure','topic_strategy','positioning','monetization'];
+    const missing = bpKeys.filter(k => ans[k] === false);
+
+    // Niche inference: rough proxy by situationIdx and goal/obstacle text
+    const goalText = (ans.goal90_text || '').toLowerCase();
+    const obstacleText = (ans.obstacle_text || '').toLowerCase();
+
+    // Simple niche detection from keywords in answers
+    const detectNiche = () => {
+      const combined = goalText + ' ' + obstacleText + ' ' + (ans.anything_else || '').toLowerCase();
+      if (/gam(e|ing|er)/i.test(combined)) return 'gaming';
+      if (/health|fitness|workout|gym|weight|nutrition/i.test(combined)) return 'health';
+      if (/travel|vlog|trip|destination/i.test(combined)) return 'travel';
+      if (/family|kids|parenting|mom|dad/i.test(combined)) return 'family';
+      if (/business|entrepreneur|money|income|finance|tech|software/i.test(combined)) return 'business';
+      if (/entertain|comedy|fun|funny|reaction/i.test(combined)) return 'entertainment';
+      if (/lifestyle|daily|routine|personal/i.test(combined)) return 'lifestyle';
+      if (/beauty|fashion|makeup|style/i.test(combined)) return 'beauty';
+      return 'general';
+    };
+    const niche = detectNiche();
+
+    // Primary missing skill areas
+    const hasStorytellingGap = missing.includes('storytelling') || missing.includes('structure') || missing.includes('connection');
+    const hasPackagingGap = missing.includes('thumbnail_psych') || missing.includes('copywriting');
+    const hasStrategyGap = missing.includes('topic_strategy') || missing.includes('positioning') || missing.includes('analytics');
+    const hasMonetizationGap = missing.includes('monetization');
+
+    // Coach roster with capacity (only these are recommended)
+    const coaches = [
+      {
+        id: 'lucas',
+        name: 'Lucas',
+        credential: 'Data-driven storyteller · 10+ yrs, 500 videos, 2M views',
+        niches: ['gaming','health','entertainment','business','general'],
+        excludes: [],
+        tiers: ['mid','high'],
+        gaps: ['storytelling','packaging'],
+        matchReason: (n, g) => `Lucas blends data analysis with storytelling — the exact combination you need to turn your ${g}-gap into a growth engine. His 500-video track record means he's seen your specific pattern before and knows exactly how to fix it.`,
+      },
+      {
+        id: 'jeffr',
+        name: 'Jeff R',
+        credential: 'Expert strategist in competitive niches · packaging specialist',
+        niches: ['health','business','gaming','general'],
+        excludes: ['lifestyle','entertainment','family','beauty'],
+        tiers: ['mid','high'],
+        gaps: ['packaging','strategy'],
+        matchReason: (n, g) => `Jeff R specializes in creators who are doing everything "right" but still not growing — because the real issue is packaging and strategy. He'll diagnose your exact bottleneck and give you a repeatable system to fix it.`,
+      },
+      {
+        id: 'erich',
+        name: 'Eric H',
+        credential: 'Grew creators from 75K to 1M views · mission & message clarity',
+        niches: ['lifestyle','entertainment','business','general'],
+        excludes: [],
+        tiers: ['mid','high'],
+        gaps: ['strategy','packaging'],
+        matchReason: (n, g) => `Eric H has a proven playbook for breaking through growth ceilings — he's done it repeatedly from 75K to 1M views. His focus on mission and message clarity will give your channel the strategic foundation it's been missing.`,
+      },
+      {
+        id: 'nasr',
+        name: 'Nasr',
+        credential: '170K community · featured by BuzzFeed · empathy + accountability',
+        niches: ['lifestyle','health','travel','general'],
+        excludes: ['business','gaming'],
+        tiers: ['low','mid'],
+        gaps: ['storytelling','strategy'],
+        matchReason: (n, g) => `Nasr built a 170K community through empathy-driven content — he knows how to help creators at your stage find their voice and build real audience connection, not just views. His accountability coaching style gets consistent results for creators who feel stuck.`,
+      },
+      {
+        id: 'anthonyo',
+        name: 'Anthony O',
+        credential: '6 BILLION views · 10M+ followers · 0-to-1M growth specialist',
+        niches: ['entertainment','lifestyle','health','general'],
+        excludes: [],
+        tiers: ['low','high'],
+        gaps: ['storytelling','packaging','strategy'],
+        matchReason: (n, g) => `Anthony O has generated 6 billion views and specializes in the exact challenge you're facing: turning a channel with real potential into one with real results. If you're starting out or need to scale fast, few coaches have done it at his level.`,
+      },
+      {
+        id: 'rhodes',
+        name: 'Rhodes',
+        credential: 'Storytelling strategist · emotional wellbeing focus',
+        niches: ['lifestyle','health','gaming','general'],
+        excludes: ['entertainment','travel','family'],
+        tiers: ['low','mid'],
+        gaps: ['storytelling'],
+        matchReason: (n, g) => `Rhodes is a storytelling strategist who understands that sustainable YouTube growth requires both craft and wellbeing. He'll help you build a narrative system that makes your content compelling without burning you out in the process.`,
+      },
+      {
+        id: 'sara',
+        name: 'Sara',
+        credential: 'Profit-focused coaching · turns content into income',
+        niches: ['travel','lifestyle','business','family','general'],
+        excludes: [],
+        tiers: ['mid','high'],
+        gaps: ['strategy','monetization'],
+        matchReason: (n, g) => `Sara's coaching is built around one question: how do you turn your YouTube content into real income? If your goal involves financial results, she has the strategic framework to connect your content decisions to your monetization outcomes.`,
+      },
+      {
+        id: 'antonio',
+        name: 'Antonio',
+        credential: 'Ph.D. Psychology · 1.2M subs · 65M views',
+        niches: ['lifestyle','health','entertainment','general'],
+        excludes: [],
+        tiers: ['high'],
+        gaps: ['storytelling','strategy'],
+        matchReason: (n, g) => `Antonio brings a unique edge: a Ph.D. in Psychology and 1.2M subscribers. He understands the cognitive and emotional triggers that make content irresistible — and at your advanced level, that psychological depth is exactly the edge that separates good channels from great ones.`,
+      },
+      {
+        id: 'david',
+        name: 'David',
+        credential: '15+ years on YouTube · multiple 30x growth stories',
+        niches: ['lifestyle','health','business','family','general'],
+        excludes: [],
+        tiers: ['low','mid'],
+        gaps: ['storytelling','strategy','packaging'],
+        matchReason: (n, g) => `David has 15+ years of YouTube experience and multiple creators he's taken from stagnant to 30x growth. For creators at your stage, his breadth of experience means he's seen your exact situation before — and he knows the shortest path forward.`,
+      },
+      {
+        id: 'timr',
+        name: 'Tim R',
+        credential: '1.5M-view creator · viral storytelling specialist',
+        niches: ['gaming','health','entertainment','general'],
+        excludes: ['travel','family'],
+        tiers: ['mid','high'],
+        gaps: ['storytelling'],
+        matchReason: (n, g) => `Tim R built his own 1.5M-view channel through viral storytelling techniques he now teaches his clients. If your biggest gap is making content that spreads and gets shared, his hands-on methodology is exactly what you need.`,
+      },
+    ];
+
+    // Filter by niche compatibility and tier
+    const eligible = coaches.filter(c => {
+      if (c.excludes.includes(niche)) return false;
+      if (!c.tiers.includes(tier)) return false;
+      return true;
+    });
+
+    // Score each eligible coach
+    const nicheMatch = (c) => c.niches.includes(niche) ? 2 : (c.niches.includes('general') ? 0 : -1);
+    const gapMatch = (c) => {
+      let score = 0;
+      if (hasStorytellingGap && c.gaps.includes('storytelling')) score += 3;
+      if (hasPackagingGap && c.gaps.includes('packaging')) score += 3;
+      if (hasStrategyGap && c.gaps.includes('strategy')) score += 3;
+      if (hasMonetizationGap && c.gaps.includes('monetization')) score += 3;
+      return score;
+    };
+
+    const scored = eligible.map(c => ({ ...c, score: nicheMatch(c) + gapMatch(c) }));
+    scored.sort((a, b) => b.score - a.score);
+
+    const best = scored[0] || coaches.find(c => c.id === 'david') || coaches[0];
+
+    // Determine primary gap label for reason text
+    const primaryGap = hasStorytellingGap ? 'storytelling' : hasPackagingGap ? 'packaging' : hasStrategyGap ? 'strategy' : hasMonetizationGap ? 'monetization' : 'growth';
+
+    return {
+      name: best.name,
+      credential: best.credential,
+      reason: best.matchReason(niche, primaryGap),
+    };
+  }
+
+  function renderCoachCard(score, tier, ans) {
+    const coach = getCoachMatch(score, tier, ans);
+    const container = document.getElementById('coach-match-container');
+    if (!container) return;
+    container.innerHTML = `
+      <div class="coach-match-card">
+        <div class="coach-match-label">🎯 Your Recommended Coach</div>
+        <div class="coach-match-name">${coach.name}</div>
+        <div class="coach-match-credential">${coach.credential}</div>
+        <div class="coach-match-reason">💬 <strong>Why ${coach.name}?</strong> ${coach.reason}</div>
+        <button class="coach-match-btn" onclick="window.open('https://vidiq.com/coaching','_blank')">Meet ${coach.name} →</button>
+      </div>
+    `;
+  }
+
   function buildClientReport(score, tier, ans) {
     const bpKeys = ['storytelling','connection','thumbnail_psych','copywriting','analytics','audience','structure','topic_strategy','positioning','monetization'];
     const missing = bpKeys.filter(k => ans[k] === false);
