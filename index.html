@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YouTube Creator Skills Assessment | vidIQ Coaching</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #fff;
+      color: #1a1a2e;
+      line-height: 1.6;
+    }
+    #landing { display: block; }
+    #quiz-section { display: none; }
+    #results-section { display: none; }
+    #loading-section { display: none; }
+
+    /* NAV */
+    .nav { background: #fff; border-bottom: 1px solid #eee; padding: 16px 24px; display: flex; align-items: center; }
+    .nav-logo { font-size: 22px; font-weight: 800; color: #1a1a2e; letter-spacing: -0.5px; }
+    .nav-logo span { color: #2979ff; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #0a0f2e 0%, #0d1b4a 50%, #0f2460 100%);
+      color: white; padding: 80px 24px 100px; text-align: center;
+    }
+    .hero .badge {
+      display: inline-block; background: rgba(41,121,255,0.2); border: 1px solid rgba(41,121,255,0.5);
+      color: #7aaeff; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 20px; margin-bottom: 28px;
+    }
+    .hero h1 { font-size: clamp(30px, 5vw, 52px); font-weight: 800; line-height: 1.15; max-width: 760px; margin: 0 auto; letter-spacing: -0.5px; }
+    .hero h3.hook-sub { font-size: clamp(18px, 3vw, 26px); font-weight: 400; color: rgba(255,255,255,0.7); max-width: 760px; margin: 10px auto 28px; }
+    .hero p.subhead { font-size: 18px; color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto 44px; }
+    .cta-btn {
+      background: #2979ff; color: white; border: none; padding: 18px 44px; font-size: 18px;
+      font-weight: 700; border-radius: 8px; cursor: pointer; transition: background 0.2s, transform 0.1s;
+      display: inline-block; font-family: inherit;
+    }
+    .cta-btn:hover { background: #1a5fd4; transform: translateY(-1px); }
+    .cta-meta { margin-top: 16px; color: rgba(255,255,255,0.5); font-size: 14px; }
+    .cta-meta span { margin: 0 10px; }
+
+    /* VALUE SECTION */
+    .value-section { background: #f8f9fc; padding: 72px 24px; text-align: center; }
+    .value-section h2 { font-size: 28px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.3px; }
+    .value-section .sub { color: #666; margin-bottom: 48px; font-size: 16px; max-width: 640px; margin-left: auto; margin-right: auto; }
+    .pillars { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; max-width: 960px; margin: 0 auto; }
+    .pillar { flex: 1; min-width: 220px; max-width: 280px; background: white; border-radius: 16px; padding: 32px 24px; border: 1px solid #eee; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+    .pillar-icon { font-size: 38px; margin-bottom: 16px; }
+    .pillar h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .pillar p { font-size: 14px; color: #666; line-height: 1.55; }
+
+    /* WHY SKILLS */
+    .why-skills {
+      padding: 72px 24px; text-align: center; max-width: 760px; margin: 0 auto;
+    }
+    .why-skills h2 { font-size: 28px; font-weight: 800; margin-bottom: 16px; }
+    .why-skills p { font-size: 17px; color: #444; line-height: 1.7; margin-bottom: 16px; }
+    .why-skills .highlight { color: #2979ff; font-weight: 600; }
+
+    /* PROOF */
+    .results-proof {
+      background: linear-gradient(135deg, #0a0f2e 0%, #0d1b4a 100%);
+      color: white; padding: 72px 24px; text-align: center;
+    }
+    .results-proof h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+    .results-proof .sub { color: rgba(255,255,255,0.6); margin-bottom: 56px; font-size: 16px; }
+    .proof-top { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; max-width: 900px; margin: 0 auto 52px; }
+    .proof-stat { flex: 1; min-width: 160px; }
+    .proof-stat .big { font-size: 48px; font-weight: 800; color: #5b9bff; line-height: 1; }
+    .proof-stat .label { font-size: 14px; color: rgba(255,255,255,0.65); margin-top: 6px; }
+    .proof-compare { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; max-width: 860px; margin: 0 auto; }
+    .compare-card { flex: 1; min-width: 180px; max-width: 200px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 24px 20px; }
+    .compare-card .duration { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
+    .compare-card .metric-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .compare-card .metric-icon { font-size: 18px; }
+    .compare-card .metric-val { font-size: 26px; font-weight: 800; color: #7aff9b; line-height: 1; }
+    .compare-card .metric-label { font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.3; }
+    .compare-card .bar-wrap { background: rgba(255,255,255,0.1); border-radius: 4px; height: 4px; margin-top: 6px; }
+    .compare-card .bar-fill { background: #2979ff; border-radius: 4px; height: 4px; }
+    .compare-card.highlight { border-color: rgba(41,121,255,0.4); background: rgba(41,121,255,0.08); }
+    .compare-card.highlight .metric-val { color: #5bffb4; }
+
+    /* FINAL CTA */
+    .final-cta { background: #f8f9fc; padding: 72px 24px; text-align: center; }
+    .final-cta h2 { font-size: 28px; font-weight: 800; margin-bottom: 14px; }
+    .final-cta p { color: #666; margin-bottom: 32px; font-size: 16px; }
+
+    /* QUIZ */
+    .quiz-nav { background: #0a0f2e; padding: 14px 24px; display: flex; align-items: center; justify-content: center; }
+    .quiz-nav-logo { font-size: 18px; font-weight: 800; color: white; }
+    .quiz-nav-logo span { color: #2979ff; }
+    .quiz-wrap { max-width: 640px; margin: 0 auto; padding: 40px 20px 80px; }
+    .progress-bar-wrap { background: #e8eaf0; border-radius: 6px; height: 6px; margin-bottom: 6px; }
+    .progress-bar-fill { background: #2979ff; height: 6px; border-radius: 6px; transition: width 0.3s ease; }
+    .progress-label { font-size: 13px; color: #999; margin-bottom: 28px; }
+    .quiz-card { background: white; border-radius: 16px; padding: 36px 32px; box-shadow: 0 4px 24px rgba(0,0,0,0.07); border: 1px solid #eee; }
+    .quiz-card h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; color: #2979ff; }
+    .quiz-card .q-sub { color: #999; font-size: 14px; margin-bottom: 26px; }
+    .q-label { display: block; font-size: 18px; font-weight: 600; margin-bottom: 22px; line-height: 1.4; }
+    .input-field {
+      width: 100%; padding: 13px 16px; border: 2px solid #e8eaf0; border-radius: 8px;
+      font-size: 15px; margin-bottom: 14px; transition: border-color 0.2s; font-family: inherit;
+    }
+    .input-field:focus { outline: none; border-color: #2979ff; }
+    .opt-btn {
+      display: block; width: 100%; padding: 14px 18px; margin-bottom: 10px;
+      background: #f8f9fc; border: 2px solid #e8eaf0; border-radius: 10px;
+      font-size: 15px; text-align: left; cursor: pointer; transition: all 0.15s; font-family: inherit;
+    }
+    .opt-btn:hover { border-color: #2979ff; background: #f0f4ff; }
+    .opt-btn.selected { border-color: #2979ff; background: #f0f4ff; color: #2979ff; font-weight: 600; }
+    .yesno-wrap { display: flex; gap: 14px; margin-top: 8px; }
+    .yn-btn {
+      flex: 1; padding: 20px; font-size: 20px; font-weight: 700;
+      border: 2px solid #e8eaf0; border-radius: 12px; background: #f8f9fc;
+      cursor: pointer; transition: all 0.15s; font-family: inherit;
+    }
+    .yn-btn:hover { border-color: #2979ff; background: #f0f4ff; }
+    .yn-btn.selected-yes { border-color: #00c853; background: #edfff4; color: #00a843; }
+    .yn-btn.selected-no { border-color: #ff1744; background: #fff0f2; color: #d50000; }
+    .next-btn {
+      margin-top: 24px; background: #0a0f2e; color: white; border: none;
+      padding: 14px 32px; border-radius: 8px; font-size: 16px; font-weight: 600;
+      cursor: pointer; transition: background 0.2s; font-family: inherit;
+    }
+    .next-btn:hover { background: #2979ff; }
+    .next-btn:disabled { background: #ccc; cursor: not-allowed; }
+    textarea.input-field { min-height: 100px; resize: vertical; }
+
+    /* LOADING */
+    .loading-wrap { max-width: 500px; margin: 120px auto; text-align: center; padding: 0 24px; }
+    .loading-wrap h2 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+    .loading-wrap p { color: #666; font-size: 16px; margin-bottom: 32px; }
+    .spinner { width: 48px; height: 48px; border: 4px solid #e8eaf0; border-top-color: #2979ff; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-steps { text-align: left; max-width: 320px; margin: 0 auto; }
+    .loading-step { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 14px; color: #999; transition: color 0.3s; }
+    .loading-step.active { color: #1a1a2e; font-weight: 600; }
+    .loading-step.done { color: #00c853; }
+    .loading-step .step-icon { width: 20px; text-align: center; }
+
+    /* RESULTS */
+    .results-wrap { max-width: 700px; margin: 0 auto; padding: 40px 20px 80px; }
+    .score-hero {
+      background: linear-gradient(135deg, #0a0f2e 0%, #0f2460 100%);
+      color: white; border-radius: 20px; padding: 44px 32px; text-align: center; margin-bottom: 28px;
+    }
+    .score-hero h2 { font-size: 20px; font-weight: 600; margin-bottom: 6px; opacity: 0.75; }
+    .score-number { font-size: 84px; font-weight: 800; color: #5b9bff; line-height: 1; }
+    .score-out { font-size: 20px; opacity: 0.5; }
+    .score-label { font-size: 22px; font-weight: 700; margin: 12px 0 14px; }
+    .score-summary { font-size: 16px; color: rgba(255,255,255,0.8); line-height: 1.6; max-width: 520px; margin: 0 auto 26px; }
+    .meter { background: rgba(255,255,255,0.12); border-radius: 20px; height: 12px; overflow: hidden; max-width: 380px; margin: 0 auto; }
+    .meter-fill { height: 100%; border-radius: 20px; transition: width 1.2s ease; }
+    .meter-labels { display: flex; justify-content: space-between; max-width: 380px; margin: 8px auto 0; font-size: 12px; opacity: 0.5; }
+
+    .report-section { margin-bottom: 28px; }
+    .report-section h3 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+    .report-section .report-headline { font-size: 20px; font-weight: 700; color: #2979ff; margin-bottom: 18px; }
+    .skill-card {
+      background: white; border-radius: 14px; padding: 24px; margin-bottom: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid #eee; border-left: 4px solid #2979ff;
+    }
+    .skill-card.secondary { border-left-color: #7aaeff; }
+    .skill-card h4 { font-size: 17px; font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+    .skill-card .skill-tag { font-size: 11px; font-weight: 600; color: white; background: #2979ff; padding: 2px 8px; border-radius: 10px; }
+    .skill-card.secondary .skill-tag { background: #7aaeff; }
+    .skill-card .why { font-size: 15px; color: #444; line-height: 1.6; margin-bottom: 10px; }
+    .skill-card .impact { font-size: 14px; color: #2979ff; font-weight: 600; background: #f0f4ff; padding: 10px 14px; border-radius: 8px; line-height: 1.5; }
+
+    .coaching-insight {
+      background: linear-gradient(135deg, #0a0f2e, #0f2460); border-radius: 14px;
+      padding: 28px; color: white; margin-bottom: 16px;
+    }
+    .coaching-insight h4 { font-size: 17px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .coaching-insight p { font-size: 15px; color: rgba(255,255,255,0.85); line-height: 1.65; }
+
+    .next-steps {
+      background: linear-gradient(135deg, #0a0f2e, #0f2460);
+      border-radius: 16px; padding: 36px 32px; text-align: center; margin-bottom: 24px; color: white;
+    }
+    .next-steps h3 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+    .next-steps p { color: rgba(255,255,255,0.75); margin-bottom: 28px; font-size: 16px; line-height: 1.6; }
+    .res-cta {
+      display: inline-block; padding: 16px 38px; font-size: 17px; font-weight: 700;
+      border-radius: 8px; background: #2979ff; color: white; cursor: pointer;
+      border: none; text-decoration: none; font-family: inherit;
+    }
+    .res-cta:hover { background: #1a5fd4; }
+
+    footer { background: #0a0f2e; color: rgba(255,255,255,0.45); text-align: center; padding: 28px 20px; font-size: 14px; }
+    footer a { color: rgba(255,255,255,0.6); margin: 0 10px; text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .quiz-card { padding: 24px 18px; }
+      .score-number { font-size: 64px; }
+      .compare-card { min-width: 140px; }
+      .skill-card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========== LANDING PAGE ========== -->
+<div id="landing">
+  <nav class="nav"><div class="nav-logo">vid<span>IQ</span></div></nav>
+
+  <div class="hero">
+    <div class="badge">Free Creator Skills Assessment</div>
+    <h1>Feeling frustrated that your YouTube channel isn't growing</h1>
+    <h3 class="hook-sub">even though you're posting consistently?</h3>
+    <p class="subhead">Answer 15 questions to discover the highest-leverage creator skill you should develop next — and why it'll change everything.</p>
+    <button class="cta-btn" onclick="startQuiz()">Discover Your #1 Growth Skill</button>
+    <div class="cta-meta">
+      <span>⏱ 3 minutes</span>
+      <span>✅ Completely free</span>
+      <span>⚡ AI-personalized results</span>
+    </div>
+  </div>
+
+  <div class="value-section">
+    <h2>Discover the skills that actually move the needle</h2>
+    <p class="sub">Data tells you what happened <em>after</em> you published. Skills determine what happens <em>before and during</em> content creation. This assessment evaluates the 10 creator skills that separate growing channels from stagnant ones.</p>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-icon">🎯</div>
+        <h3>Content Craft</h3>
+        <p>Storytelling, hooks, copywriting — the skills that make viewers unable to stop watching.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🧠</div>
+        <h3>Strategic Thinking</h3>
+        <p>Topic strategy, positioning, audience clarity — knowing what to make and why it works.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">📈</div>
+        <h3>Growth Systems</h3>
+        <p>Analytics diagnosis, monetization, engagement architecture — turning skill into scale.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="why-skills">
+    <h2>Why skills, not just data?</h2>
+    <p>Most creators look at their analytics after a video underperforms and think, <em>"I need to try harder next time."</em> But trying harder with the same skills produces the same results.</p>
+    <p>It's like looking at a soccer scoreboard. The score tells you who's winning — it doesn't teach you how to dribble. <span class="highlight">You need someone who can watch you play and coach you in real time.</span></p>
+    <p>This assessment identifies which creator skill, once developed, will have the biggest compounding impact on your channel's growth.</p>
+  </div>
+
+  <div class="results-proof">
+    <h2>The longer you're coached, the faster you grow</h2>
+    <p class="sub">Real data from vidIQ coaching clients — tracked across views and subscribers</p>
+    <div class="proof-top">
+      <div class="proof-stat"><div class="big">5,000+</div><div class="label">Creators Coached</div></div>
+      <div class="proof-stat"><div class="big">2,828%</div><div class="label">Avg. View Growth</div></div>
+      <div class="proof-stat"><div class="big">832%</div><div class="label">Avg. Subscriber Growth</div></div>
+      <div class="proof-stat"><div class="big">49B+</div><div class="label">Views Gained by Clients</div></div>
+    </div>
+    <div class="proof-compare">
+      <div class="compare-card">
+        <div class="duration">1 Month</div>
+        <div class="metric-row"><div class="metric-icon">👁️</div><div><div class="metric-val">1×</div><div class="metric-label">Baseline view growth</div></div></div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:5%;background:#666"></div></div>
+        <div class="metric-row" style="margin-top:14px"><div class="metric-icon">👥</div><div><div class="metric-val">1×</div><div class="metric-label">Baseline subscriber growth</div></div></div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:5%;background:#666"></div></div>
+      </div>
+      <div class="compare-card">
+        <div class="duration">3 Months</div>
+        <div class="metric-row"><div class="metric-icon">👁️</div><div><div class="metric-val">150%</div><div class="metric-label">more view growth</div></div></div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:35%"></div></div>
+        <div class="metric-row" style="margin-top:14px"><div class="metric-icon">👥</div><div><div class="metric-val">538%</div><div class="metric-label">more subscriber growth</div></div></div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:45%"></div></div>
+      </div>
+      <div class="compare-card highlight">
+        <div class="duration">12 Months ⭐</div>
+        <div class="metric-row"><div class="metric-icon">👁️</div><div><div class="metric-val">1,398%</div><div class="metric-label">more view growth</div></div></div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:90%;background:#5bffb4"></div></div>
+        <div class="metric-row" style="margin-top:14px"><div class="metric-icon">👥</div><div><div class="metric-val">3,635%</div><div class="metric-label">more subscriber growth</div></div></div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:100%;background:#5bffb4"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="final-cta">
+    <h2>Find your highest-leverage growth skill in 3 minutes</h2>
+    <p>Get an AI-personalized report with your #1 skill to develop, why it matters for your specific situation, and the impact it'll have on your channel.</p>
+    <button class="cta-btn" onclick="startQuiz()">Start the Free Assessment →</button>
+    <div class="cta-meta" style="color:#999;"><span>⏱ 3 minutes</span><span>✅ Free</span><span>⚡ AI-personalized results</span></div>
+  </div>
+
+  <footer><div>© 2026 vidIQ · <a href="https://vidiq.com/coaching">vidiq.com/coaching</a></div></footer>
+</div>
+
+<!-- ========== QUIZ ========== -->
+<div id="quiz-section">
+  <nav class="quiz-nav"><div class="quiz-nav-logo">vid<span>IQ</span> Creator Skills Assessment</div></nav>
+  <div class="quiz-wrap">
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="progress-label" id="progress-label">Question 1 of 16</div>
+    <div class="quiz-card" id="quiz-card"></div>
+  </div>
+</div>
+
+<!-- ========== LOADING ========== -->
+<div id="loading-section">
+  <nav class="quiz-nav"><div class="quiz-nav-logo">vid<span>IQ</span> Creator Skills Assessment</div></nav>
+  <div class="loading-wrap">
+    <div class="spinner"></div>
+    <h2>Analyzing your creator profile…</h2>
+    <p>Our AI is building your personalized skills report.</p>
+    <div class="loading-steps">
+      <div class="loading-step active" id="ls1"><span class="step-icon">⏳</span> Evaluating your skill profile</div>
+      <div class="loading-step" id="ls2"><span class="step-icon">⏳</span> Identifying your highest-leverage skill</div>
+      <div class="loading-step" id="ls3"><span class="step-icon">⏳</span> Generating personalized recommendations</div>
+      <div class="loading-step" id="ls4"><span class="step-icon">⏳</span> Preparing your report</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== RESULTS ========== -->
+<div id="results-section">
+  <nav class="quiz-nav"><div class="quiz-nav-logo">vid<span>IQ</span> — Your Skills Report</div></nav>
+  <div class="results-wrap">
+    <div class="score-hero">
+      <h2 id="score-greeting"></h2>
+      <div class="score-number" id="score-number"></div>
+      <div class="score-out">/ 100</div>
+      <div class="score-label" id="score-label"></div>
+      <div class="score-summary" id="score-summary"></div>
+      <div class="meter"><div class="meter-fill" id="meter-fill"></div></div>
+      <div class="meter-labels"><span>Developing</span><span>Building</span><span>Advanced</span></div>
+    </div>
+
+    <div class="report-section">
+      <h3 id="report-headline-label">Your Growth Roadmap</h3>
+      <div class="report-headline" id="report-headline"></div>
+      <div id="skill-cards-container"></div>
+      <div class="coaching-insight" id="coaching-insight-card" style="display:none">
+        <h4>🏆 Why a Coach Accelerates This</h4>
+        <p id="coaching-insight-text"></p>
+      </div>
+    </div>
+
+    <div class="next-steps">
+      <h3 id="cta-headline"></h3>
+      <p id="cta-body"></p>
+      <button class="res-cta" id="cta-button"></button>
+    </div>
+
+    <p style="text-align:center; color:#999; font-size:13px; margin-bottom:30px;">
+      vidIQ Coaching · <a href="https://vidiq.com/coaching" style="color:#2979ff;">vidiq.com/coaching</a>
+    </p>
+  </div>
+  <footer><div>© 2026 vidIQ · <a href="https://vidiq.com/coaching">vidiq.com/coaching</a></div></footer>
+</div>
+
+<script>
+  // ======= DYNAMIC GOAL OPTIONS BASED ON CHANNEL SIZE =======
+  const goalsBySize = {
+    0: [ // haven't started
+      "Launch my channel and publish my first 10 videos",
+      "Find my niche and define my ideal viewer",
+      "Build a content system I can sustain long-term",
+      "Learn the fundamentals before I start",
+    ],
+    1: [ // < 1K subs
+      "Hit my first 1,000 subscribers and get monetized",
+      "Figure out why my videos aren't getting views",
+      "Develop a consistent content style that works",
+      "Start generating income from my channel",
+    ],
+    2: [ // 1K–10K
+      "Break through my growth plateau to 10K+ subscribers",
+      "Start generating meaningful income from YouTube",
+      "Turn my side channel into a real business",
+      "Develop a more strategic content system",
+    ],
+    3: [ // 10K–100K
+      "Scale to 100K+ subscribers with a sustainable system",
+      "Significantly grow my YouTube revenue",
+      "Build a team or delegate parts of my workflow",
+      "Dominate my niche and become the go-to channel",
+    ],
+    4: [ // 100K+
+      "Diversify income and build a business beyond YouTube",
+      "Scale my existing channel to the next level",
+      "Optimize revenue per view and per subscriber",
+      "Launch a second channel or expand into new formats",
+    ],
+  };
+
+  const obstaclesBySize = {
+    0: [
+      "I don't know what niche or topic to choose",
+      "I'm afraid of putting myself out there",
+      "I don't know where to start technically",
+      "I can't seem to commit and actually begin",
+    ],
+    1: [
+      "I don't know what content my audience wants",
+      "My videos don't get found — no views or impressions",
+      "I struggle to stay consistent — life gets in the way",
+      "I get some views but people aren't subscribing",
+    ],
+    2: [
+      "I'm stuck at the same subscriber count and can't break through",
+      "I don't know what content will take me to the next level",
+      "I get views but can't convert them to income",
+      "I'm burning out trying to keep up with the grind",
+    ],
+    3: [
+      "Growth has slowed and I can't figure out why",
+      "I'm making content but my revenue isn't growing with it",
+      "I don't have a clear strategy — just reacting to trends",
+      "I want to build a business but I'm still just a creator",
+    ],
+    4: [
+      "I'm hitting a ceiling and need to evolve my content strategy",
+      "Revenue isn't scaling proportionally with my audience",
+      "I'm spending too much time on low-leverage activities",
+      "I need strategic guidance beyond what I can figure out alone",
+    ],
+  };
+
+  // ======= QUESTIONS =======
+  const questions = [
+    // 1–10: Skill questions (yes/no)
+    { type: 'yesno', key: 'storytelling',    category: 'Unlock Viewer Addiction',          text: 'When you script or outline a video, do you use a specific storytelling structure designed to create tension or curiosity — making it feel impossible to click away?' },
+    { type: 'yesno', key: 'connection',      category: 'Build a Loyal Fanbase',            text: 'Can you describe, in one sentence, the specific emotional connection you\'re building with your viewer in every video — beyond just the topic you\'re covering?' },
+    { type: 'yesno', key: 'thumbnail_psych', category: 'Master the First Impression',      text: 'When you design a thumbnail, do you know which psychological trigger you\'re activating (curiosity, FOMO, aspiration, shock) — and can you explain why your thumbnail works?' },
+    { type: 'yesno', key: 'copywriting',     category: 'Make Every Title Irresistible',    text: 'When you write a title, do you apply a specific copywriting principle — like an open loop, a pattern interrupt, or a curiosity gap — rather than just summarizing what the video is about?' },
+    { type: 'yesno', key: 'analytics',       category: 'Read Your Data Like a Pro',        text: 'Can you look at your analytics and diagnose why a video underperformed — distinguishing between a discovery problem (low impressions), a packaging problem (low CTR), and a retention problem (short watch time)?' },
+    { type: 'yesno', key: 'audience',        category: 'Know Your Viewer Better Than They Know Themselves', text: 'Can you describe your ideal viewer in specific detail — their frustrations, desires, other channels they watch, and the exact words they use when searching for your content?' },
+    { type: 'yesno', key: 'structure',       category: 'Engineer Watch Time',              text: 'Do you have a deliberate, repeatable video structure — beyond "intro, middle, outro" — that you designed specifically to maintain engagement at each stage of the viewer journey?' },
+    { type: 'yesno', key: 'topic_strategy',  category: 'Choose Topics That Guarantee Growth', text: 'Do you choose topics using a strategy that weighs search demand, your unique authority, audience desires, and competitive opportunity — rather than making what you feel like making?' },
+    { type: 'yesno', key: 'positioning',     category: 'Own Your Niche',                   text: 'Have you completed a formal channel positioning exercise that defines what makes your channel the only one serving your specific audience in your specific way?' },
+    { type: 'yesno', key: 'monetization',    category: 'Turn Views Into Income',           text: 'Is your content strategy intentionally connected to a specific monetization model — and do you know the exact metrics that predict whether you\'re on track for your income goals?' },
+    // 11: Channel size
+    {
+      type: 'choice', key: 'situation',
+      category: 'Personalize Your Results',
+      text: 'Which best describes your current channel situation?',
+      options: [
+        "I haven't started yet — still in planning mode",
+        "I have a channel with fewer than 1,000 subscribers",
+        "I'm between 1,000 and 10,000 subscribers",
+        "I'm between 10,000 and 100,000 subscribers",
+        "I have over 100,000 subscribers",
+      ]
+    },
+    // 12: Dynamic 90-day goal (populated after Q11)
+    { type: 'dynamic_choice', key: 'goal90', category: 'Set Your 90-Day Target', text: 'What is the most important outcome you want to achieve in the next 90 days?', optionsKey: 'goalsBySize' },
+    // 13: Dynamic obstacle (populated after Q11)
+    { type: 'dynamic_choice', key: 'obstacle', category: 'Identify What\'s Holding You Back', text: "What's the biggest obstacle stopping your channel from growing right now?", optionsKey: 'obstaclesBySize' },
+    // 14: Solution preference
+    {
+      type: 'choice', key: 'solution',
+      category: 'Find Your Best Path Forward',
+      text: 'Which type of support would suit you best right now?',
+      options: [
+        "Self-study — I'll learn from vidIQ's YouTube channel and podcast at my own pace",
+        "AI Coach — I want AI-powered coaching as part of vidIQ Boost or Max",
+        "One-on-one human coaching — I want a dedicated coach for personalized guidance",
+      ]
+    },
+    // 15: Open text
+    { type: 'open', key: 'anything_else', category: 'Help Us Help You', text: "Is there anything else you think we should know about your channel or goals?", placeholder: "Share anything that might help us give you better recommendations…" },
+    // 16: Contact info (moved to END)
+    { type: 'contact', heading: "Almost there — where should we send your report?", sub: "We'll email you a copy of your personalized skills report." },
+  ];
+
+  // ======= STATE =======
+  let current = 0;
+  let answers = {};
+  const total = questions.length;
+
+  function startQuiz() {
+    document.getElementById('landing').style.display = 'none';
+    document.getElementById('quiz-section').style.display = 'block';
+    renderQuestion();
+    window.scrollTo(0, 0);
+  }
+
+  function renderQuestion() {
+    const pct = Math.round(((current + 1) / total) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-label').textContent = `Question ${current + 1} of ${total}`;
+
+    const q = questions[current];
+    const card = document.getElementById('quiz-card');
+
+    if (q.type === 'contact') {
+      card.innerHTML = `
+        <h2>📬 ${q.heading}</h2>
+        <p class="q-sub">${q.sub}</p>
+        <input class="input-field" type="text" id="inp-name" placeholder="Your first name *" value="${answers.name||''}" />
+        <input class="input-field" type="email" id="inp-email" placeholder="Email address *" value="${answers.email||''}" />
+        <input class="input-field" type="tel" id="inp-phone" placeholder="Phone number (optional)" value="${answers.phone||''}" />
+        <button class="next-btn" onclick="saveContact()">Get My Results →</button>
+      `;
+    } else if (q.type === 'yesno') {
+      const sel = answers[q.key];
+      card.innerHTML = `
+        <h2>${q.category}</h2>
+        <p class="q-sub">Skill ${current + 1} of 10</p>
+        <label class="q-label">${q.text}</label>
+        <div class="yesno-wrap">
+          <button class="yn-btn ${sel===true?'selected-yes':''}" onclick="saveYesNo(true)">✅ Yes</button>
+          <button class="yn-btn ${sel===false?'selected-no':''}" onclick="saveYesNo(false)">❌ No</button>
+        </div>
+      `;
+    } else if (q.type === 'choice') {
+      const sel = answers[q.key];
+      const opts = q.options.map((o, i) =>
+        `<button class="opt-btn ${sel===i?'selected':''}" onclick="saveChoice('${q.key}', ${i}, '${encodeURIComponent(o)}')">${o}</button>`
+      ).join('');
+      card.innerHTML = `
+        <h2>${q.category}</h2>
+        <p class="q-sub">Almost there…</p>
+        <label class="q-label">${q.text}</label>
+        ${opts}
+      `;
+    } else if (q.type === 'dynamic_choice') {
+      const size = answers.situation !== undefined ? answers.situation : 1;
+      const optionsMap = q.optionsKey === 'goalsBySize' ? goalsBySize : obstaclesBySize;
+      const opts = (optionsMap[size] || optionsMap[1]).map((o, i) =>
+        `<button class="opt-btn ${answers[q.key]===i?'selected':''}" onclick="saveChoice('${q.key}', ${i}, '${encodeURIComponent(o)}')">${o}</button>`
+      ).join('');
+      card.innerHTML = `
+        <h2>${q.category}</h2>
+        <p class="q-sub">Almost there…</p>
+        <label class="q-label">${q.text}</label>
+        ${opts}
+      `;
+    } else if (q.type === 'open') {
+      card.innerHTML = `
+        <h2>${q.category}</h2>
+        <p class="q-sub">Optional — but very helpful</p>
+        <label class="q-label">${q.text}</label>
+        <textarea class="input-field" id="inp-open" placeholder="${q.placeholder}">${answers[q.key]||''}</textarea>
+        <button class="next-btn" onclick="saveOpen()">Next →</button>
+      `;
+    }
+  }
+
+  function saveContact() {
+    const name = document.getElementById('inp-name').value.trim();
+    const email = document.getElementById('inp-email').value.trim();
+    const phone = document.getElementById('inp-phone').value.trim();
+    if (!name || !email) { alert('Please enter your name and email to get your results.'); return; }
+    answers.name = name; answers.email = email; answers.phone = phone;
+    showLoading();
+  }
+
+  function saveYesNo(val) {
+    answers[questions[current].key] = val;
+    setTimeout(() => { current++; renderQuestion(); window.scrollTo(0, 0); }, 280);
+  }
+
+  function saveChoice(key, idx, encodedText) {
+    answers[key] = idx;
+    answers[key + '_text'] = decodeURIComponent(encodedText);
+    setTimeout(() => { current++; renderQuestion(); window.scrollTo(0, 0); }, 280);
+  }
+
+  function saveOpen() {
+    answers.anything_else = document.getElementById('inp-open').value.trim();
+    current++;
+    renderQuestion();
+    window.scrollTo(0, 0);
+  }
+
+  // ======= LOADING & AI REPORT =======
+  function showLoading() {
+    document.getElementById('quiz-section').style.display = 'none';
+    document.getElementById('loading-section').style.display = 'block';
+    window.scrollTo(0, 0);
+
+    // Animate loading steps
+    const steps = ['ls1','ls2','ls3','ls4'];
+    let si = 0;
+    const interval = setInterval(() => {
+      if (si > 0) {
+        document.getElementById(steps[si-1]).classList.remove('active');
+        document.getElementById(steps[si-1]).classList.add('done');
+        document.getElementById(steps[si-1]).querySelector('.step-icon').textContent = '✅';
+      }
+      if (si < steps.length) {
+        document.getElementById(steps[si]).classList.add('active');
+        document.getElementById(steps[si]).querySelector('.step-icon').textContent = '⏳';
+        si++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 1200);
+
+    generateReport();
+  }
+
+  async function generateReport() {
+    const bpKeys = ['storytelling','connection','thumbnail_psych','copywriting','analytics','audience','structure','topic_strategy','positioning','monetization'];
+    let yesCount = 0;
+    bpKeys.forEach(k => { if (answers[k] === true) yesCount++; });
+    const score = yesCount * 10;
+    const missingSkills = bpKeys.filter(k => answers[k] === false);
+
+    let tier;
+    if (score >= 80) tier = 'high';
+    else if (score >= 50) tier = 'mid';
+    else tier = 'low';
+
+    let report = null;
+    try {
+      const resp = await fetch('/api/generate-report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ answers, score, missingSkills, tier }),
+      });
+      if (resp.ok) {
+        report = await resp.json();
+      }
+    } catch (e) {
+      console.error('AI generation failed, using fallback', e);
+    }
+
+    // Ensure minimum loading time for UX
+    await new Promise(r => setTimeout(r, 2000));
+
+    showResults(score, tier, report);
+  }
+
+  // ======= RESULTS =======
+  function showResults(score, tier, report) {
+    document.getElementById('loading-section').style.display = 'none';
+    document.getElementById('results-section').style.display = 'block';
+    window.scrollTo(0, 0);
+
+    const name = answers.name || 'Creator';
+    document.getElementById('score-number').textContent = score;
+
+    let tierLabel, meterColor;
+    if (tier === 'high') {
+      tierLabel = '🌟 Advanced Creator'; meterColor = '#00c853';
+      document.getElementById('score-greeting').textContent = `Impressive, ${name}!`;
+    } else if (tier === 'mid') {
+      tierLabel = '⚡ Building Momentum'; meterColor = '#ffa726';
+      document.getElementById('score-greeting').textContent = `You're on the right track, ${name}`;
+    } else {
+      tierLabel = '🔧 Clear Room to Grow'; meterColor = '#ef5350';
+      document.getElementById('score-greeting').textContent = `Here's your growth plan, ${name}`;
+    }
+    document.getElementById('score-label').textContent = tierLabel;
+    const fill = document.getElementById('meter-fill');
+    fill.style.background = meterColor;
+    setTimeout(() => { fill.style.width = score + '%'; }, 100);
+
+    if (report) {
+      // AI-generated report
+      document.getElementById('score-summary').textContent = report.summary || '';
+      document.getElementById('report-headline').textContent = report.headline || '';
+
+      let cardsHtml = '';
+      if (report.primarySkill) {
+        cardsHtml += `
+          <div class="skill-card">
+            <h4><span class="skill-tag">#1 Priority</span> ${report.primarySkill.name}</h4>
+            <div class="why">${report.primarySkill.why}</div>
+            <div class="impact">📈 ${report.primarySkill.impact}</div>
+          </div>`;
+      }
+      if (report.secondarySkill) {
+        cardsHtml += `
+          <div class="skill-card secondary">
+            <h4><span class="skill-tag">#2 Priority</span> ${report.secondarySkill.name}</h4>
+            <div class="why">${report.secondarySkill.why}</div>
+            <div class="impact">📈 ${report.secondarySkill.impact}</div>
+          </div>`;
+      }
+      document.getElementById('skill-cards-container').innerHTML = cardsHtml;
+
+      if (report.coachingInsight) {
+        document.getElementById('coaching-insight-card').style.display = 'block';
+        document.getElementById('coaching-insight-text').textContent = report.coachingInsight;
+      }
+
+      // CTA based on solution preference
+      const sol = answers.solution;
+      if (sol === 0) { // self-study
+        document.getElementById('cta-headline').textContent = "Start learning for free";
+        document.getElementById('cta-body').textContent = report.nextStep || "Check out vidIQ's YouTube channel and podcast for in-depth guides on the skills you need to develop.";
+        document.getElementById('cta-button').textContent = "Watch vidIQ on YouTube →";
+        document.getElementById('cta-button').onclick = () => window.open('https://youtube.com/@vidiq','_blank');
+      } else if (sol === 1) { // AI Coach
+        document.getElementById('cta-headline').textContent = "Get AI-powered coaching with vidIQ";
+        document.getElementById('cta-body').textContent = report.nextStep || "vidIQ's AI Coach is built into Boost and Max plans — get personalized guidance on exactly the skills this assessment identified.";
+        document.getElementById('cta-button').textContent = "Explore vidIQ Plans →";
+        document.getElementById('cta-button').onclick = () => window.open('https://vidiq.com/pricing','_blank');
+      } else { // 1-on-1 coaching
+        document.getElementById('cta-headline').textContent = "Get matched with a vidIQ coach";
+        document.getElementById('cta-body').textContent = report.nextStep || "A dedicated coach will watch your content, identify your blind spots, and give you real-time feedback — exactly how the skills you're missing get built.";
+        document.getElementById('cta-button').textContent = "Get Matched with a Coach →";
+        document.getElementById('cta-button').onclick = () => window.open('https://vidiq.com/coaching','_blank');
+      }
+    } else {
+      // Fallback (no AI)
+      document.getElementById('score-summary').textContent = `You've mastered ${score/10} out of 10 essential creator skills. Here's what to focus on next.`;
+      document.getElementById('report-headline').textContent = 'Developing the right skills changes everything.';
+      document.getElementById('skill-cards-container').innerHTML = '<p style="color:#666">We couldn\'t generate your AI report right now. But your score tells the story — focus on the skills you answered "No" to, starting with storytelling and audience clarity.</p>';
+      document.getElementById('cta-headline').textContent = "Ready to develop these skills?";
+      document.getElementById('cta-body').textContent = "vidIQ coaching has helped 5,000+ creators master the exact skills this assessment measures.";
+      document.getElementById('cta-button').textContent = "Explore vidIQ Coaching →";
+      document.getElementById('cta-button').onclick = () => window.open('https://vidiq.com/coaching','_blank');
+    }
+  }
+</script>
+</body>
+</html>

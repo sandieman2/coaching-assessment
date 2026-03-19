@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/api/generate-report", "destination": "/api/generate-report" }
+  ]
+}
