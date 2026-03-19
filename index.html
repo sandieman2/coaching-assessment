@@ -707,15 +707,205 @@
         document.getElementById('cta-button').onclick = () => window.open('https://vidiq.com/coaching','_blank');
       }
     } else {
-      // Fallback (no AI)
-      document.getElementById('score-summary').textContent = `You've mastered ${score/10} out of 10 essential creator skills. Here's what to focus on next.`;
-      document.getElementById('report-headline').textContent = 'Developing the right skills changes everything.';
-      document.getElementById('skill-cards-container').innerHTML = '<p style="color:#666">We couldn\'t generate your AI report right now. But your score tells the story — focus on the skills you answered "No" to, starting with storytelling and audience clarity.</p>';
-      document.getElementById('cta-headline').textContent = "Ready to develop these skills?";
-      document.getElementById('cta-body').textContent = "vidIQ coaching has helped 5,000+ creators master the exact skills this assessment measures.";
-      document.getElementById('cta-button').textContent = "Explore vidIQ Coaching →";
-      document.getElementById('cta-button').onclick = () => window.open('https://vidiq.com/coaching','_blank');
+      // Rich client-side fallback
+      const fb = buildClientReport(score, tier, answers);
+      document.getElementById('score-summary').textContent = fb.summary;
+      document.getElementById('report-headline').textContent = fb.headline;
+
+      let cardsHtml = '';
+      if (fb.primarySkill) {
+        cardsHtml += `
+          <div class="skill-card">
+            <h4><span class="skill-tag">#1 Priority</span> ${fb.primarySkill.name}</h4>
+            <div class="why">${fb.primarySkill.why}</div>
+            <div class="impact">📈 ${fb.primarySkill.impact}</div>
+          </div>`;
+      }
+      if (fb.secondarySkill) {
+        cardsHtml += `
+          <div class="skill-card secondary">
+            <h4><span class="skill-tag">#2 Priority</span> ${fb.secondarySkill.name}</h4>
+            <div class="why">${fb.secondarySkill.why}</div>
+            <div class="impact">📈 ${fb.secondarySkill.impact}</div>
+          </div>`;
+      }
+      document.getElementById('skill-cards-container').innerHTML = cardsHtml;
+
+      if (fb.coachingInsight) {
+        document.getElementById('coaching-insight-card').style.display = 'block';
+        document.getElementById('coaching-insight-text').textContent = fb.coachingInsight;
+      }
+
+      const sol = answers.solution;
+      if (sol === 0) {
+        document.getElementById('cta-headline').textContent = "Start learning for free";
+        document.getElementById('cta-body').textContent = fb.nextStep || "Check out vidIQ's YouTube channel and podcast for in-depth guides on developing the creator skills you need most.";
+        document.getElementById('cta-button').textContent = "Watch vidIQ on YouTube →";
+        document.getElementById('cta-button').onclick = () => window.open('https://youtube.com/@vidiq','_blank');
+      } else if (sol === 1) {
+        document.getElementById('cta-headline').textContent = "Get AI-powered coaching with vidIQ";
+        document.getElementById('cta-body').textContent = fb.nextStep || "vidIQ's AI Coach is built into Boost and Max plans — get personalized guidance on exactly the skills this assessment identified.";
+        document.getElementById('cta-button').textContent = "Explore vidIQ Plans →";
+        document.getElementById('cta-button').onclick = () => window.open('https://vidiq.com/pricing','_blank');
+      } else {
+        document.getElementById('cta-headline').textContent = "Get matched with a vidIQ coach";
+        document.getElementById('cta-body').textContent = fb.nextStep || "A dedicated coach will watch your content, identify your blind spots, and give you real-time feedback on the exact skills you need to develop.";
+        document.getElementById('cta-button').textContent = "Get Matched with a Coach →";
+        document.getElementById('cta-button').onclick = () => window.open('https://vidiq.com/coaching','_blank');
+      }
     }
+  }
+  function buildClientReport(score, tier, ans) {
+    const bpKeys = ['storytelling','connection','thumbnail_psych','copywriting','analytics','audience','structure','topic_strategy','positioning','monetization'];
+    const missing = bpKeys.filter(k => ans[k] === false);
+    const present = bpKeys.filter(k => ans[k] === true);
+    const goalText = ans.goal90_text || '';
+    const obstacleText = ans.obstacle_text || '';
+    const situationIdx = ans.situation || 0;
+
+    const skillDb = {
+      storytelling: {
+        name: 'Storytelling & Narrative Structure',
+        why: {
+          low: `You said your biggest challenge is "${obstacleText.toLowerCase()}" — and storytelling is the master key. Creators who learn to build narrative tension don't just get more watch time; they make viewers feel something that compels them to subscribe, share, and come back. At your stage, this single skill has the highest multiplier effect because it transforms every video you'll ever make.`,
+          mid: `With ${present.length} skills already in place, storytelling is the force multiplier that ties them all together. You know how to choose topics and understand your audience — but without narrative structure, your videos inform without captivating. The difference between a 40% and 70% retention rate is almost always the story.`,
+          high: `Even at your advanced level, refining narrative structure is where the top 1% separate from the top 10%. The creators who build deep tension loops within their videos see 2-3x the average view duration of creators at similar subscriber counts.`,
+        },
+        impact: 'vidIQ coaching clients who developed storytelling skills saw average retention rates climb from 35% to 55% — which the algorithm directly rewards with more impressions and suggested placements.',
+      },
+      connection: {
+        name: 'Viewer Connection & Primal Branding',
+        why: {
+          low: `Your goal of "${goalText.toLowerCase()}" depends on people choosing YOUR channel over thousands of others. Primal Branding is the skill of building an emotional identity that makes viewers feel like they know you personally. Without it, you're just another channel covering the same topics — and viewers have no reason to come back.`,
+          mid: `You've got solid foundations, but the gap between "people watch my videos" and "people feel connected to me" is where subscriber loyalty lives. Primal Branding isn't personality — it's a learnable framework of rituals, beliefs, and shared language that turns viewers into community members.`,
+          high: `At your level, deepening viewer connection is what turns a large audience into a movement. The creators who master this don't just get views — they get defenders, evangelists, and customers for life.`,
+        },
+        impact: 'Coached creators who implemented Primal Branding frameworks saw subscriber-to-view ratios improve by 40-60%, meaning more of their viewers converted to loyal subscribers.',
+      },
+      thumbnail_psych: {
+        name: 'Thumbnail Psychology',
+        why: {
+          low: `Right now, your videos might be great — but nobody's clicking on them. Thumbnail psychology isn't about design skills; it's about understanding which emotional trigger (curiosity, FOMO, aspiration, shock) will make YOUR specific audience physically unable to scroll past. This is a completely learnable craft, but it requires feedback on your actual thumbnails, not generic tips.`,
+          mid: `You mentioned "${obstacleText.toLowerCase()}" as your obstacle. If your impressions are decent but CTR is low, thumbnails are almost certainly the bottleneck. Learning to engineer a specific psychological response in your thumbnails can double your click-through rate without changing anything else.`,
+          high: `Even advanced creators often design thumbnails that look good instead of thumbnails that trigger clicks. The difference is measurable: coached creators who learned thumbnail psychology saw CTR improvements of 30-50%.`,
+        },
+        impact: 'A 1% improvement in CTR can mean 20-40% more views on the same impressions. Coached creators who learned thumbnail psychology averaged a 2.3% CTR increase across their catalog.',
+      },
+      copywriting: {
+        name: 'Title Copywriting & Hooks',
+        why: {
+          low: `Most creators summarize their video in the title. That's like a newspaper running the headline "Article About Economy." Copywriting is the skill of making words irresistible — using open loops, pattern interrupts, and curiosity gaps that force a click. Combined with thumbnails, this determines whether anyone ever sees your content.`,
+          mid: `Your content skills are building, but if your titles aren't applying specific copywriting principles, you're leaving massive click-through on the table. The difference between "How to Grow on YouTube" and a title with a genuine curiosity gap can be 3-5x the views.`,
+          high: `At your stage, title optimization has compounding returns because you have the impressions. A better title on a high-impression video can mean tens of thousands of additional views per video.`,
+        },
+        impact: 'Creators who learned copywriting principles for titles saw average CTR increase by 1.8%, translating to 25-35% more views across their content library.',
+      },
+      analytics: {
+        name: 'Analytics Diagnosis',
+        why: {
+          low: `You're making content but can't tell why some videos work and others don't. Analytics diagnosis is the skill of looking at your data and immediately knowing: is this a discovery problem (low impressions), a packaging problem (low CTR), or a retention problem (short watch time)? Each problem has completely different solutions. Without this diagnostic skill, you're guessing — and guessing is exhausting.`,
+          mid: `You know enough to check your numbers, but the skill of diagnosis — of translating data patterns into specific actions — is what separates plateaued creators from growing ones. Your goal of "${goalText.toLowerCase()}" requires knowing exactly which lever to pull for each video.`,
+          high: `Your analytical foundations are strong. The next level is predictive diagnosis — understanding patterns across your catalog that predict performance before you publish.`,
+        },
+        impact: 'Creators who developed true diagnostic skills made 40% fewer "wrong direction" videos — meaning more of their creative energy went into content that actually moved the needle.',
+      },
+      audience: {
+        name: 'Audience Clarity & Targeting',
+        why: {
+          low: `"${obstacleText}" — this almost always traces back to audience clarity. If you can't describe your ideal viewer's frustrations in their own words, your content will always feel slightly off-target. The algorithm rewards specificity: content that feels "made for someone" outperforms content "made for everyone" by 5-10x at your stage.`,
+          mid: `You have a sense of your audience, but the difference between "I make content for small YouTubers" and being able to describe their exact frustrations, desires, and search language is the difference between decent and exceptional content-market fit.`,
+          high: `At your level, audience segmentation becomes critical. Understanding the different viewer personas within your audience — and creating content that serves each — is how you unlock the next tier of growth.`,
+        },
+        impact: 'Coached creators who completed structured audience clarity exercises saw their content-to-subscriber conversion rate improve by 45% within the first 60 days.',
+      },
+      structure: {
+        name: 'Engagement Architecture',
+        why: {
+          low: `Beyond "intro, middle, outro" — engagement architecture is about designing specific moments in your video to maintain attention at every stage. Think of it like a rollercoaster: the peaks, valleys, and transitions are all engineered. Most creators lose 50% of their audience in the first 30 seconds because they never learned how to build a retention structure.`,
+          mid: `Your other skills suggest you know what to make — but how you structure it determines whether people watch 30% or 80% of each video. That difference in retention is the single biggest signal the algorithm uses to decide who sees your content.`,
+          high: `You're already doing well, but advanced engagement techniques — nested open loops, strategic pattern interrupts, emotional arc mapping — can push your retention curves from good to exceptional.`,
+        },
+        impact: 'Creators who learned engagement architecture frameworks improved their average view duration by 35%, directly resulting in more algorithmic distribution.',
+      },
+      topic_strategy: {
+        name: 'Topic Strategy & Content Planning',
+        why: {
+          low: `Choosing topics based on what you feel like making is the #1 reason channels stagnate. Topic strategy is the skill of weighing search demand, your unique authority, audience desires, and competitive gaps — all at once. The right topic chosen strategically can outperform the wrong topic 10:1, even with identical production quality.`,
+          mid: `You're creating consistently, but "${goalText.toLowerCase()}" requires more than just consistency — it requires strategic topic selection. The difference between "I post every week" and "every video I post is strategically chosen to compound my growth" is enormous.`,
+          high: `At your scale, topic strategy shifts from "what should I make" to "what content ecosystem will drive my business goals." This strategic thinking is what separates 6-figure channels from 7-figure channels.`,
+        },
+        impact: 'Creators who implemented systematic topic strategy saw 60% fewer underperforming videos and 2.3x more "breakout" videos in their first 90 days of coaching.',
+      },
+      positioning: {
+        name: 'Channel Positioning & Differentiation',
+        why: {
+          low: `Without clear positioning, your channel competes with everyone and wins against no one. Positioning isn't a tagline — it's a formal exercise that defines your specific audience, unique angle, and competitive advantage. It's the strategic foundation that makes every other skill more effective.`,
+          mid: `You're building skills, but without positioning, you're building on an unclear foundation. Creators who complete a formal positioning exercise report that every subsequent decision — topics, thumbnails, titles — becomes dramatically easier and more effective.`,
+          high: `Even established creators often haven't done formal positioning work. At your scale, the ROI is massive: clear positioning attracts better sponsors, more loyal subscribers, and stronger word-of-mouth growth.`,
+        },
+        impact: 'One coached creator, Bridget Fisher, went from "headless chicken mode" to landing consistent sponsorships after a positioning exercise with her coach. Average time to results: 45 days.',
+      },
+      monetization: {
+        name: 'Monetization Strategy',
+        why: {
+          low: `Most creators wait until they "have enough subscribers" to think about money. That's backwards. Monetization strategy means intentionally connecting your content to a revenue model from the start — knowing which metrics predict income and optimizing for them. Creators who do this build sustainable businesses; creators who don't stay hobbyists.`,
+          mid: `Your goal of "${goalText.toLowerCase()}" requires a deliberate monetization strategy, not just hoping ad revenue grows. Understanding revenue per subscriber, conversion paths, and which content types drive purchases vs. views is a specific, learnable skill.`,
+          high: `At your level, monetization optimization is where the biggest financial returns live. Small improvements in conversion rate or revenue per viewer at your scale translate to significant income changes.`,
+        },
+        impact: 'Christina went from 11K to 37K subs AND became a full-time creator because her coach helped her build an income-intentional content strategy from day one.',
+      },
+    };
+
+    // Pick top 2 missing skills, prioritized by relevance to their situation
+    const priorityOrder = {
+      0: ['audience','storytelling','positioning','topic_strategy','thumbnail_psych','copywriting','structure','connection','analytics','monetization'],
+      1: ['audience','thumbnail_psych','storytelling','copywriting','topic_strategy','structure','connection','analytics','positioning','monetization'],
+      2: ['topic_strategy','storytelling','thumbnail_psych','copywriting','analytics','audience','structure','positioning','connection','monetization'],
+      3: ['analytics','topic_strategy','positioning','storytelling','monetization','thumbnail_psych','copywriting','structure','connection','audience'],
+      4: ['monetization','positioning','topic_strategy','analytics','storytelling','structure','connection','thumbnail_psych','copywriting','audience'],
+    };
+
+    const order = priorityOrder[situationIdx] || priorityOrder[1];
+    const sortedMissing = missing.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+    const p1Key = sortedMissing[0] || present[0] || 'storytelling';
+    const p2Key = sortedMissing[1] || sortedMissing[0] || present[1] || 'connection';
+
+    const p1 = skillDb[p1Key];
+    const p2 = skillDb[p2Key];
+
+    let summaryText;
+    if (tier === 'low') {
+      summaryText = `You've developed ${present.length} out of 10 essential creator skills. The skills you're missing aren't nice-to-haves — they're the ones that determine whether your channel grows or stays stuck. The good news? They're all learnable, and knowing exactly which ones to focus on puts you ahead of most creators who just try harder without developing new skills.`;
+    } else if (tier === 'mid') {
+      summaryText = `With ${present.length} out of 10 creator skills in place, you have real foundations. But you're likely feeling that plateau — where effort isn't translating to proportional growth. That's because the skills you're missing are the high-leverage ones that create compounding returns. Developing just 1-2 of them can tip the scale.`;
+    } else {
+      summaryText = `You've mastered ${present.length} out of 10 essential creator skills — that puts you in the top tier. At your level, growth comes from refining and deepening the skills you have, not accumulating new ones. The areas below represent your highest-ROI optimization opportunities.`;
+    }
+
+    const headlineText = tier === 'low'
+      ? `Your #1 growth unlock: mastering ${p1.name.toLowerCase()}`
+      : tier === 'mid'
+      ? `The skill that'll break your plateau: ${p1.name.toLowerCase()}`
+      : `Your highest-leverage optimization: ${p1.name.toLowerCase()}`;
+
+    const coachText = `The skills this assessment identified — ${p1.name.toLowerCase()} and ${p2.name.toLowerCase()} — aren't things you learn from a video tutorial. They require someone watching YOUR content, giving real-time feedback on YOUR execution, and iterating with you until the skill becomes instinct. It's the difference between reading about how to dribble a soccer ball and having a coach on the field with you. AI can tell you what's wrong with your video after you publish it. A coach teaches you to feel what's right while you're creating it.`;
+
+    return {
+      headline: headlineText,
+      summary: summaryText,
+      primarySkill: {
+        name: p1.name,
+        why: p1.why[tier] || p1.why.low,
+        impact: p1.impact,
+      },
+      secondarySkill: p1Key !== p2Key ? {
+        name: p2.name,
+        why: p2.why[tier] || p2.why.low,
+        impact: p2.impact,
+      } : null,
+      coachingInsight: coachText,
+      nextStep: null,
+    };
   }
 </script>
 </body>
