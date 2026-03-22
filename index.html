@@ -761,14 +761,10 @@
     // 2. Priority skill cards (no fake stats — removed impact line)
     let cardsHtml = '';
     if (fb.primarySkill) {
-      // Personalize with Q12/Q13
-      const personalizedWhy = obstacleText
-        ? `You said your biggest challenge is "${obstacleText.toLowerCase()}." That's exactly why ${fb.primarySkill.name.toLowerCase()} is your highest-leverage area right now. ` + fb.primarySkill.why
-        : fb.primarySkill.why;
       cardsHtml += `
         <div class="skill-card">
           <h4><span class="skill-tag">#1 Priority</span> ${fb.primarySkill.name}</h4>
-          <div class="why">${personalizedWhy}</div>
+          <div class="why">${fb.primarySkill.why}</div>
         </div>`;
     }
     if (fb.secondarySkill) {
