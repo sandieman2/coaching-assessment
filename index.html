@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>YouTube Creator Skills Assessment | vidIQ Coaching</title>
+  <title>Discover Your #1 Creator Growth Skill | vidIQ Coaching</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -84,6 +84,12 @@
     .compare-card .bar-fill { background: #2979ff; border-radius: 4px; height: 4px; }
     .compare-card.highlight { border-color: rgba(41,121,255,0.4); background: rgba(41,121,255,0.08); }
     .compare-card.highlight .metric-val { color: #5bffb4; }
+
+    /* TRUST BAR */
+    .trust-bar { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-bottom: 36px; }
+    .trust-item { text-align: center; }
+    .trust-item .trust-num { font-size: 22px; font-weight: 800; color: #5b9bff; line-height: 1.2; }
+    .trust-item .trust-label { font-size: 12px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.5px; }
 
     /* FINAL CTA */
     .final-cta { background: #f8f9fc; padding: 72px 24px; text-align: center; }
@@ -241,18 +247,24 @@
     <div class="badge">Free Creator Skills Assessment</div>
     <h1>Feeling frustrated that your YouTube channel isn't growing</h1>
     <h3 class="hook-sub">even though you're posting consistently?</h3>
-    <p class="subhead">You've watched the tutorials. You know the tips. But knowing what to do and being able to do it are two different things. Find out what's really holding your channel back.</p>
-    <button class="cta-btn" onclick="startQuiz()">Discover Your #1 Growth Skill</button>
+    <p class="subhead">You're showing up. You're publishing. You're doing what the tutorials told you. And still — the views barely move, the subscriber count feels frozen, and you're starting to wonder if you're just not cut out for this. You're not the problem. The strategy isn't the problem. There's a specific skill gap between where you are and where you want to be — and this assessment will find it in 3 minutes.</p>
+    <div class="trust-bar">
+      <div class="trust-item"><div class="trust-num">5,000+</div><div class="trust-label">Creators Coached</div></div>
+      <div class="trust-item"><div class="trust-num">2,828%</div><div class="trust-label">Avg. View Growth</div></div>
+      <div class="trust-item"><div class="trust-num">832%</div><div class="trust-label">Avg. Sub Growth</div></div>
+      <div class="trust-item"><div class="trust-num">49B+</div><div class="trust-label">Views Gained</div></div>
+    </div>
+    <button class="cta-btn" onclick="startQuiz()">Find the One Skill Holding You Back</button>
     <div class="cta-meta">
       <span>⏱ 3 minutes</span>
-      <span>✅ Completely free</span>
-      <span>⚡ AI-personalized results</span>
+      <span>✅ Free</span>
+      <span>⚡ Get your personalized skill + action plan</span>
     </div>
   </div>
 
   <div class="value-section">
-    <h2>Discover the skills that actually move the needle</h2>
-    <p class="sub">Data tells you what happened <em>after</em> you published. Skills determine what happens <em>before and during</em> content creation. This assessment evaluates the 10 creator skills that separate growing channels from stagnant ones.</p>
+    <h2>What will you discover?</h2>
+    <p class="sub">In 3 minutes, you'll uncover which of the 10 essential creator skills is your biggest growth lever — and what mastering it could unlock for your channel.</p>
     <div class="pillars">
       <div class="pillar">
         <div class="pillar-icon">🎯</div>
@@ -274,8 +286,9 @@
 
   <div class="why-skills">
     <h2>Why skills, not just data?</h2>
-    <p>If you want to learn to pitch a baseball, you can watch YouTube videos about technique. You'll probably improve a little. But if you want to develop the skills that make you a professional pitcher, you need a coach — someone who watches you throw, spots what you can't see, and works with you until the mechanics become second nature.</p>
-    <p>YouTube growth works the same way. There's no shortage of tips and tutorials. The gap isn't information — it's the ability to execute. <span class="highlight">This assessment reveals the specific creator skills you need to develop to go pro on YouTube.</span></p>
+    <p>Data tells you what happened. Skills determine what happens next. <span class="highlight">This assessment finds the one skill that will move the needle most.</span></p>
+    <p>Watching a video about how to pitch a baseball might improve your throw. But developing the skills to pitch professionally? That takes a coach who watches you, corrects you, and drills with you until it's muscle memory. YouTube is no different.</p>
+    <p>AI can analyze your channel and tell you what's underperforming — but it can't watch you create and coach you through the reps until a skill becomes instinct. <span class="highlight">That's where human coaching closes the gap.</span></p>
   </div>
 
   <div class="results-proof">
@@ -313,10 +326,10 @@
   </div>
 
   <div class="final-cta">
-    <h2>Find your highest-leverage growth skill in 3 minutes</h2>
-    <p>Get an AI-personalized report with your #1 skill to develop, why it matters for your specific situation, and the impact it'll have on your channel.</p>
+    <h2>Ready to discover what's really holding your channel back?</h2>
+    <p>15 questions. 3 minutes. One skill that could change everything about how your channel grows.</p>
     <button class="cta-btn" onclick="startQuiz()">Start the Free Assessment →</button>
-    <div class="cta-meta" style="color:#999;"><span>⏱ 3 minutes</span><span>✅ Free</span><span>⚡ AI-personalized results</span></div>
+    <div class="cta-meta" style="color:#999;"><span>⏱ 3 minutes</span><span>✅ Free</span><span>⚡ Get your personalized skill + action plan</span></div>
   </div>
 
   <footer><div>© 2026 vidIQ · <a href="https://vidiq.com/coaching">vidiq.com/coaching</a></div></footer>
@@ -337,13 +350,13 @@
   <nav class="quiz-nav"><div class="quiz-nav-logo">vid<span>IQ</span> Creator Skills Assessment</div></nav>
   <div class="loading-wrap">
     <div class="spinner"></div>
-    <h2>Analyzing your creator profile…</h2>
-    <p>Our AI is building your personalized skills report.</p>
+    <h2>Discovering your growth unlock…</h2>
+    <p>We're building your personalized skill report — here's what's happening.</p>
     <div class="loading-steps">
-      <div class="loading-step active" id="ls1"><span class="step-icon">⏳</span> Evaluating your skill profile</div>
-      <div class="loading-step" id="ls2"><span class="step-icon">⏳</span> Identifying your highest-leverage skill</div>
-      <div class="loading-step" id="ls3"><span class="step-icon">⏳</span> Generating personalized recommendations</div>
-      <div class="loading-step" id="ls4"><span class="step-icon">⏳</span> Preparing your report</div>
+      <div class="loading-step active" id="ls1"><span class="step-icon">⏳</span> Mapping your creator skill profile</div>
+      <div class="loading-step" id="ls2"><span class="step-icon">⏳</span> Finding your highest-leverage growth skill</div>
+      <div class="loading-step" id="ls3"><span class="step-icon">⏳</span> Building your personalized action plan</div>
+      <div class="loading-step" id="ls4"><span class="step-icon">⏳</span> Matching you with the right coach</div>
     </div>
   </div>
 </div>
@@ -363,11 +376,11 @@
     </div>
 
     <div class="report-section">
-      <h3 id="report-headline-label">Your Growth Roadmap</h3>
+      <h3 id="report-headline-label">Your #1 Skill to Develop — and the Impact It'll Have</h3>
       <div class="report-headline" id="report-headline"></div>
       <div id="skill-cards-container"></div>
       <div class="coaching-insight" id="coaching-insight-card" style="display:none">
-        <h4>🏆 Why a Coach Accelerates This</h4>
+        <h4>🏆 Why This Skill Requires a Coach, Not Just Information</h4>
         <p id="coaching-insight-text"></p>
       </div>
     </div>
@@ -458,20 +471,20 @@
   // ======= QUESTIONS =======
   const questions = [
     // 1–10: Skill questions (yes/no)
-    { type: 'yesno', key: 'storytelling',    category: 'Unlock Viewer Addiction',          text: 'When you script or outline a video, do you use a specific storytelling structure designed to create tension or curiosity — making it feel impossible to click away?' },
-    { type: 'yesno', key: 'connection',      category: 'Build a Loyal Fanbase',            text: 'Can you describe, in one sentence, the specific emotional connection you\'re building with your viewer in every video — beyond just the topic you\'re covering?' },
-    { type: 'yesno', key: 'thumbnail_psych', category: 'Master the First Impression',      text: 'When you design a thumbnail, do you know which psychological trigger you\'re activating (curiosity, FOMO, aspiration, shock) — and can you explain why your thumbnail works?' },
-    { type: 'yesno', key: 'copywriting',     category: 'Make Every Title Irresistible',    text: 'When you write a title, do you apply a specific copywriting principle — like an open loop, a pattern interrupt, or a curiosity gap — rather than just summarizing what the video is about?' },
-    { type: 'yesno', key: 'analytics',       category: 'Read Your Data Like a Pro',        text: 'Can you look at your analytics and diagnose why a video underperformed — distinguishing between a discovery problem (low impressions), a packaging problem (low CTR), and a retention problem (short watch time)?' },
-    { type: 'yesno', key: 'audience',        category: 'Know Your Viewer Better Than They Know Themselves', text: 'Can you describe your ideal viewer in specific detail — their frustrations, desires, other channels they watch, and the exact words they use when searching for your content?' },
-    { type: 'yesno', key: 'structure',       category: 'Engineer Watch Time',              text: 'Do you have a deliberate, repeatable video structure — beyond "intro, middle, outro" — that you designed specifically to maintain engagement at each stage of the viewer journey?' },
-    { type: 'yesno', key: 'topic_strategy',  category: 'Choose Topics That Guarantee Growth', text: 'Do you choose topics using a strategy that weighs search demand, your unique authority, audience desires, and competitive opportunity — rather than making what you feel like making?' },
-    { type: 'yesno', key: 'positioning',     category: 'Own Your Niche',                   text: 'Have you completed a formal channel positioning exercise that defines what makes your channel the only one serving your specific audience in your specific way?' },
-    { type: 'yesno', key: 'monetization',    category: 'Turn Views Into Income',           text: 'Is your content strategy intentionally connected to a specific monetization model — and do you know the exact metrics that predict whether you\'re on track for your income goals?' },
+    { type: 'yesno', key: 'storytelling',    category: 'The Skill That Makes Viewers Unable to Stop Watching',          text: 'When you script or outline a video, do you use a specific storytelling structure designed to create tension or curiosity — making it feel impossible to click away?' },
+    { type: 'yesno', key: 'connection',      category: 'What Turns a Viewer Into a Fan for Life',            text: 'Can you describe, in one sentence, the specific emotional connection you\'re building with your viewer in every video — beyond just the topic you\'re covering?' },
+    { type: 'yesno', key: 'thumbnail_psych', category: 'The Skill Behind Click-Worthy Thumbnails',      text: 'When you design a thumbnail, do you know which psychological trigger you\'re activating (curiosity, FOMO, aspiration, shock) — and can you explain why your thumbnail works?' },
+    { type: 'yesno', key: 'copywriting',     category: 'Why Some Titles Get 10× More Clicks',    text: 'When you write a title, do you apply a specific copywriting principle — like an open loop, a pattern interrupt, or a curiosity gap — rather than just summarizing what the video is about?' },
+    { type: 'yesno', key: 'analytics',       category: 'The Difference Between Guessing and Knowing',        text: 'Can you look at your analytics and diagnose why a video underperformed — distinguishing between a discovery problem (low impressions), a packaging problem (low CTR), and a retention problem (short watch time)?' },
+    { type: 'yesno', key: 'audience',        category: 'The Foundation Every Growing Channel Is Built On', text: 'Can you describe your ideal viewer in specific detail — their frustrations, desires, other channels they watch, and the exact words they use when searching for your content?' },
+    { type: 'yesno', key: 'structure',       category: 'What Keeps Viewers Watching to the End',              text: 'Do you have a deliberate, repeatable video structure — beyond "intro, middle, outro" — that you designed specifically to maintain engagement at each stage of the viewer journey?' },
+    { type: 'yesno', key: 'topic_strategy',  category: 'How Top Creators Choose What to Make Next', text: 'Do you choose topics using a strategy that weighs search demand, your unique authority, audience desires, and competitive opportunity — rather than making what you feel like making?' },
+    { type: 'yesno', key: 'positioning',     category: 'What Makes a Channel Impossible to Ignore',                   text: 'Have you completed a formal channel positioning exercise that defines what makes your channel the only one serving your specific audience in your specific way?' },
+    { type: 'yesno', key: 'monetization',    category: 'The Bridge Between Views and Real Income',           text: 'Is your content strategy intentionally connected to a specific monetization model — and do you know the exact metrics that predict whether you\'re on track for your income goals?' },
     // 11: Channel size
     {
       type: 'choice', key: 'situation',
-      category: 'Personalize Your Results',
+      category: 'Help Us Tailor Your Growth Roadmap',
       text: 'Which best describes your current channel situation?',
       options: [
         "I haven't started yet — still in planning mode",
@@ -482,13 +495,13 @@
       ]
     },
     // 12: Dynamic 90-day goal (populated after Q11)
-    { type: 'dynamic_choice', key: 'goal90', category: 'Set Your 90-Day Target', text: 'What is the most important outcome you want to achieve in the next 90 days?', optionsKey: 'goalsBySize' },
+    { type: 'dynamic_choice', key: 'goal90', category: 'What Does Your Next Level Look Like?', text: 'What is the most important outcome you want to achieve in the next 90 days?', optionsKey: 'goalsBySize' },
     // 13: Dynamic obstacle (populated after Q11)
-    { type: 'dynamic_choice', key: 'obstacle', category: 'Identify What\'s Holding You Back', text: "What's the biggest obstacle stopping your channel from growing right now?", optionsKey: 'obstaclesBySize' },
+    { type: 'dynamic_choice', key: 'obstacle', category: 'Pinpoint What\'s Standing in Your Way', text: "What's the biggest obstacle stopping your channel from growing right now?", optionsKey: 'obstaclesBySize' },
     // 14: Solution preference
     {
       type: 'choice', key: 'solution',
-      category: 'Find Your Best Path Forward',
+      category: 'Choose the Path That Fits Your Goals',
       text: 'Which type of support would suit you best right now?',
       options: [
         "Self-study — I'll learn from vidIQ's YouTube channel and podcast at my own pace",
@@ -497,7 +510,7 @@
       ]
     },
     // 15: Open text
-    { type: 'open', key: 'anything_else', category: 'Help Us Help You', text: "Is there anything else you think we should know about your channel or goals?", placeholder: "Share anything that might help us give you better recommendations…" },
+    { type: 'open', key: 'anything_else', category: 'Anything Else We Should Know?', text: "Is there anything else you think we should know about your channel or goals?", placeholder: "Share anything that might help us give you better recommendations…" },
     // 16: Contact info (moved to END)
     { type: 'contact', heading: "Almost there — where should we send your report?", sub: "We'll email you a copy of your personalized skills report." },
   ];
@@ -535,7 +548,7 @@
       const sel = answers[q.key];
       card.innerHTML = `
         <h2>${q.category}</h2>
-        <p class="q-sub">Skill ${current + 1} of 10</p>
+        <p class="q-sub">Skill discovery ${current + 1} of 10</p>
         <label class="q-label">${q.text}</label>
         <div class="yesno-wrap">
           <button class="yn-btn ${sel===true?'selected-yes':''}" onclick="saveYesNo(true)">✅ Yes</button>
@@ -549,7 +562,7 @@
       ).join('');
       card.innerHTML = `
         <h2>${q.category}</h2>
-        <p class="q-sub">Almost there…</p>
+        <p class="q-sub">Personalizing your results</p>
         <label class="q-label">${q.text}</label>
         ${opts}
       `;
@@ -561,7 +574,7 @@
       ).join('');
       card.innerHTML = `
         <h2>${q.category}</h2>
-        <p class="q-sub">Almost there…</p>
+        <p class="q-sub">Personalizing your results</p>
         <label class="q-label">${q.text}</label>
         ${opts}
       `;
@@ -723,18 +736,18 @@
       // CTA based on solution preference
       const sol = answers.solution;
       if (sol === 0) { // self-study
-        document.getElementById('cta-headline').textContent = "Start learning for free";
-        document.getElementById('cta-body').textContent = report.nextStep || "Check out vidIQ's YouTube channel and podcast for in-depth guides on the skills you need to develop.";
+        document.getElementById('cta-headline').textContent = "Start building this skill for free";
+        document.getElementById('cta-body').textContent = report.nextStep || "vidIQ's YouTube channel and podcast are packed with in-depth guides on the skills you need. Start learning at your own pace — and when you're ready for a coach to accelerate the process, we'll be here.";
         document.getElementById('cta-button').textContent = "Watch vidIQ on YouTube →";
         document.getElementById('cta-button').onclick = () => window.open('https://youtube.com/@vidiq','_blank');
       } else if (sol === 1) { // AI Coach
-        document.getElementById('cta-headline').textContent = "Get AI-powered coaching with vidIQ";
-        document.getElementById('cta-body').textContent = report.nextStep || "vidIQ's AI Coach is built into Boost and Max plans — get personalized guidance on exactly the skills this assessment identified.";
+        document.getElementById('cta-headline').textContent = "Start developing this skill with AI coaching";
+        document.getElementById('cta-body').textContent = report.nextStep || "vidIQ's AI Coach is built into Boost and Max plans — it'll work with you on exactly the skill gap this assessment identified, giving you personalized guidance as you practice.";
         document.getElementById('cta-button').textContent = "Explore vidIQ Plans →";
         document.getElementById('cta-button').onclick = () => window.open('https://vidiq.com/pricing','_blank');
       } else { // 1-on-1 coaching
-        document.getElementById('cta-headline').textContent = "Get matched with a vidIQ coach";
-        document.getElementById('cta-body').textContent = report.nextStep || "A dedicated coach will watch your content, identify your blind spots, and give you real-time feedback — exactly how the skills you're missing get built.";
+        document.getElementById('cta-headline').textContent = "Now that you know the skill, let a coach help you build it";
+        document.getElementById('cta-body').textContent = report.nextStep || "A dedicated coach won't just tell you what to do — they'll watch your content, give you real-time feedback as you practice, and help you build the muscle memory that turns a skill gap into a growth engine. That's how the best creators develop.";
         document.getElementById('cta-button').textContent = "Get Matched with a Coach →";
         document.getElementById('cta-button').onclick = () => window.open('https://vidiq.com/coaching','_blank');
       }
@@ -770,18 +783,18 @@
 
       const sol = answers.solution;
       if (sol === 0) {
-        document.getElementById('cta-headline').textContent = "Start learning for free";
-        document.getElementById('cta-body').textContent = fb.nextStep || "Check out vidIQ's YouTube channel and podcast for in-depth guides on developing the creator skills you need most.";
+        document.getElementById('cta-headline').textContent = "Start building this skill for free";
+        document.getElementById('cta-body').textContent = fb.nextStep || "vidIQ's YouTube channel and podcast are packed with in-depth guides on the skills you need. Start learning at your own pace — and when you're ready for a coach to accelerate the process, we'll be here.";
         document.getElementById('cta-button').textContent = "Watch vidIQ on YouTube →";
         document.getElementById('cta-button').onclick = () => window.open('https://youtube.com/@vidiq','_blank');
       } else if (sol === 1) {
-        document.getElementById('cta-headline').textContent = "Get AI-powered coaching with vidIQ";
-        document.getElementById('cta-body').textContent = fb.nextStep || "vidIQ's AI Coach is built into Boost and Max plans — get personalized guidance on exactly the skills this assessment identified.";
+        document.getElementById('cta-headline').textContent = "Start developing this skill with AI coaching";
+        document.getElementById('cta-body').textContent = fb.nextStep || "vidIQ's AI Coach is built into Boost and Max plans — it'll work with you on exactly the skill gap this assessment identified, giving you personalized guidance as you practice.";
         document.getElementById('cta-button').textContent = "Explore vidIQ Plans →";
         document.getElementById('cta-button').onclick = () => window.open('https://vidiq.com/pricing','_blank');
       } else {
-        document.getElementById('cta-headline').textContent = "Get matched with a vidIQ coach";
-        document.getElementById('cta-body').textContent = fb.nextStep || "A dedicated coach will watch your content, identify your blind spots, and give you real-time feedback on the exact skills you need to develop.";
+        document.getElementById('cta-headline').textContent = "Now that you know the skill, let a coach help you build it";
+        document.getElementById('cta-body').textContent = fb.nextStep || "A dedicated coach won't just tell you what to do — they'll watch your content, give you real-time feedback as you practice, and help you build the muscle memory that turns a skill gap into a growth engine. That's how the best creators develop.";
         document.getElementById('cta-button').textContent = "Get Matched with a Coach →";
         document.getElementById('cta-button').onclick = () => window.open('https://vidiq.com/coaching','_blank');
       }
@@ -1106,7 +1119,7 @@
       ? `The skill that'll break your plateau: ${p1.name.toLowerCase()}`
       : `Your highest-leverage optimization: ${p1.name.toLowerCase()}`;
 
-    const coachText = `The skills this assessment identified — ${p1.name.toLowerCase()} and ${p2.name.toLowerCase()} — aren't things you learn from a video tutorial. They require someone watching YOUR content, giving real-time feedback on YOUR execution, and iterating with you until the skill becomes instinct. It's the difference between reading about how to dribble a soccer ball and having a coach on the field with you. AI can tell you what's wrong with your video after you publish it. A coach teaches you to feel what's right while you're creating it.`;
+    const coachText = `${p1.name} isn't something you master from a tutorial — it's a skill you build through practice and feedback. Think of it like a pitcher working with a pitching coach: the coach watches your mechanics, spots what you can't see, and drills with you until the motion becomes second nature. That's exactly what a vidIQ coach does for ${p1.name.toLowerCase()} and ${p2.name.toLowerCase()}. They watch YOUR content, give real-time feedback on YOUR execution, and iterate with you until these skills become instinct — not just information you know but can't consistently apply.`;
 
     return {
       headline: headlineText,
