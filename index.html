@@ -227,6 +227,28 @@
     }
     .coach-match-btn:hover { background: #1a5fd4; }
 
+    /* SKILL OVERVIEW GRID */
+    .skill-overview { margin: 28px 0; }
+    .skill-overview h4 { font-size: 16px; font-weight: 700; margin-bottom: 14px; color: #1a1a2e; }
+    .skill-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+    .skill-row:last-child { border-bottom: none; }
+    .skill-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .skill-dot.green { background: #00c853; }
+    .skill-dot.yellow { background: #ffa726; }
+    .skill-dot.red { background: #ef5350; }
+    .skill-row-name { font-size: 14px; color: #333; flex: 1; }
+    .skill-row-status { font-size: 12px; color: #999; white-space: nowrap; }
+
+    /* RESOURCE CARD */
+    .resource-card { background: #f8f9fc; border: 1px solid #eee; border-radius: 12px; padding: 20px; margin-bottom: 12px; }
+    .resource-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .resource-card p { font-size: 14px; color: #666; line-height: 1.5; }
+    .resource-card a { color: #2979ff; text-decoration: none; font-weight: 600; }
+
+    /* SOFT COACHING MENTION */
+    .soft-coaching { background: #f8f9fc; border-radius: 12px; padding: 18px; margin-top: 18px; font-size: 14px; color: #666; line-height: 1.6; }
+    .soft-coaching a { color: #2979ff; text-decoration: none; font-weight: 600; }
+
     footer { background: #0a0f2e; color: rgba(255,255,255,0.45); text-align: center; padding: 28px 20px; font-size: 14px; }
     footer a { color: rgba(255,255,255,0.6); margin: 0 10px; text-decoration: none; }
 
@@ -699,6 +721,11 @@
     window.scrollTo(0, 0);
 
     const name = answers.name || 'Creator';
+    const sol = answers.solution; // 0=self-study, 1=guided, 2=direct feedback
+    const sitIdx = answers.situation !== undefined ? answers.situation : 1;
+    const obstacleText = answers.obstacle_text || '';
+    const goalText = answers.goal90_text || '';
+
     document.getElementById('score-number').textContent = score;
 
     let tierLabel, meterColor;
@@ -717,104 +744,133 @@
     fill.style.background = meterColor;
     setTimeout(() => { fill.style.width = score + '%'; }, 100);
 
-    if (report) {
-      // AI-generated report
-      document.getElementById('score-summary').textContent = report.summary || '';
-      document.getElementById('report-headline').textContent = report.headline || '';
+    // Use client report (AI report path removed — client-side only for now)
+    const fb = report ? {
+      summary: report.summary, headline: report.headline,
+      primarySkill: report.primarySkill, secondarySkill: report.secondarySkill,
+      coachingInsight: report.coachingInsight,
+    } : buildClientReport(score, tier, answers);
 
-      let cardsHtml = '';
-      if (report.primarySkill) {
-        cardsHtml += `
-          <div class="skill-card">
-            <h4><span class="skill-tag">#1 Priority</span> ${report.primarySkill.name}</h4>
-            <div class="why">${report.primarySkill.why}</div>
-            <div class="impact">📈 ${report.primarySkill.impact}</div>
-          </div>`;
-      }
-      if (report.secondarySkill) {
-        cardsHtml += `
-          <div class="skill-card secondary">
-            <h4><span class="skill-tag">#2 Priority</span> ${report.secondarySkill.name}</h4>
-            <div class="why">${report.secondarySkill.why}</div>
-            <div class="impact">📈 ${report.secondarySkill.impact}</div>
-          </div>`;
-      }
-      document.getElementById('skill-cards-container').innerHTML = cardsHtml;
+    // 1. Short summary (2 sentences max)
+    const bpKeys = ['storytelling','audience','analytics','thumbnail_psych','copywriting','connection','structure','topic_strategy','positioning','monetization'];
+    const present = bpKeys.filter(k => answers[k] === 2);
+    document.getElementById('score-summary').textContent = `You've developed ${present.length} of 10 essential creator skills. The ones you're missing are the highest-leverage areas for your channel's growth.`;
 
-      if (report.coachingInsight) {
-        document.getElementById('coaching-insight-card').style.display = 'block';
-        document.getElementById('coaching-insight-text').textContent = report.coachingInsight;
-      }
+    document.getElementById('report-headline').textContent = fb.headline || '';
 
-      // CTA based on solution preference
-      const sol = answers.solution;
-      if (sol === 0) { // self-study
-        document.getElementById('cta-headline').textContent = "Start building this skill for free";
-        document.getElementById('cta-body').textContent = report.nextStep || "vidIQ's YouTube channel and podcast are packed with in-depth guides on the skills you need. Start learning at your own pace — and when you're ready for a coach to accelerate the process, we'll be here.";
-        document.getElementById('cta-button').textContent = "Watch vidIQ on YouTube →";
-        document.getElementById('cta-button').onclick = () => window.open('https://youtube.com/@vidiq','_blank');
-      } else if (sol === 1) { // AI Coach
-        document.getElementById('cta-headline').textContent = "Start developing this skill with AI coaching";
-        document.getElementById('cta-body').textContent = report.nextStep || "vidIQ's AI Coach is built into Boost and Max plans — it'll work with you on exactly the skill gap this assessment identified, giving you personalized guidance as you practice.";
-        document.getElementById('cta-button').textContent = "Explore vidIQ Plans →";
-        document.getElementById('cta-button').onclick = () => window.open('https://vidiq.com/pricing','_blank');
-      } else { // 1-on-1 coaching
-        document.getElementById('cta-headline').textContent = "Now that you know the skill, let a coach help you build it";
-        document.getElementById('cta-body').textContent = report.nextStep || "A dedicated coach won't just tell you what to do — they'll watch your content, give you real-time feedback as you practice, and help you build the muscle memory that turns a skill gap into a growth engine. That's how the best creators develop.";
-        document.getElementById('cta-button').textContent = "Get Matched with a Coach →";
-        document.getElementById('cta-button').onclick = () => window.open('https://vidiq.com/coaching','_blank');
-      }
-    } else {
-      // Rich client-side fallback
-      const fb = buildClientReport(score, tier, answers);
-      document.getElementById('score-summary').textContent = fb.summary;
-      document.getElementById('report-headline').textContent = fb.headline;
-
-      let cardsHtml = '';
-      if (fb.primarySkill) {
-        cardsHtml += `
-          <div class="skill-card">
-            <h4><span class="skill-tag">#1 Priority</span> ${fb.primarySkill.name}</h4>
-            <div class="why">${fb.primarySkill.why}</div>
-            <div class="impact">📈 ${fb.primarySkill.impact}</div>
-          </div>`;
-      }
-      if (fb.secondarySkill) {
-        cardsHtml += `
-          <div class="skill-card secondary">
-            <h4><span class="skill-tag">#2 Priority</span> ${fb.secondarySkill.name}</h4>
-            <div class="why">${fb.secondarySkill.why}</div>
-            <div class="impact">📈 ${fb.secondarySkill.impact}</div>
-          </div>`;
-      }
-      document.getElementById('skill-cards-container').innerHTML = cardsHtml;
-
-      if (fb.coachingInsight) {
-        document.getElementById('coaching-insight-card').style.display = 'block';
-        document.getElementById('coaching-insight-text').textContent = fb.coachingInsight;
-      }
-
-      const sol = answers.solution;
-      if (sol === 0) {
-        document.getElementById('cta-headline').textContent = "Start building this skill for free";
-        document.getElementById('cta-body').textContent = fb.nextStep || "vidIQ's YouTube channel and podcast are packed with in-depth guides on the skills you need. Start learning at your own pace — and when you're ready for a coach to accelerate the process, we'll be here.";
-        document.getElementById('cta-button').textContent = "Watch vidIQ on YouTube →";
-        document.getElementById('cta-button').onclick = () => window.open('https://youtube.com/@vidiq','_blank');
-      } else if (sol === 1) {
-        document.getElementById('cta-headline').textContent = "Start developing this skill with AI coaching";
-        document.getElementById('cta-body').textContent = fb.nextStep || "vidIQ's AI Coach is built into Boost and Max plans — it'll work with you on exactly the skill gap this assessment identified, giving you personalized guidance as you practice.";
-        document.getElementById('cta-button').textContent = "Explore vidIQ Plans →";
-        document.getElementById('cta-button').onclick = () => window.open('https://vidiq.com/pricing','_blank');
-      } else {
-        document.getElementById('cta-headline').textContent = "Now that you know the skill, let a coach help you build it";
-        document.getElementById('cta-body').textContent = fb.nextStep || "A dedicated coach won't just tell you what to do — they'll watch your content, give you real-time feedback as you practice, and help you build the muscle memory that turns a skill gap into a growth engine. That's how the best creators develop.";
-        document.getElementById('cta-button').textContent = "Get Matched with a Coach →";
-        document.getElementById('cta-button').onclick = () => window.open('https://vidiq.com/coaching','_blank');
-      }
+    // 2. Priority skill cards (no fake stats — removed impact line)
+    let cardsHtml = '';
+    if (fb.primarySkill) {
+      // Personalize with Q12/Q13
+      const personalizedWhy = obstacleText
+        ? `You said your biggest challenge is "${obstacleText.toLowerCase()}." That's exactly why ${fb.primarySkill.name.toLowerCase()} is your highest-leverage area right now. ` + fb.primarySkill.why
+        : fb.primarySkill.why;
+      cardsHtml += `
+        <div class="skill-card">
+          <h4><span class="skill-tag">#1 Priority</span> ${fb.primarySkill.name}</h4>
+          <div class="why">${personalizedWhy}</div>
+        </div>`;
     }
+    if (fb.secondarySkill) {
+      cardsHtml += `
+        <div class="skill-card secondary">
+          <h4><span class="skill-tag">#2 Priority</span> ${fb.secondarySkill.name}</h4>
+          <div class="why">${fb.secondarySkill.why}</div>
+        </div>`;
+    }
+    document.getElementById('skill-cards-container').innerHTML = cardsHtml;
 
-    // Render coach match card above CTA (always shown)
-    renderCoachCard(score, tier, answers);
+    // 3. Coaching insight — shortened, no repeated baseball metaphor
+    const p1Name = fb.primarySkill ? fb.primarySkill.name.toLowerCase() : 'this skill';
+    document.getElementById('coaching-insight-card').style.display = 'block';
+    document.getElementById('coaching-insight-text').textContent = `${fb.primarySkill ? fb.primarySkill.name : 'This'} isn't a skill you can learn from a tutorial — it takes practice with feedback. A coach watches your actual content, gives you real-time input, and helps you build the muscle memory until it clicks.`;
+
+    // 4. Full 10-skill overview (green/yellow/red dots)
+    const skillNames = {
+      storytelling: 'Storytelling & Narrative', audience: 'Audience Clarity', analytics: 'Analytics Diagnosis',
+      thumbnail_psych: 'Thumbnail Psychology', copywriting: 'Title Copywriting', connection: 'Viewer Connection',
+      structure: 'Engagement Architecture', topic_strategy: 'Topic Strategy', positioning: 'Channel Positioning',
+      monetization: 'Monetization Strategy',
+    };
+    let overviewHtml = '<div class="skill-overview"><h4>Your Full Skill Profile</h4>';
+    bpKeys.forEach(k => {
+      const v = answers[k];
+      const dotClass = v === 2 ? 'green' : v === 1 ? 'yellow' : 'red';
+      const statusText = v === 2 ? 'Yes' : v === 1 ? 'Working on it' : 'Not yet';
+      overviewHtml += `<div class="skill-row"><div class="skill-dot ${dotClass}"></div><div class="skill-row-name">${skillNames[k]}</div><div class="skill-row-status">${statusText}</div></div>`;
+    });
+    overviewHtml += '</div>';
+    document.getElementById('skill-cards-container').innerHTML += overviewHtml;
+
+    // 5. Dynamic CTA based on Q11 (situation) × Q14 (learning style)
+    const ctaH = document.getElementById('cta-headline');
+    const ctaB = document.getElementById('cta-body');
+    const ctaBtn = document.getElementById('cta-button');
+    const coachContainer = document.getElementById('coach-match-container');
+
+    // Override: pre-1K creators (sitIdx 0 or 1) → default to resources regardless of Q14
+    const isEarlyStage = sitIdx <= 1;
+    const isCoachingSweet = sitIdx >= 2 && sitIdx <= 3;
+    const isAdvanced = sitIdx === 4;
+
+    if (isEarlyStage && sol !== 2) {
+      // Haven't started / Under 1K — lead with free resources, soft AI Coach mention
+      ctaH.textContent = "Start building this skill for free";
+      ctaB.innerHTML = `vidIQ's <a href="https://youtube.com/@vidiq" target="_blank" style="color:#5b9bff;">YouTube channel</a> and <a href="https://vidiq.com/podcast" target="_blank" style="color:#5b9bff;">podcast</a> have in-depth guides on ${p1Name}. Start at your own pace.<br><br>If you're a vidIQ Boost or Max subscriber, your AI Coach can help you practice this skill as you create — it's like having a guided study partner built into your workflow.`;
+      ctaBtn.textContent = "Watch vidIQ on YouTube →";
+      ctaBtn.onclick = () => window.open('https://youtube.com/@vidiq','_blank');
+      // Soft coaching mention, no coach card
+      coachContainer.innerHTML = `<div class="soft-coaching">Some creators find that working with a coach accelerates skill development. If you're ever curious once you're publishing consistently, <a href="https://vidiq.com/coaching" target="_blank">here's what that looks like</a>.</div>`;
+
+    } else if (sol === 0) {
+      // Q14 = "I figure things out on my own"
+      ctaH.textContent = "Start building this skill for free";
+      ctaB.innerHTML = `vidIQ's <a href="https://youtube.com/@vidiq" target="_blank" style="color:#5b9bff;">YouTube channel</a> and <a href="https://vidiq.com/podcast" target="_blank" style="color:#5b9bff;">podcast</a> have in-depth guides on ${p1Name}. Start at your own pace.<br><br>If you're a vidIQ Boost or Max subscriber, your AI Coach can help you practice this skill as you create — it's like having a guided study partner built into your workflow.`;
+      ctaBtn.textContent = "Watch vidIQ on YouTube →";
+      ctaBtn.onclick = () => window.open('https://youtube.com/@vidiq','_blank');
+      coachContainer.innerHTML = `<div class="soft-coaching">Some creators find that working with a coach accelerates skill development. If you're ever curious, <a href="https://vidiq.com/coaching" target="_blank">here's what that looks like</a>.</div>`;
+
+    } else if (sol === 1) {
+      // Q14 = "I like guided tools and resources" → lead with AI Coach
+      ctaH.textContent = "Your guided path to developing this skill";
+      ctaB.innerHTML = `vidIQ's AI Coach is built into Boost and Max plans — it'll work with you on exactly the skill gap this assessment identified, giving you personalized guidance as you create and practice.`;
+      ctaBtn.textContent = "Explore vidIQ Plans →";
+      ctaBtn.onclick = () => window.open('https://vidiq.com/pricing','_blank');
+      // Show coach card as "accelerated" upgrade option
+      const coach = getCoachMatch(score, tier, answers);
+      coachContainer.innerHTML = `
+        <div style="margin-top:20px;padding:18px;background:#f8f9fc;border-radius:12px;font-size:14px;color:#666;line-height:1.6;">
+          <strong>Want to develop this skill faster?</strong> A dedicated coach gives you direct feedback on your content.
+        </div>
+        <div class="coach-match-card" style="margin-top:12px;">
+          <div class="coach-match-label">🎯 Your Recommended Coach</div>
+          <div class="coach-match-name">${coach.name}</div>
+          <div class="coach-match-credential">${coach.credential}</div>
+          <div class="coach-match-reason">💬 <strong>Why ${coach.name}?</strong> ${coach.reason}</div>
+          <button class="coach-match-btn" onclick="window.open('https://vidiq.com/coaching','_blank')">Meet ${coach.name} →</button>
+        </div>`;
+
+    } else {
+      // sol === 2 — "I learn best with direct feedback" — pre-qualified
+      const coach = getCoachMatch(score, tier, answers);
+      const coachPitch = isAdvanced
+        ? `At your level, you need more than skill basics — you need strategic coaching on business scaling, revenue optimization, and content ecosystem design. ${coach.name} works with advanced creators on exactly these challenges.`
+        : `${coach.name} will watch your content, give you real-time feedback on your execution, and help you build the muscle memory until ${p1Name} becomes instinct.`;
+
+      // Show coach card as primary CTA
+      coachContainer.innerHTML = `
+        <div class="coach-match-card">
+          <div class="coach-match-label">🎯 Your Recommended Coach</div>
+          <div class="coach-match-name">${coach.name}</div>
+          <div class="coach-match-credential">${coach.credential}</div>
+          <div class="coach-match-reason">💬 <strong>Why ${coach.name}?</strong> ${coachPitch}</div>
+          <button class="coach-match-btn" onclick="window.open('https://vidiq.com/coaching','_blank')">Meet ${coach.name} →</button>
+        </div>`;
+      ctaH.textContent = "Now that you know the skill, let a coach help you build it";
+      ctaB.innerHTML = `Between coaching sessions, your AI Coach keeps you on track — practicing ${p1Name} in real time as you create.`;
+      ctaBtn.textContent = "Get Matched with a Coach →";
+      ctaBtn.onclick = () => window.open('https://vidiq.com/coaching','_blank');
+    }
   }
   // ======= COACH MATCHING =======
   function getCoachMatch(score, tier, ans) {
@@ -984,20 +1040,7 @@
     };
   }
 
-  function renderCoachCard(score, tier, ans) {
-    const coach = getCoachMatch(score, tier, ans);
-    const container = document.getElementById('coach-match-container');
-    if (!container) return;
-    container.innerHTML = `
-      <div class="coach-match-card">
-        <div class="coach-match-label">🎯 Your Recommended Coach</div>
-        <div class="coach-match-name">${coach.name}</div>
-        <div class="coach-match-credential">${coach.credential}</div>
-        <div class="coach-match-reason">💬 <strong>Why ${coach.name}?</strong> ${coach.reason}</div>
-        <button class="coach-match-btn" onclick="window.open('https://vidiq.com/coaching','_blank')">Meet ${coach.name} →</button>
-      </div>
-    `;
-  }
+  // renderCoachCard removed — coach card rendering is now inline in the Q11×Q14 dynamic logic
 
   function buildClientReport(score, tier, ans) {
     const bpKeys = ['storytelling','audience','analytics','thumbnail_psych','copywriting','connection','structure','topic_strategy','positioning','monetization'];
@@ -1119,11 +1162,11 @@
 
     let summaryText;
     if (tier === 'low') {
-      summaryText = `You've developed ${present.length} out of 10 essential creator skills. The skills you're missing aren't nice-to-haves — they're the ones that determine whether your channel grows or stays stuck. The good news? They're all learnable, and knowing exactly which ones to focus on puts you ahead of most creators who just try harder without developing new skills.`;
+      summaryText = `You've developed ${present.length} of 10 essential creator skills. The ones you're missing are the highest-leverage areas for your channel's growth.`;
     } else if (tier === 'mid') {
-      summaryText = `With ${present.length} out of 10 creator skills in place, you have real foundations. But you're likely feeling that plateau — where effort isn't translating to proportional growth. That's because the skills you're missing are the high-leverage ones that create compounding returns. Developing just 1-2 of them can tip the scale.`;
+      summaryText = `You've developed ${present.length} of 10 creator skills — solid foundations. The missing ones are the high-leverage skills that create compounding returns.`;
     } else {
-      summaryText = `You've mastered ${present.length} out of 10 essential creator skills — that puts you in the top tier. At your level, growth comes from refining and deepening the skills you have, not accumulating new ones. The areas below represent your highest-ROI optimization opportunities.`;
+      summaryText = `You've developed ${present.length} of 10 essential creator skills — top tier. The areas below are your highest-ROI optimization opportunities.`;
     }
 
     const headlineText = tier === 'low'
@@ -1132,7 +1175,7 @@
       ? `The skill that'll break your plateau: ${p1.name.toLowerCase()}`
       : `Your highest-leverage optimization: ${p1.name.toLowerCase()}`;
 
-    const coachText = `${p1.name} isn't something you master from a tutorial — it's a skill you build through practice and feedback. Think of it like a pitcher working with a pitching coach: the coach watches your mechanics, spots what you can't see, and drills with you until the motion becomes second nature. That's exactly what a vidIQ coach does for ${p1.name.toLowerCase()} and ${p2.name.toLowerCase()}. They watch YOUR content, give real-time feedback on YOUR execution, and iterate with you until these skills become instinct — not just information you know but can't consistently apply.`;
+    const coachText = `${p1.name} isn't a skill you can learn from a tutorial — it takes practice with feedback. A coach watches your actual content, gives you real-time input, and helps you build the muscle memory until it clicks.`;
 
     return {
       headline: headlineText,
