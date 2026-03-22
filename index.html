@@ -177,7 +177,9 @@
     .skill-card h4 { font-size: 17px; font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
     .skill-card .skill-tag { font-size: 11px; font-weight: 600; color: white; background: #2979ff; padding: 2px 8px; border-radius: 10px; }
     .skill-card.secondary .skill-tag { background: #7aaeff; }
-    .skill-card .why { font-size: 15px; color: #444; line-height: 1.6; margin-bottom: 10px; }
+    .skill-card .why { font-size: 15px; color: #444; line-height: 1.6; margin-bottom: 12px; }
+    .skill-card .skill-example { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 12px; padding: 12px 14px; background: #f8f9fc; border-radius: 8px; border-left: 3px solid #ddd; }
+    .skill-card .skill-action { font-size: 14px; color: #1a6b2e; line-height: 1.6; padding: 12px 14px; background: #f0fff4; border-radius: 8px; border-left: 3px solid #00c853; }
     .skill-card .impact { font-size: 14px; color: #2979ff; font-weight: 600; background: #f0f4ff; padding: 10px 14px; border-radius: 8px; line-height: 1.5; }
 
     .coaching-insight {
@@ -214,8 +216,17 @@
       font-size: 11px; font-weight: 700; color: #2979ff; text-transform: uppercase;
       letter-spacing: 1.5px; margin-bottom: 12px;
     }
-    .coach-match-name { font-size: 22px; font-weight: 800; color: #1a1a2e; margin-bottom: 4px; }
-    .coach-match-credential { font-size: 14px; color: #666; margin-bottom: 14px; }
+    .coach-match-header { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+    .coach-match-avatar {
+      width: 64px; height: 64px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, #2979ff, #5b9bff); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; font-weight: 800; letter-spacing: -0.5px;
+      overflow: hidden;
+    }
+    .coach-match-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .coach-match-name { font-size: 22px; font-weight: 800; color: #1a1a2e; margin-bottom: 2px; }
+    .coach-match-credential { font-size: 14px; color: #666; }
     .coach-match-reason {
       font-size: 15px; color: #333; line-height: 1.65; background: #f0f4ff;
       border-radius: 10px; padding: 14px 16px; margin-bottom: 18px;
@@ -569,8 +580,6 @@
     } else if (q.type === 'skill') {
       const sel = answers[q.key];
       card.innerHTML = `
-        <h2>${q.category}</h2>
-        <p class="q-sub">Question ${current + 1} of 10</p>
         <label class="q-label">${q.text}</label>
         <div class="yesno-wrap" style="flex-direction:column;gap:10px;">
           <button class="yn-btn ${sel===2?'selected-yes':''}" onclick="saveSkill(2)" style="flex:none;padding:16px;">Yes</button>
@@ -585,8 +594,6 @@
         return `<button class="opt-btn ${sel===i?'selected':''}" onclick="saveChoiceByIdx('${q.key}', ${i})">${o}</button>`;
       }).join('');
       card.innerHTML = `
-        <h2>${q.category}</h2>
-        <p class="q-sub">Personalizing your results</p>
         <label class="q-label">${q.text}</label>
         ${opts}
       `;
@@ -598,15 +605,11 @@
         return `<button class="opt-btn ${answers[q.key]===i?'selected':''}" onclick="saveChoiceByIdx('${q.key}', ${i})">${o}</button>`;
       }).join('');
       card.innerHTML = `
-        <h2>${q.category}</h2>
-        <p class="q-sub">Personalizing your results</p>
         <label class="q-label">${q.text}</label>
         ${opts}
       `;
     } else if (q.type === 'open') {
       card.innerHTML = `
-        <h2>${q.category}</h2>
-        <p class="q-sub">Optional — but very helpful</p>
         <label class="q-label">${q.text}</label>
         <textarea class="input-field" id="inp-open" placeholder="${q.placeholder}">${answers[q.key]||''}</textarea>
         <button class="next-btn" onclick="saveOpen()">Next →</button>
@@ -758,13 +761,15 @@
 
     document.getElementById('report-headline').textContent = fb.headline || '';
 
-    // 2. Priority skill cards (no fake stats — removed impact line)
+    // 2. Priority skill cards with example + action tip
     let cardsHtml = '';
     if (fb.primarySkill) {
       cardsHtml += `
         <div class="skill-card">
           <h4><span class="skill-tag">#1 Priority</span> ${fb.primarySkill.name}</h4>
           <div class="why">${fb.primarySkill.why}</div>
+          ${fb.primarySkill.example ? `<div class="skill-example"><strong>What this looks like in practice:</strong> ${fb.primarySkill.example}</div>` : ''}
+          ${fb.primarySkill.actionTip ? `<div class="skill-action"><strong>🎬 Try this on your next video:</strong> ${fb.primarySkill.actionTip}</div>` : ''}
         </div>`;
     }
     if (fb.secondarySkill) {
@@ -772,6 +777,8 @@
         <div class="skill-card secondary">
           <h4><span class="skill-tag">#2 Priority</span> ${fb.secondarySkill.name}</h4>
           <div class="why">${fb.secondarySkill.why}</div>
+          ${fb.secondarySkill.example ? `<div class="skill-example"><strong>What this looks like in practice:</strong> ${fb.secondarySkill.example}</div>` : ''}
+          ${fb.secondarySkill.actionTip ? `<div class="skill-action"><strong>🎬 Try this on your next video:</strong> ${fb.secondarySkill.actionTip}</div>` : ''}
         </div>`;
     }
     document.getElementById('skill-cards-container').innerHTML = cardsHtml;
@@ -809,63 +816,58 @@
     const isCoachingSweet = sitIdx >= 2 && sitIdx <= 3;
     const isAdvanced = sitIdx === 4;
 
+    const nextStepsDiv = document.querySelector('.next-steps');
+
     if (isEarlyStage && sol !== 2) {
-      // Haven't started / Under 1K — lead with free resources, soft AI Coach mention
+      // Haven't started / Under 1K — free resources as primary CTA, soft coaching text link
       ctaH.textContent = "Start building this skill for free";
-      ctaB.innerHTML = `vidIQ's <a href="https://youtube.com/@vidiq" target="_blank" style="color:#5b9bff;">YouTube channel</a> and <a href="https://vidiq.com/podcast" target="_blank" style="color:#5b9bff;">podcast</a> have in-depth guides on ${p1Name}. Start at your own pace.<br><br>If you're a vidIQ Boost or Max subscriber, your AI Coach can help you practice this skill as you create — it's like having a guided study partner built into your workflow.`;
+      ctaB.innerHTML = `vidIQ's YouTube channel and podcast have in-depth guides on ${p1Name}. Start at your own pace.`;
       ctaBtn.textContent = "Watch vidIQ on YouTube →";
       ctaBtn.onclick = () => window.open('https://youtube.com/@vidiq','_blank');
-      // Soft coaching mention, no coach card
-      coachContainer.innerHTML = `<div class="soft-coaching">Some creators find that working with a coach accelerates skill development. If you're ever curious once you're publishing consistently, <a href="https://vidiq.com/coaching" target="_blank">here's what that looks like</a>.</div>`;
+      coachContainer.innerHTML = `<div class="soft-coaching">Want to accelerate? <a href="https://vidiq.com/coaching" target="_blank">Learn about vidIQ coaching</a>.</div>`;
 
     } else if (sol === 0) {
-      // Q14 = "I figure things out on my own"
+      // Q14 = "I figure things out on my own" — free resources primary, text link for coaching
       ctaH.textContent = "Start building this skill for free";
-      ctaB.innerHTML = `vidIQ's <a href="https://youtube.com/@vidiq" target="_blank" style="color:#5b9bff;">YouTube channel</a> and <a href="https://vidiq.com/podcast" target="_blank" style="color:#5b9bff;">podcast</a> have in-depth guides on ${p1Name}. Start at your own pace.<br><br>If you're a vidIQ Boost or Max subscriber, your AI Coach can help you practice this skill as you create — it's like having a guided study partner built into your workflow.`;
+      ctaB.innerHTML = `vidIQ's YouTube channel and podcast have in-depth guides on ${p1Name}. Start at your own pace.`;
       ctaBtn.textContent = "Watch vidIQ on YouTube →";
       ctaBtn.onclick = () => window.open('https://youtube.com/@vidiq','_blank');
-      coachContainer.innerHTML = `<div class="soft-coaching">Some creators find that working with a coach accelerates skill development. If you're ever curious, <a href="https://vidiq.com/coaching" target="_blank">here's what that looks like</a>.</div>`;
+      coachContainer.innerHTML = `<div class="soft-coaching">Want to accelerate? <a href="https://vidiq.com/coaching" target="_blank">Learn about vidIQ coaching</a>.</div>`;
 
     } else if (sol === 1) {
-      // Q14 = "I like guided tools and resources" → lead with AI Coach
+      // Q14 = "I like guided tools and resources" → AI Coach as primary CTA
       ctaH.textContent = "Your guided path to developing this skill";
-      ctaB.innerHTML = `vidIQ's AI Coach is built into Boost and Max plans — it'll work with you on exactly the skill gap this assessment identified, giving you personalized guidance as you create and practice.`;
+      ctaB.innerHTML = `vidIQ's AI Coach is built into Boost and Max plans — it'll work with you on exactly the skill gap this assessment identified, giving you personalized guidance as you create.`;
       ctaBtn.textContent = "Explore vidIQ Plans →";
       ctaBtn.onclick = () => window.open('https://vidiq.com/pricing','_blank');
-      // Show coach card as "accelerated" upgrade option
+      // Optional secondary coach mention
       const coach = getCoachMatch(score, tier, answers);
       coachContainer.innerHTML = `
-        <div style="margin-top:20px;padding:18px;background:#f8f9fc;border-radius:12px;font-size:14px;color:#666;line-height:1.6;">
-          <strong>Want to develop this skill faster?</strong> A dedicated coach gives you direct feedback on your content.
-        </div>
-        <div class="coach-match-card" style="margin-top:12px;">
-          <div class="coach-match-label">🎯 Your Recommended Coach</div>
-          <div class="coach-match-name">${coach.name}</div>
-          <div class="coach-match-credential">${coach.credential}</div>
-          <div class="coach-match-reason">💬 <strong>Why ${coach.name}?</strong> ${coach.reason}</div>
-          <button class="coach-match-btn" onclick="window.open('https://vidiq.com/coaching','_blank')">Meet ${coach.name} →</button>
+        <div class="soft-coaching" style="margin-top:18px;">
+          If you ever want direct feedback on your content, we'd match you with <strong>${coach.name}</strong> — ${coach.credential.toLowerCase()}. <a href="https://vidiq.com/coaching" target="_blank">Learn more</a>.
         </div>`;
 
     } else {
-      // sol === 2 — "I learn best with direct feedback" — pre-qualified
+      // sol === 2 — "I learn best with direct feedback" — coach card IS the primary CTA
       const coach = getCoachMatch(score, tier, answers);
       const coachPitch = isAdvanced
         ? `At your level, you need more than skill basics — you need strategic coaching on business scaling, revenue optimization, and content ecosystem design. ${coach.name} works with advanced creators on exactly these challenges.`
         : `${coach.name} will watch your content, give you real-time feedback on your execution, and help you build the muscle memory until ${p1Name} becomes instinct.`;
 
-      // Show coach card as primary CTA
       coachContainer.innerHTML = `
         <div class="coach-match-card">
           <div class="coach-match-label">🎯 Your Recommended Coach</div>
-          <div class="coach-match-name">${coach.name}</div>
-          <div class="coach-match-credential">${coach.credential}</div>
+          <div class="coach-match-header">
+            <div class="coach-match-avatar">${coach.photo ? `<img src="${coach.photo}" alt="${coach.name}">` : coach.initials}</div>
+            <div><div class="coach-match-name">${coach.name}</div><div class="coach-match-credential">${coach.credential}</div></div>
+          </div>
           <div class="coach-match-reason">💬 <strong>Why ${coach.name}?</strong> ${coachPitch}</div>
           <button class="coach-match-btn" onclick="window.open('https://vidiq.com/coaching','_blank')">Meet ${coach.name} →</button>
         </div>`;
-      ctaH.textContent = "Now that you know the skill, let a coach help you build it";
-      ctaB.innerHTML = `Between coaching sessions, your AI Coach keeps you on track — practicing ${p1Name} in real time as you create.`;
-      ctaBtn.textContent = "Get Matched with a Coach →";
-      ctaBtn.onclick = () => window.open('https://vidiq.com/coaching','_blank');
+      // Hide the duplicate CTA block — coach card is the action
+      nextStepsDiv.style.display = 'none';
+      // Add secondary AI Coach mention below the coach card
+      coachContainer.innerHTML += `<div class="soft-coaching" style="margin-top:12px;">Between sessions, your AI Coach keeps you on track — practicing ${p1Name} in real time as you create.</div>`;
     }
   }
   // ======= COACH MATCHING =======
@@ -900,10 +902,13 @@
     const hasMonetizationGap = missing.includes('monetization');
 
     // Coach roster with capacity (only these are recommended)
+    // photo: URL to headshot (add when available); initials: fallback for CSS avatar
     const coaches = [
       {
         id: 'lucas',
         name: 'Lucas',
+        initials: 'L',
+        photo: '',
         credential: 'Data-driven storyteller · 10+ yrs, 500 videos, 2M views',
         niches: ['gaming','health','entertainment','business','general'],
         excludes: [],
@@ -914,6 +919,8 @@
       {
         id: 'jeffr',
         name: 'Jeff R',
+        initials: 'JR',
+        photo: '',
         credential: 'Expert strategist in competitive niches · packaging specialist',
         niches: ['health','business','gaming','general'],
         excludes: ['lifestyle','entertainment','family','beauty'],
@@ -924,6 +931,8 @@
       {
         id: 'erich',
         name: 'Eric H',
+        initials: 'EH',
+        photo: '',
         credential: 'Grew creators from 75K to 1M views · mission & message clarity',
         niches: ['lifestyle','entertainment','business','general'],
         excludes: [],
@@ -934,6 +943,8 @@
       {
         id: 'nasr',
         name: 'Nasr',
+        initials: 'N',
+        photo: '',
         credential: '170K community · featured by BuzzFeed · empathy + accountability',
         niches: ['lifestyle','health','travel','general'],
         excludes: ['business','gaming'],
@@ -944,6 +955,8 @@
       {
         id: 'anthonyo',
         name: 'Anthony O',
+        initials: 'AO',
+        photo: '',
         credential: '6 BILLION views · 10M+ followers · 0-to-1M growth specialist',
         niches: ['entertainment','lifestyle','health','general'],
         excludes: [],
@@ -954,6 +967,8 @@
       {
         id: 'rhodes',
         name: 'Rhodes',
+        initials: 'R',
+        photo: '',
         credential: 'Storytelling strategist · emotional wellbeing focus',
         niches: ['lifestyle','health','gaming','general'],
         excludes: ['entertainment','travel','family'],
@@ -964,6 +979,8 @@
       {
         id: 'sara',
         name: 'Sara',
+        initials: 'S',
+        photo: '',
         credential: 'Profit-focused coaching · turns content into income',
         niches: ['travel','lifestyle','business','family','general'],
         excludes: [],
@@ -974,6 +991,8 @@
       {
         id: 'antonio',
         name: 'Antonio',
+        initials: 'A',
+        photo: '',
         credential: 'Ph.D. Psychology · 1.2M subs · 65M views',
         niches: ['lifestyle','health','entertainment','general'],
         excludes: [],
@@ -984,6 +1003,8 @@
       {
         id: 'david',
         name: 'David',
+        initials: 'D',
+        photo: '',
         credential: '15+ years on YouTube · multiple 30x growth stories',
         niches: ['lifestyle','health','business','family','general'],
         excludes: [],
@@ -994,6 +1015,8 @@
       {
         id: 'timr',
         name: 'Tim R',
+        initials: 'TR',
+        photo: '',
         credential: '1.5M-view creator · viral storytelling specialist',
         niches: ['gaming','health','entertainment','general'],
         excludes: ['travel','family'],
@@ -1032,6 +1055,8 @@
     return {
       name: best.name,
       credential: best.credential,
+      initials: best.initials,
+      photo: best.photo,
       reason: best.matchReason(niche, primaryGap),
     };
   }
@@ -1050,92 +1075,102 @@
       storytelling: {
         name: 'Storytelling & Narrative Structure',
         why: {
-          low: `You said your biggest challenge is "${obstacleText.toLowerCase()}" — and storytelling is the master key. Creators who learn to build narrative tension don't just get more watch time; they make viewers feel something that compels them to subscribe, share, and come back. At your stage, this single skill has the highest multiplier effect because it transforms every video you'll ever make.`,
-          mid: `With ${present.length} skills already in place, storytelling is the force multiplier that ties them all together. You know how to choose topics and understand your audience — but without narrative structure, your videos inform without captivating. The difference between a 40% and 70% retention rate is almost always the story.`,
-          high: `Even at your advanced level, refining narrative structure is where the top 1% separate from the top 10%. The creators who build deep tension loops within their videos see 2-3x the average view duration of creators at similar subscriber counts.`,
+          low: `You said your biggest challenge is "${obstacleText.toLowerCase()}" — and storytelling is the master key. Creators who build narrative tension don't just get more watch time; they make viewers feel something that compels them to subscribe, share, and come back.`,
+          mid: `With ${present.length} skills already in place, storytelling is the force multiplier that ties them all together. You know how to choose topics and understand your audience — but without narrative structure, your videos inform without captivating.`,
+          high: `Even at your advanced level, refining narrative structure is where the top 1% separate from the top 10%. Deep tension loops within videos drive 2-3x the average view duration at similar subscriber counts.`,
         },
-        impact: 'vidIQ coaching clients who developed storytelling skills saw average retention rates climb from 35% to 55% — which the algorithm directly rewards with more impressions and suggested placements.',
+        example: `A creator covering "5 Tips for Better Lighting" gets decent views. A creator who opens with "I ruined a $10,000 client shoot because of one lighting mistake — here's what I learned" gets 5x the retention. Same information, completely different storytelling structure.`,
+        actionTip: `On your next video, try the "Open Loop" technique: start with a compelling question or teaser in the first 10 seconds that you don't resolve until the end. Write it out before you film. Even this one change can dramatically shift your retention curve.`,
       },
       connection: {
         name: 'Viewer Connection & Primal Branding',
         why: {
-          low: `Your goal of "${goalText.toLowerCase()}" depends on people choosing YOUR channel over thousands of others. Primal Branding is the skill of building an emotional identity that makes viewers feel like they know you personally. Without it, you're just another channel covering the same topics — and viewers have no reason to come back.`,
-          mid: `You've got solid foundations, but the gap between "people watch my videos" and "people feel connected to me" is where subscriber loyalty lives. Primal Branding isn't personality — it's a learnable framework of rituals, beliefs, and shared language that turns viewers into community members.`,
-          high: `At your level, deepening viewer connection is what turns a large audience into a movement. The creators who master this don't just get views — they get defenders, evangelists, and customers for life.`,
+          low: `Your goal of "${goalText.toLowerCase()}" depends on people choosing YOUR channel over thousands of others. Primal Branding builds an emotional identity that makes viewers feel like they know you personally. Without it, you're just another channel covering the same topics.`,
+          mid: `The gap between "people watch my videos" and "people feel connected to me" is where subscriber loyalty lives. Primal Branding isn't personality — it's a learnable framework of rituals, beliefs, and shared language that turns viewers into community members.`,
+          high: `At your level, deepening viewer connection is what turns a large audience into a movement. The creators who master this get defenders, evangelists, and customers for life.`,
         },
-        impact: 'Coached creators who implemented Primal Branding frameworks saw subscriber-to-view ratios improve by 40-60%, meaning more of their viewers converted to loyal subscribers.',
+        example: `Compare two tech review channels with identical content quality. One opens every video with "Hey guys, let's look at this phone." The other has a signature greeting, running inside jokes, a "does it pass the pocket test" ritual, and regularly references viewer comments by name. The second channel has 3x the subscriber-to-view ratio because viewers feel like they belong to something.`,
+        actionTip: `Create one repeatable ritual for your channel — a catchphrase, a recurring segment, or a signature opening. Use it consistently for your next 5 videos. This single element starts building the "shared language" that turns casual viewers into loyal subscribers.`,
       },
       thumbnail_psych: {
         name: 'Thumbnail Psychology',
         why: {
-          low: `Right now, your videos might be great — but nobody's clicking on them. Thumbnail psychology isn't about design skills; it's about understanding which emotional trigger (curiosity, FOMO, aspiration, shock) will make YOUR specific audience physically unable to scroll past. This is a completely learnable craft, but it requires feedback on your actual thumbnails, not generic tips.`,
-          mid: `You mentioned "${obstacleText.toLowerCase()}" as your obstacle. If your impressions are decent but CTR is low, thumbnails are almost certainly the bottleneck. Learning to engineer a specific psychological response in your thumbnails can double your click-through rate without changing anything else.`,
-          high: `Even advanced creators often design thumbnails that look good instead of thumbnails that trigger clicks. The difference is measurable: coached creators who learned thumbnail psychology saw CTR improvements of 30-50%.`,
+          low: `Right now, your videos might be great — but nobody's clicking on them. Thumbnail psychology isn't about design skills; it's about understanding which emotional trigger (curiosity, FOMO, aspiration, shock) will make YOUR specific audience unable to scroll past.`,
+          mid: `You mentioned "${obstacleText.toLowerCase()}" as your obstacle. If your impressions are decent but CTR is low, thumbnails are almost certainly the bottleneck. Engineering a specific psychological response can double your click-through rate without changing anything else.`,
+          high: `Even advanced creators often design thumbnails that look good instead of thumbnails that trigger clicks. There's a measurable difference between aesthetic thumbnails and psychologically compelling ones.`,
         },
-        impact: 'A 1% improvement in CTR can mean 20-40% more views on the same impressions. Coached creators who learned thumbnail psychology averaged a 2.3% CTR increase across their catalog.',
+        example: `A cooking channel posted "Easy Pasta Recipe" with a beautiful overhead shot of the finished dish — 2.1% CTR. They reshot the thumbnail showing a close-up of someone's shocked face tasting it with visible steam rising — same video, 5.8% CTR. The second thumbnail triggers curiosity ("what made them react like that?") instead of just showing the end result.`,
+        actionTip: `Before your next upload, create 3 different thumbnail concepts for the same video. For each one, write down the specific emotion you're trying to trigger (curiosity, shock, aspiration). Test the one that creates the strongest "I HAVE to know" feeling — not the one that looks prettiest.`,
       },
       copywriting: {
         name: 'Title Copywriting & Hooks',
         why: {
-          low: `Most creators summarize their video in the title. That's like a newspaper running the headline "Article About Economy." Copywriting is the skill of making words irresistible — using open loops, pattern interrupts, and curiosity gaps that force a click. Combined with thumbnails, this determines whether anyone ever sees your content.`,
+          low: `Most creators summarize their video in the title. That's like a newspaper running the headline "Article About Economy." Copywriting is the skill of making words irresistible — using open loops, pattern interrupts, and curiosity gaps that force a click.`,
           mid: `Your content skills are building, but if your titles aren't applying specific copywriting principles, you're leaving massive click-through on the table. The difference between "How to Grow on YouTube" and a title with a genuine curiosity gap can be 3-5x the views.`,
-          high: `At your stage, title optimization has compounding returns because you have the impressions. A better title on a high-impression video can mean tens of thousands of additional views per video.`,
+          high: `At your stage, title optimization has compounding returns because you have the impressions. A better title on a high-impression video can mean tens of thousands of additional views.`,
         },
-        impact: 'Creators who learned copywriting principles for titles saw average CTR increase by 1.8%, translating to 25-35% more views across their content library.',
+        example: `"How to Edit Videos Faster" → decent. "I Edit a Full YouTube Video in 47 Minutes — Here's My Exact Process" → the specific number creates credibility, "exact process" creates curiosity, and the implied promise (you could do this too) drives the click. Same content, completely different title psychology.`,
+        actionTip: `For your next video, write 10 title variations before picking one. For each, ask: "Does this create a question in the viewer's mind that they can only answer by watching?" If it doesn't, it's a summary — not a title. Pick the one that creates the strongest unanswered question.`,
       },
       analytics: {
         name: 'Analytics Diagnosis',
         why: {
-          low: `You're making content but can't tell why some videos work and others don't. Analytics diagnosis is the skill of looking at your data and immediately knowing: is this a discovery problem (low impressions), a packaging problem (low CTR), or a retention problem (short watch time)? Each problem has completely different solutions. Without this diagnostic skill, you're guessing — and guessing is exhausting.`,
-          mid: `You know enough to check your numbers, but the skill of diagnosis — of translating data patterns into specific actions — is what separates plateaued creators from growing ones. Your goal of "${goalText.toLowerCase()}" requires knowing exactly which lever to pull for each video.`,
+          low: `You're making content but can't tell why some videos work and others don't. Analytics diagnosis means looking at your data and immediately knowing: is this a discovery problem (low impressions), a packaging problem (low CTR), or a retention problem (short watch time)? Each has completely different solutions.`,
+          mid: `You know enough to check your numbers, but the skill of translating data patterns into specific actions is what separates plateaued creators from growing ones. Your goal of "${goalText.toLowerCase()}" requires knowing exactly which lever to pull for each video.`,
           high: `Your analytical foundations are strong. The next level is predictive diagnosis — understanding patterns across your catalog that predict performance before you publish.`,
         },
-        impact: 'Creators who developed true diagnostic skills made 40% fewer "wrong direction" videos — meaning more of their creative energy went into content that actually moved the needle.',
+        example: `A creator sees a video got 50K impressions but only 2K views. Without diagnostic skill, they think "that video flopped." With it, they see: impressions were high (topic worked), but CTR was 4% (packaging failed) — so the fix is a new thumbnail and title, not a new topic. That's a completely different action than "try harder next time."`,
+        actionTip: `Pull up your last 10 videos in YouTube Studio. For each one, write down: impressions, CTR, and average view duration. Sort by impressions. The videos with high impressions but low CTR have a packaging problem. The ones with high CTR but low duration have a content/structure problem. This diagnosis tells you exactly what to improve.`,
       },
       audience: {
         name: 'Audience Clarity & Targeting',
         why: {
-          low: `"${obstacleText}" — this almost always traces back to audience clarity. If you can't describe your ideal viewer's frustrations in their own words, your content will always feel slightly off-target. The algorithm rewards specificity: content that feels "made for someone" outperforms content "made for everyone" by 5-10x at your stage.`,
+          low: `"${obstacleText}" — this almost always traces back to audience clarity. If you can't describe your ideal viewer's frustrations in their own words, your content will always feel slightly off-target. Content that feels "made for someone" outperforms content "made for everyone" by 5-10x.`,
           mid: `You have a sense of your audience, but the difference between "I make content for small YouTubers" and being able to describe their exact frustrations, desires, and search language is the difference between decent and exceptional content-market fit.`,
           high: `At your level, audience segmentation becomes critical. Understanding the different viewer personas within your audience — and creating content that serves each — is how you unlock the next tier of growth.`,
         },
-        impact: 'Coached creators who completed structured audience clarity exercises saw their content-to-subscriber conversion rate improve by 45% within the first 60 days.',
+        example: `"I make fitness content" → vague. "I help busy dads over 35 who used to be athletic but now struggle to find 30 minutes to work out, and they're searching for 'quick home workouts no equipment'" → specific. The second creator knows exactly what titles to write, what thumbnails to use, and what content to make because they can hear their viewer's inner monologue.`,
+        actionTip: `Write a one-paragraph "viewer letter" — addressed to your single ideal viewer. Include their name (make one up), their biggest frustration with your topic, what they've already tried, and what they secretly want. Read it before you plan your next video. If you can't write this letter, that's the gap.`,
       },
       structure: {
         name: 'Engagement Architecture',
         why: {
-          low: `Beyond "intro, middle, outro" — engagement architecture is about designing specific moments in your video to maintain attention at every stage. Think of it like a rollercoaster: the peaks, valleys, and transitions are all engineered. Most creators lose 50% of their audience in the first 30 seconds because they never learned how to build a retention structure.`,
-          mid: `Your other skills suggest you know what to make — but how you structure it determines whether people watch 30% or 80% of each video. That difference in retention is the single biggest signal the algorithm uses to decide who sees your content.`,
-          high: `You're already doing well, but advanced engagement techniques — nested open loops, strategic pattern interrupts, emotional arc mapping — can push your retention curves from good to exceptional.`,
+          low: `Engagement architecture is about designing specific moments in your video to maintain attention at every stage. Most creators lose 50% of their audience in the first 30 seconds because they never learned how to build a retention structure.`,
+          mid: `Your other skills suggest you know what to make — but how you structure it determines whether people watch 30% or 80%. That retention difference is the single biggest signal the algorithm uses to decide who sees your content.`,
+          high: `Advanced engagement techniques — nested open loops, strategic pattern interrupts, emotional arc mapping — can push your retention curves from good to exceptional.`,
         },
-        impact: 'Creators who learned engagement architecture frameworks improved their average view duration by 35%, directly resulting in more algorithmic distribution.',
+        example: `Most creators structure a "10 Tips" video as a flat list: tip 1, tip 2, tip 3… and lose viewers steadily. A creator with engagement architecture skills opens with "Tip #7 changed everything for me" (open loop), delivers tips 1-6 with mini-payoffs, drops a pattern interrupt at tip 5 ("before we get to the big one, there's something I need to warn you about"), and delivers tip 7 as a climax. Same content — completely different retention curve.`,
+        actionTip: `On your next video, plan a "pattern interrupt" at the 30% mark — a visual change, a tone shift, a surprising statement, or a new angle on the topic. This single structural element can recover viewers who would otherwise drop off at the point where most audiences start leaving.`,
       },
       topic_strategy: {
         name: 'Topic Strategy & Content Planning',
         why: {
-          low: `Choosing topics based on what you feel like making is the #1 reason channels stagnate. Topic strategy is the skill of weighing search demand, your unique authority, audience desires, and competitive gaps — all at once. The right topic chosen strategically can outperform the wrong topic 10:1, even with identical production quality.`,
-          mid: `You're creating consistently, but "${goalText.toLowerCase()}" requires more than just consistency — it requires strategic topic selection. The difference between "I post every week" and "every video I post is strategically chosen to compound my growth" is enormous.`,
-          high: `At your scale, topic strategy shifts from "what should I make" to "what content ecosystem will drive my business goals." This strategic thinking is what separates 6-figure channels from 7-figure channels.`,
+          low: `Choosing topics based on what you feel like making is the #1 reason channels stagnate. The right topic chosen strategically can outperform the wrong topic 10:1, even with identical production quality.`,
+          mid: `You're creating consistently, but "${goalText.toLowerCase()}" requires more than just consistency — it requires strategic topic selection. The difference between "I post every week" and "every video is strategically chosen to compound my growth" is enormous.`,
+          high: `At your scale, topic strategy shifts from "what should I make" to "what content ecosystem will drive my business goals." This is what separates 6-figure channels from 7-figure channels.`,
         },
-        impact: 'Creators who implemented systematic topic strategy saw 60% fewer underperforming videos and 2.3x more "breakout" videos in their first 90 days of coaching.',
+        example: `A creator posts whatever feels interesting that week: a tutorial, then a vlog, then a review, then a rant. Views are inconsistent. Another creator maps out a content grid: 2 "search" videos per month (evergreen, high search volume), 1 "trending" video (timely topic in their niche), and 1 "community" video (responding to comments/requests). The second creator's channel grows 3x faster because every video serves a strategic purpose.`,
+        actionTip: `Before your next video, check vidIQ's keyword tool for 3 topics in your niche. Pick the one with the highest search volume where you have genuine expertise or a unique angle. Film that one — not the one you "feel like" making. Do this for 4 weeks straight and compare the results to your last 4 videos.`,
       },
       positioning: {
         name: 'Channel Positioning & Differentiation',
         why: {
-          low: `Without clear positioning, your channel competes with everyone and wins against no one. Positioning isn't a tagline — it's a formal exercise that defines your specific audience, unique angle, and competitive advantage. It's the strategic foundation that makes every other skill more effective.`,
-          mid: `You're building skills, but without positioning, you're building on an unclear foundation. Creators who complete a formal positioning exercise report that every subsequent decision — topics, thumbnails, titles — becomes dramatically easier and more effective.`,
-          high: `Even established creators often haven't done formal positioning work. At your scale, the ROI is massive: clear positioning attracts better sponsors, more loyal subscribers, and stronger word-of-mouth growth.`,
+          low: `Without clear positioning, your channel competes with everyone and wins against no one. Positioning defines your specific audience, unique angle, and competitive advantage. It's the strategic foundation that makes every other skill more effective.`,
+          mid: `You're building skills, but without positioning, you're building on an unclear foundation. Creators who complete a formal positioning exercise report that every subsequent decision — topics, thumbnails, titles — becomes dramatically easier.`,
+          high: `Even established creators often haven't done formal positioning work. At your scale, clear positioning attracts better sponsors, more loyal subscribers, and stronger word-of-mouth growth.`,
         },
-        impact: 'One coached creator, Bridget Fisher, went from "headless chicken mode" to landing consistent sponsorships after a positioning exercise with her coach. Average time to results: 45 days.',
+        example: `Two channels teach photography. Channel A: "Photography tips and tutorials." Channel B: "Smartphone photography for real estate agents who need to sell houses faster." Channel B has 1/10th the potential audience but 10x the conversion rate, 5x the sponsor value, and viewers who never unsubscribe — because there's literally no alternative.`,
+        actionTip: `Complete this sentence: "My channel is the only one that helps [specific person] achieve [specific outcome] through [your unique approach]." If you can't fill in all three blanks with something genuinely specific, that's your positioning gap. Write 5 attempts and pick the most specific one.`,
       },
       monetization: {
         name: 'Monetization Strategy',
         why: {
-          low: `Most creators wait until they "have enough subscribers" to think about money. That's backwards. Monetization strategy means intentionally connecting your content to a revenue model from the start — knowing which metrics predict income and optimizing for them. Creators who do this build sustainable businesses; creators who don't stay hobbyists.`,
+          low: `Most creators wait until they "have enough subscribers" to think about money. Monetization strategy means intentionally connecting your content to a revenue model from the start. Creators who do this build sustainable businesses; creators who don't stay hobbyists.`,
           mid: `Your goal of "${goalText.toLowerCase()}" requires a deliberate monetization strategy, not just hoping ad revenue grows. Understanding revenue per subscriber, conversion paths, and which content types drive purchases vs. views is a specific, learnable skill.`,
           high: `At your level, monetization optimization is where the biggest financial returns live. Small improvements in conversion rate or revenue per viewer at your scale translate to significant income changes.`,
         },
-        impact: 'Christina went from 11K to 37K subs AND became a full-time creator because her coach helped her build an income-intentional content strategy from day one.',
+        example: `Creator A with 50K subs makes $800/month from AdSense alone — they think they need more subscribers to earn more. Creator B with 50K subs makes $8,000/month because they built an email list from day one, created a $47 digital product aligned with their content, and 2% of their viewers buy it every month. Same audience size, 10x the income — because Creator B has a monetization strategy, not just a channel.`,
+        actionTip: `Identify the single most valuable action your viewer could take after watching your video — beyond subscribing. Could they join an email list? Download a resource? Visit a landing page? Add one clear call-to-action for that action in your next video. Even if you don't have a product yet, building the habit of conversion-oriented content pays off enormously later.`,
       },
     };
 
@@ -1179,12 +1214,14 @@
       primarySkill: {
         name: p1.name,
         why: p1.why[tier] || p1.why.low,
-        impact: p1.impact,
+        example: p1.example,
+        actionTip: p1.actionTip,
       },
       secondarySkill: p1Key !== p2Key ? {
         name: p2.name,
         why: p2.why[tier] || p2.why.low,
-        impact: p2.impact,
+        example: p2.example,
+        actionTip: p2.actionTip,
       } : null,
       coachingInsight: coachText,
       nextStep: null,
