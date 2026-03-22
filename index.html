@@ -128,7 +128,8 @@
     }
     .yn-btn:hover { border-color: #2979ff; background: #f0f4ff; }
     .yn-btn.selected-yes { border-color: #00c853; background: #edfff4; color: #00a843; }
-    .yn-btn.selected-no { border-color: #ff1744; background: #fff0f2; color: #d50000; }
+    .yn-btn.selected-working { border-color: #ffa726; background: #fff8e1; color: #e65100; }
+    .yn-btn.selected-no { border-color: #999; background: #f5f5f5; color: #666; }
     .next-btn {
       margin-top: 24px; background: #0a0f2e; color: white; border: none;
       padding: 14px 32px; border-radius: 8px; font-size: 16px; font-weight: 600;
@@ -466,18 +467,20 @@
   };
 
   // ======= QUESTIONS =======
+  // Reordered: start aspirational (storytelling), give early Yes opportunities (audience, analytics),
+  // then harder skills, end on monetization as bridge to qualifying questions.
   const questions = [
-    // 1–10: Skill questions (yes/no)
-    { type: 'yesno', key: 'storytelling',    category: 'The Skill That Makes Viewers Unable to Stop Watching',          text: 'When you script or outline a video, do you use a specific storytelling structure designed to create tension or curiosity — making it feel impossible to click away?' },
-    { type: 'yesno', key: 'connection',      category: 'What Turns a Viewer Into a Fan for Life',            text: 'Can you describe, in one sentence, the specific emotional connection you\'re building with your viewer in every video — beyond just the topic you\'re covering?' },
-    { type: 'yesno', key: 'thumbnail_psych', category: 'The Skill Behind Click-Worthy Thumbnails',      text: 'When you design a thumbnail, do you know which psychological trigger you\'re activating (curiosity, FOMO, aspiration, shock) — and can you explain why your thumbnail works?' },
-    { type: 'yesno', key: 'copywriting',     category: 'Why Some Titles Get 10× More Clicks',    text: 'When you write a title, do you apply a specific copywriting principle — like an open loop, a pattern interrupt, or a curiosity gap — rather than just summarizing what the video is about?' },
-    { type: 'yesno', key: 'analytics',       category: 'The Difference Between Guessing and Knowing',        text: 'Can you look at your analytics and diagnose why a video underperformed — distinguishing between a discovery problem (low impressions), a packaging problem (low CTR), and a retention problem (short watch time)?' },
-    { type: 'yesno', key: 'audience',        category: 'The Foundation Every Growing Channel Is Built On', text: 'Can you describe your ideal viewer in specific detail — their frustrations, desires, other channels they watch, and the exact words they use when searching for your content?' },
-    { type: 'yesno', key: 'structure',       category: 'What Keeps Viewers Watching to the End',              text: 'Do you have a deliberate, repeatable video structure — beyond "intro, middle, outro" — that you designed specifically to maintain engagement at each stage of the viewer journey?' },
-    { type: 'yesno', key: 'topic_strategy',  category: 'How Top Creators Choose What to Make Next', text: 'Do you choose topics using a strategy that weighs search demand, your unique authority, audience desires, and competitive opportunity — rather than making what you feel like making?' },
-    { type: 'yesno', key: 'positioning',     category: 'What Makes a Channel Impossible to Ignore',                   text: 'Have you completed a formal channel positioning exercise that defines what makes your channel the only one serving your specific audience in your specific way?' },
-    { type: 'yesno', key: 'monetization',    category: 'The Bridge Between Views and Real Income',           text: 'Is your content strategy intentionally connected to a specific monetization model — and do you know the exact metrics that predict whether you\'re on track for your income goals?' },
+    // 1–10: Skill questions (yes / working on it / not yet)
+    { type: 'skill', key: 'storytelling',    category: 'The Skill That Makes Viewers Unable to Stop Watching',          text: 'When you script or outline a video, do you use a specific storytelling structure designed to create tension or curiosity — making it feel impossible to click away?' },
+    { type: 'skill', key: 'audience',        category: 'The Foundation Every Growing Channel Is Built On', text: 'Can you describe your ideal viewer in specific detail — their frustrations, desires, other channels they watch, and the exact words they use when searching for your content?' },
+    { type: 'skill', key: 'analytics',       category: 'The Difference Between Guessing and Knowing',        text: 'Can you look at your analytics and diagnose why a video underperformed — distinguishing between a discovery problem (low impressions), a packaging problem (low CTR), and a retention problem (short watch time)?' },
+    { type: 'skill', key: 'thumbnail_psych', category: 'The Skill Behind Click-Worthy Thumbnails',      text: 'When you design a thumbnail, do you know which psychological trigger you\'re activating (curiosity, FOMO, aspiration, shock) — and can you explain why your thumbnail works?' },
+    { type: 'skill', key: 'copywriting',     category: 'Why Some Titles Get 10× More Clicks',    text: 'When you write a title, do you apply a specific copywriting principle — like an open loop, a pattern interrupt, or a curiosity gap — rather than just summarizing what the video is about?' },
+    { type: 'skill', key: 'connection',      category: 'What Turns a Viewer Into a Fan for Life',            text: 'Can you describe, in one sentence, the specific emotional connection you\'re building with your viewer in every video — beyond just the topic you\'re covering?' },
+    { type: 'skill', key: 'structure',       category: 'What Keeps Viewers Watching to the End',              text: 'Do you have a deliberate, repeatable video structure — beyond "intro, middle, outro" — that you designed specifically to maintain engagement at each stage of the viewer journey?' },
+    { type: 'skill', key: 'topic_strategy',  category: 'How Top Creators Choose What to Make Next', text: 'Do you choose topics using a strategy that weighs search demand, your unique authority, audience desires, and competitive opportunity — rather than making what you feel like making?' },
+    { type: 'skill', key: 'positioning',     category: 'What Makes a Channel Impossible to Ignore',                   text: 'Have you completed a formal channel positioning exercise that defines what makes your channel the only one serving your specific audience in your specific way?' },
+    { type: 'skill', key: 'monetization',    category: 'The Bridge Between Views and Real Income',           text: 'Is your content strategy intentionally connected to a specific monetization model — and do you know the exact metrics that predict whether you\'re on track for your income goals?' },
     // 11: Channel size
     {
       type: 'choice', key: 'situation',
@@ -495,15 +498,15 @@
     { type: 'dynamic_choice', key: 'goal90', category: 'What Does Your Next Level Look Like?', text: 'What is the most important outcome you want to achieve in the next 90 days?', optionsKey: 'goalsBySize' },
     // 13: Dynamic obstacle (populated after Q11)
     { type: 'dynamic_choice', key: 'obstacle', category: 'Pinpoint What\'s Standing in Your Way', text: "What's the biggest obstacle stopping your channel from growing right now?", optionsKey: 'obstaclesBySize' },
-    // 14: Solution preference
+    // 14: Learning style (softer framing — segmentation without pre-committing to product tier)
     {
       type: 'choice', key: 'solution',
-      category: 'Choose the Path That Fits Your Goals',
-      text: 'Which type of support would suit you best right now?',
+      category: 'How Do You Learn Best?',
+      text: 'When it comes to developing a new skill, how do you prefer to learn?',
       options: [
-        "Self-study — I'll learn from vidIQ's YouTube channel and podcast at my own pace",
-        "AI Coach — I want AI-powered coaching as part of vidIQ Boost or Max",
-        "One-on-one human coaching — I want a dedicated coach for personalized guidance",
+        "I figure things out on my own — give me the resources and I'll go at my own pace",
+        "I like guided tools and resources — show me the path and keep me on track",
+        "I learn best with direct feedback from someone experienced",
       ]
     },
     // 15: Open text
@@ -541,22 +544,24 @@
         <input class="input-field" type="tel" id="inp-phone" placeholder="Phone number (optional)" value="${answers.phone||''}" />
         <button class="next-btn" onclick="saveContact()">Get My Results →</button>
       `;
-    } else if (q.type === 'yesno') {
+    } else if (q.type === 'skill') {
       const sel = answers[q.key];
       card.innerHTML = `
         <h2>${q.category}</h2>
-        <p class="q-sub">Skill discovery ${current + 1} of 10</p>
+        <p class="q-sub">Question ${current + 1} of 10</p>
         <label class="q-label">${q.text}</label>
-        <div class="yesno-wrap">
-          <button class="yn-btn ${sel===true?'selected-yes':''}" onclick="saveYesNo(true)">✅ Yes</button>
-          <button class="yn-btn ${sel===false?'selected-no':''}" onclick="saveYesNo(false)">❌ No</button>
+        <div class="yesno-wrap" style="flex-direction:column;gap:10px;">
+          <button class="yn-btn ${sel===2?'selected-yes':''}" onclick="saveSkill(2)" style="flex:none;padding:16px;">Yes</button>
+          <button class="yn-btn ${sel===1?'selected-working':''}" onclick="saveSkill(1)" style="flex:none;padding:16px;">I'm working on it</button>
+          <button class="yn-btn ${sel===0?'selected-no':''}" onclick="saveSkill(0)" style="flex:none;padding:16px;">Not yet</button>
         </div>
       `;
     } else if (q.type === 'choice') {
       const sel = answers[q.key];
-      const opts = q.options.map((o, i) =>
-        `<button class="opt-btn ${sel===i?'selected':''}" onclick="saveChoice('${q.key}', ${i}, '${encodeURIComponent(o)}')">${o}</button>`
-      ).join('');
+      const opts = q.options.map((o, i) => {
+        const safeO = o.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        return `<button class="opt-btn ${sel===i?'selected':''}" onclick="saveChoiceByIdx('${q.key}', ${i})">${o}</button>`;
+      }).join('');
       card.innerHTML = `
         <h2>${q.category}</h2>
         <p class="q-sub">Personalizing your results</p>
@@ -566,9 +571,10 @@
     } else if (q.type === 'dynamic_choice') {
       const size = answers.situation !== undefined ? answers.situation : 1;
       const optionsMap = q.optionsKey === 'goalsBySize' ? goalsBySize : obstaclesBySize;
-      const opts = (optionsMap[size] || optionsMap[1]).map((o, i) =>
-        `<button class="opt-btn ${answers[q.key]===i?'selected':''}" onclick="saveChoice('${q.key}', ${i}, '${encodeURIComponent(o)}')">${o}</button>`
-      ).join('');
+      const optsList = optionsMap[size] || optionsMap[1];
+      const opts = optsList.map((o, i) => {
+        return `<button class="opt-btn ${answers[q.key]===i?'selected':''}" onclick="saveChoiceByIdx('${q.key}', ${i})">${o}</button>`;
+      }).join('');
       card.innerHTML = `
         <h2>${q.category}</h2>
         <p class="q-sub">Personalizing your results</p>
@@ -595,16 +601,26 @@
     showLoading();
   }
 
-  function saveYesNo(val) {
+  function saveSkill(val) {
     answers[questions[current].key] = val;
     current++;
     renderQuestion();
     window.scrollTo(0, 0);
   }
 
-  function saveChoice(key, idx, encodedText) {
+  function saveChoiceByIdx(key, idx) {
+    const q = questions[current];
+    let optText = '';
+    if (q.type === 'dynamic_choice') {
+      const size = answers.situation !== undefined ? answers.situation : 1;
+      const optionsMap = q.optionsKey === 'goalsBySize' ? goalsBySize : obstaclesBySize;
+      const optsList = optionsMap[size] || optionsMap[1];
+      optText = optsList[idx] || '';
+    } else if (q.options) {
+      optText = q.options[idx] || '';
+    }
     answers[key] = idx;
-    answers[key + '_text'] = decodeURIComponent(encodedText);
+    answers[key + '_text'] = optText;
     current++;
     renderQuestion();
     window.scrollTo(0, 0);
@@ -645,11 +661,11 @@
   }
 
   async function generateReport() {
-    const bpKeys = ['storytelling','connection','thumbnail_psych','copywriting','analytics','audience','structure','topic_strategy','positioning','monetization'];
-    let yesCount = 0;
-    bpKeys.forEach(k => { if (answers[k] === true) yesCount++; });
-    const score = yesCount * 10;
-    const missingSkills = bpKeys.filter(k => answers[k] === false);
+    const bpKeys = ['storytelling','audience','analytics','thumbnail_psych','copywriting','connection','structure','topic_strategy','positioning','monetization'];
+    let totalPoints = 0;
+    bpKeys.forEach(k => { totalPoints += (answers[k] || 0); }); // 2=Yes, 1=Working, 0=Not yet
+    const score = Math.round((totalPoints / 20) * 100); // 0-100 scale
+    const missingSkills = bpKeys.filter(k => answers[k] === 0 || answers[k] === undefined);
 
     let tier;
     if (score >= 80) tier = 'high';
@@ -803,8 +819,8 @@
   // ======= COACH MATCHING =======
   function getCoachMatch(score, tier, ans) {
     const situationIdx = ans.situation !== undefined ? ans.situation : 1;
-    const bpKeys = ['storytelling','connection','thumbnail_psych','copywriting','analytics','audience','structure','topic_strategy','positioning','monetization'];
-    const missing = bpKeys.filter(k => ans[k] === false);
+    const bpKeys = ['storytelling','audience','analytics','thumbnail_psych','copywriting','connection','structure','topic_strategy','positioning','monetization'];
+    const missing = bpKeys.filter(k => ans[k] === 0 || ans[k] === undefined);
 
     // Niche inference: rough proxy by situationIdx and goal/obstacle text
     const goalText = (ans.goal90_text || '').toLowerCase();
@@ -984,9 +1000,9 @@
   }
 
   function buildClientReport(score, tier, ans) {
-    const bpKeys = ['storytelling','connection','thumbnail_psych','copywriting','analytics','audience','structure','topic_strategy','positioning','monetization'];
-    const missing = bpKeys.filter(k => ans[k] === false);
-    const present = bpKeys.filter(k => ans[k] === true);
+    const bpKeys = ['storytelling','audience','analytics','thumbnail_psych','copywriting','connection','structure','topic_strategy','positioning','monetization'];
+    const missing = bpKeys.filter(k => ans[k] === 0 || ans[k] === undefined);
+    const present = bpKeys.filter(k => ans[k] === 2);
     const goalText = ans.goal90_text || '';
     const obstacleText = ans.obstacle_text || '';
     const situationIdx = ans.situation || 0;
