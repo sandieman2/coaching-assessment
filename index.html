@@ -155,16 +155,16 @@
     .results-wrap { max-width: 700px; margin: 0 auto; padding: 40px 20px 80px; }
     .score-hero {
       background: linear-gradient(135deg, #0a0f2e 0%, #0f2460 100%);
-      color: white; border-radius: 20px; padding: 44px 32px; text-align: center; margin-bottom: 28px;
+      color: white; border-radius: 20px; padding: 28px 24px; text-align: center; margin-bottom: 28px;
     }
     .score-hero h2 { font-size: 20px; font-weight: 600; margin-bottom: 6px; opacity: 0.75; }
-    .score-number { font-size: 84px; font-weight: 800; color: #5b9bff; line-height: 1; }
+    .score-number { font-size: 56px; font-weight: 800; color: #5b9bff; line-height: 1; }
     .score-out { font-size: 20px; opacity: 0.5; }
     .score-label { font-size: 22px; font-weight: 700; margin: 12px 0 14px; }
     .score-summary { font-size: 16px; color: rgba(255,255,255,0.8); line-height: 1.6; max-width: 520px; margin: 0 auto 26px; }
-    .meter { background: rgba(255,255,255,0.12); border-radius: 20px; height: 12px; overflow: hidden; max-width: 380px; margin: 0 auto; }
+    .meter { background: rgba(255,255,255,0.12); border-radius: 20px; height: 10px; overflow: hidden; max-width: 320px; margin: 0 auto; }
     .meter-fill { height: 100%; border-radius: 20px; transition: width 1.2s ease; }
-    .meter-labels { display: flex; justify-content: space-between; max-width: 380px; margin: 8px auto 0; font-size: 12px; opacity: 0.5; }
+    .meter-labels { display: flex; justify-content: space-between; max-width: 320px; margin: 6px auto 0; font-size: 11px; opacity: 0.5; }
 
     .report-section { margin-bottom: 28px; }
     .report-section h3 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
@@ -263,18 +263,7 @@
     footer { background: #0a0f2e; color: rgba(255,255,255,0.45); text-align: center; padding: 28px 20px; font-size: 14px; }
     footer a { color: rgba(255,255,255,0.6); margin: 0 10px; text-decoration: none; }
 
-    /* ACTION PLAN CARD */
-    .action-plan-card {
-      background: #f0fff4; border: 2px solid #00c853; border-radius: 16px;
-      padding: 28px 28px 24px; margin-bottom: 28px;
-    }
-    .action-plan-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 16px; color: #1a1a2e; }
-    .action-plan-card .action-item {
-      font-size: 16px; color: #333; line-height: 1.6; padding: 12px 16px;
-      background: white; border-radius: 10px; margin-bottom: 10px;
-      border-left: 3px solid #00c853;
-    }
-    .action-plan-card .action-item strong { color: #1a6b2e; }
+
 
     /* SELF-DIRECTED PLAN */
     .self-directed-plan {
@@ -300,35 +289,36 @@
     .guided-tools-section p { font-size: 15px; color: #444; line-height: 1.65; }
     .guided-tools-section .tool-highlight { color: #2979ff; font-weight: 600; }
 
-    /* SHARE/SAVE BUTTONS */
-    .share-save-row {
-      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
-      margin-bottom: 28px; margin-top: -8px;
+    /* SAVE BUTTON (bottom of results) */
+    .save-results-bottom {
+      text-align: center; margin: 24px 0 8px;
     }
-    .share-save-btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 10px 20px; font-size: 14px; font-weight: 600;
-      border-radius: 8px; cursor: pointer; border: 2px solid rgba(255,255,255,0.2);
-      background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.85);
-      transition: all 0.2s; font-family: inherit;
+    .save-results-bottom button {
+      background: none; border: 1px solid #ccc; color: #888; padding: 10px 24px;
+      font-size: 14px; font-weight: 500; border-radius: 8px; cursor: pointer;
+      font-family: inherit; transition: all 0.2s;
     }
-    .share-save-btn:hover { background: rgba(255,255,255,0.2); color: white; }
-    .share-link-row {
-      text-align: center; margin-bottom: 24px; font-size: 14px; color: #666;
+    .save-results-bottom button:hover { border-color: #999; color: #555; }
+
+
+    /* BACK BUTTON */
+    .back-btn {
+      background: none; border: none; color: #999; font-size: 14px;
+      cursor: pointer; padding: 0; margin-bottom: 12px; font-family: inherit;
+      transition: color 0.2s;
     }
-    .share-link-row .copy-link-btn {
-      display: inline-block; margin-left: 8px; padding: 5px 14px;
-      font-size: 13px; font-weight: 600; border-radius: 6px;
-      background: #2979ff; color: white; border: none; cursor: pointer;
-      transition: background 0.2s; font-family: inherit;
+    .back-btn:hover { color: #2979ff; }
+
+    /* COLLAPSIBLE SKILL PROFILE */
+    .skill-profile-toggle {
+      display: block; width: 100%; background: none; border: none;
+      font-size: 14px; font-weight: 600; color: #2979ff; cursor: pointer;
+      padding: 10px 0; text-align: center; font-family: inherit;
+      transition: color 0.2s;
     }
-    .share-link-row .copy-link-btn:hover { background: #1a5fd4; }
-    .copied-toast {
-      display: inline-block; margin-left: 8px; font-size: 13px;
-      color: #00c853; font-weight: 600; opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .copied-toast.show { opacity: 1; }
+    .skill-profile-toggle:hover { color: #1a5fd4; }
+    .skill-profile-list { display: none; }
+    .skill-profile-list.expanded { display: block; }
 
     /* SKILL PROFILE BOOKEND */
     .skill-profile-bookend {
@@ -339,25 +329,25 @@
 
     @media (max-width: 600px) {
       .quiz-card { padding: 24px 18px; }
-      .score-number { font-size: 64px; }
+      .score-number { font-size: 48px; }
       .compare-card { min-width: 140px; }
       .skill-card { padding: 18px; }
-      .share-save-row { flex-direction: column; align-items: center; }
+
     }
 
     /* PRINT STYLES */
     @media print {
       body { background: white; color: black; font-size: 12pt; }
       #landing, #quiz-section, #loading-section, .quiz-nav, .next-steps,
-      .share-save-row, .share-link-row, .coach-match-btn, .res-cta,
-      .soft-coaching, footer, .copy-link-btn, .share-save-btn { display: none !important; }
+      .coach-match-btn, .res-cta, .save-results-bottom,
+      .soft-coaching, footer { display: none !important; }
       #results-section { display: block !important; }
       .results-wrap { max-width: 100%; padding: 0; }
       .score-hero {
         background: #0a0f2e !important; -webkit-print-color-adjust: exact;
         print-color-adjust: exact; color: white !important; page-break-after: avoid;
       }
-      .skill-card, .coaching-insight, .action-plan-card, .self-directed-plan,
+      .skill-card, .coaching-insight, .self-directed-plan,
       .guided-tools-section, .coach-match-card {
         page-break-inside: avoid; box-shadow: none; border: 1px solid #ddd;
       }
@@ -499,15 +489,6 @@
       <div class="score-summary" id="score-summary"></div>
       <div class="meter"><div class="meter-fill" id="meter-fill"></div></div>
       <div class="meter-labels"><span>Developing</span><span>Building</span><span>Advanced</span></div>
-      <div class="share-save-row" style="margin-top: 20px;">
-        <button class="share-save-btn" onclick="window.print()">📥 Save Your Results</button>
-      </div>
-    </div>
-
-    <div class="share-link-row">
-      🔗 Know a creator who's stuck? Share this assessment.
-      <button class="copy-link-btn" onclick="copyAssessmentLink(this)">Copy Link</button>
-      <span class="copied-toast" id="copied-toast">Copied!</span>
     </div>
 
     <div class="report-section">
@@ -526,6 +507,10 @@
       <h3 id="cta-headline"></h3>
       <p id="cta-body"></p>
       <button class="res-cta" id="cta-button"></button>
+    </div>
+
+    <div class="save-results-bottom">
+      <button onclick="window.print()">📥 Save Your Results</button>
     </div>
 
     <p style="text-align:center; color:#999; font-size:13px; margin-bottom:30px;">
@@ -671,9 +656,11 @@
 
     const q = questions[current];
     const card = document.getElementById('quiz-card');
+    const backBtnHtml = current > 0 ? `<button class="back-btn" onclick="goBack()">← Back</button>` : '';
 
     if (q.type === 'contact') {
       card.innerHTML = `
+        ${backBtnHtml}
         <h2>📬 ${q.heading}</h2>
         <p class="q-sub">${q.sub}</p>
         <input class="input-field" type="text" id="inp-name" placeholder="Your first name *" value="${answers.name||''}" />
@@ -684,6 +671,7 @@
     } else if (q.type === 'skill') {
       const sel = answers[q.key];
       card.innerHTML = `
+        ${backBtnHtml}
         <label class="q-label">${q.text}</label>
         <div class="yesno-wrap" style="flex-direction:column;gap:10px;">
           <button class="yn-btn ${sel===2?'selected-yes':''}" onclick="saveSkill(2)" style="flex:none;padding:16px;">Yes</button>
@@ -698,6 +686,7 @@
         return `<button class="opt-btn ${sel===i?'selected':''}" onclick="saveChoiceByIdx('${q.key}', ${i})">${o}</button>`;
       }).join('');
       card.innerHTML = `
+        ${backBtnHtml}
         <label class="q-label">${q.text}</label>
         ${opts}
       `;
@@ -709,11 +698,13 @@
         return `<button class="opt-btn ${answers[q.key]===i?'selected':''}" onclick="saveChoiceByIdx('${q.key}', ${i})">${o}</button>`;
       }).join('');
       card.innerHTML = `
+        ${backBtnHtml}
         <label class="q-label">${q.text}</label>
         ${opts}
       `;
     } else if (q.type === 'open') {
       card.innerHTML = `
+        ${backBtnHtml}
         <label class="q-label">${q.text}</label>
         <textarea class="input-field" id="inp-open" placeholder="${q.placeholder}">${answers[q.key]||''}</textarea>
         <button class="next-btn" onclick="saveOpen()">Next →</button>
@@ -876,18 +867,18 @@
       cardsHtml += `
         <div class="skill-card">
           <h4><span class="skill-tag">#1 Priority</span> ${fb.primarySkill.name}</h4>
-          <div class="why">${fb.primarySkill.why}</div>
-          ${fb.primarySkill.example ? `<div class="skill-example"><strong>What this looks like in practice:</strong> ${fb.primarySkill.example}</div>` : ''}
-          ${fb.primarySkill.actionTip ? `<div class="skill-action"><strong>🎬 Try this on your next video:</strong> ${fb.primarySkill.actionTip}</div>` : ''}
+          <div class="why">🎯 ${fb.primarySkill.why}</div>
+          ${fb.primarySkill.example ? `<div class="skill-example"><strong>👀 What this looks like in practice:</strong> ${fb.primarySkill.example}</div>` : ''}
+          ${fb.primarySkill.actionTip ? `<div class="skill-action"><strong>🚀 Try this on your next video:</strong> ${fb.primarySkill.actionTip}</div>` : ''}
         </div>`;
     }
     if (fb.secondarySkill) {
       cardsHtml += `
         <div class="skill-card secondary">
           <h4><span class="skill-tag">#2 Priority</span> ${fb.secondarySkill.name}</h4>
-          <div class="why">${fb.secondarySkill.why}</div>
-          ${fb.secondarySkill.example ? `<div class="skill-example"><strong>What this looks like in practice:</strong> ${fb.secondarySkill.example}</div>` : ''}
-          ${fb.secondarySkill.actionTip ? `<div class="skill-action"><strong>🎬 Try this on your next video:</strong> ${fb.secondarySkill.actionTip}</div>` : ''}
+          <div class="why">🎯 ${fb.secondarySkill.why}</div>
+          ${fb.secondarySkill.example ? `<div class="skill-example"><strong>👀 What this looks like in practice:</strong> ${fb.secondarySkill.example}</div>` : ''}
+          ${fb.secondarySkill.actionTip ? `<div class="skill-action"><strong>🚀 Try this on your next video:</strong> ${fb.secondarySkill.actionTip}</div>` : ''}
         </div>`;
     }
     document.getElementById('skill-cards-container').innerHTML = cardsHtml;
@@ -903,11 +894,12 @@
       const planHtml = `
         <div class="self-directed-plan">
           <h4>📋 Your 4-Week ${p1NameCap} Development Plan</h4>
+          <p style="font-size:14px;color:#555;margin-bottom:16px;line-height:1.6;">You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. This plan targets that exact gap through ${p1Name} — the skill with the highest leverage on your specific situation.</p>
           <div class="week-step"><div class="week-badge">1</div><div><strong>Study examples:</strong> Watch 5 top-performing videos in your niche. For each, note specifically how they use ${p1Name}. What makes it work? Save screenshots or timestamps.</div></div>
           <div class="week-step"><div class="week-badge">2</div><div><strong>Practice the basics:</strong> Apply one technique you observed to your next 2 videos. Don't try to master everything — pick ONE element of ${p1Name} and focus on it.</div></div>
           <div class="week-step"><div class="week-badge">3</div><div><strong>Review your results:</strong> Check analytics on the videos where you practiced. Compare watch time, CTR, or engagement against your previous average. What shifted?</div></div>
           <div class="week-step"><div class="week-badge">4</div><div><strong>Refine and iterate:</strong> Adjust based on what the data tells you. Double down on what worked, drop what didn't. Then pick the next element to practice.</div></div>
-          <div class="soft-link">Want to accelerate? Some creators find working with a coach speeds up skill development. <a href="https://vidiq.com/coaching" target="_blank">Learn more →</a></div>
+          <div class="soft-link">Want to accelerate? Many creators who started self-directed found that working with a coach cut their learning curve in half — especially for ${p1Name}. <a href="https://vidiq.com/coaching" target="_blank">Learn more →</a></div>
         </div>`;
       document.getElementById('skill-cards-container').innerHTML += planHtml;
 
@@ -915,27 +907,27 @@
       // Guided tools: lighter version — "How to accelerate this skill"
       coachInsightCard.style.display = 'block';
       coachInsightCard.querySelector('h4').innerHTML = '⚡ How to accelerate this skill';
-      document.getElementById('coaching-insight-text').innerHTML = `vidIQ's AI Coach can work with you on ${p1Name} in real time — reviewing your drafts, suggesting improvements, and tracking your progress as you create. For creators who want to go further and faster, a dedicated coach provides the human feedback loop that turns knowledge into instinct.`;
+      document.getElementById('coaching-insight-text').innerHTML = `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. vidIQ's AI Coach is designed for exactly this — it works with you on ${p1Name} in real time, reviewing your drafts, suggesting improvements specific to your niche, and tracking your progress as you create. It's like having a knowledgeable practice partner available whenever you're working on content. For creators who want to go further and faster, a dedicated human coach provides the deeper feedback loop that turns knowledge into instinct — they see the patterns across your entire catalog that even great AI tools miss.`;
 
     } else {
       // Direct feedback: skill-specific coaching pitch
       coachInsightCard.style.display = 'block';
       const skillSpecificPitch = {
-        'storytelling & narrative structure': `A coach will watch YOUR videos, identify exactly where viewers lose interest, and work with you on narrative tension techniques until structuring compelling stories becomes automatic.`,
-        'title copywriting & hooks': `A coach will review YOUR titles and thumbnails, show you exactly where the curiosity gap is missing, and work with you until writing click-worthy titles becomes automatic.`,
-        'thumbnail psychology': `A coach will review YOUR thumbnail designs, identify which psychological triggers are missing, and iterate with you until creating click-worthy thumbnails becomes instinct.`,
-        'viewer connection & primal branding': `A coach will analyze YOUR viewer relationship, identify the emotional connections you're missing, and build rituals and shared language until your community feels like family.`,
-        'analytics diagnosis': `A coach will sit with you in YOUR analytics dashboard, teach you to read the patterns, and build your diagnostic muscle until you can instantly spot what to fix on every video.`,
-        'audience clarity & targeting': `A coach will help you define YOUR specific viewer persona, test your assumptions against real data, and refine until you can hear your audience's inner monologue before you create.`,
-        'engagement architecture': `A coach will watch YOUR full videos, mark exactly where attention drops, and redesign your structure until every section earns its place in the viewer's time.`,
-        'topic strategy': `A coach will review YOUR content calendar, identify the strategic gaps, and build a system for choosing topics that balances what your audience wants with what you're uniquely positioned to deliver.`,
-        'channel positioning': `A coach will work with you to define what makes YOUR channel the only choice for your specific audience — and sharpen every element until your positioning is undeniable.`,
-        'monetization strategy': `A coach will map YOUR content to specific revenue opportunities, identify the metrics that predict income, and build a strategy that turns views into a sustainable business.`,
+        'storytelling & narrative structure': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a film director working with an actor — the actor can't see their own performance from the audience's perspective. A coach watches YOUR videos, spots the exact moments where narrative tension breaks and viewers leave, and works with you take after take until structuring compelling stories becomes muscle memory. They'll show you the patterns across your catalog that you can't see from inside the edit — where your hooks land flat, where your payoffs come too late, where you're telling when you should be showing. That's not something a tutorial can replicate. It's a skill that develops through real-time feedback on YOUR creative decisions.`,
+        'title copywriting & hooks': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a boxing coach studying your opponent's tape — they see openings you'd never spot on your own. A coach reviews YOUR titles against what's actually working in your niche right now, shows you exactly where the curiosity gap is weak or the pattern interrupt falls flat, and drills you on copywriting principles until writing click-worthy titles becomes automatic. They'll A/B test your instincts against data, challenge your assumptions about what your audience responds to, and build your title-writing muscle through hundreds of reps on YOUR content. That kind of personalized iteration is what separates good titles from irresistible ones.`,
+        'thumbnail psychology': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a golf coach analyzing your swing frame by frame — they see the micro-adjustments invisible to you. A coach reviews YOUR thumbnail designs against the competitive landscape in your niche, identifies which psychological triggers you're missing or misusing, and iterates with you version after version until creating click-worthy thumbnails becomes instinct. They'll show you why your composition choices are costing you clicks, which emotional triggers work specifically for YOUR audience, and how to test and refine systematically. That level of personalized visual feedback simply doesn't exist in any course or tool.`,
+        'viewer connection & primal branding': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a theater director shaping a performer's stage presence — they see how the audience experiences you in ways you can't feel from on stage. A coach analyzes YOUR viewer relationship, watches how your audience responds to your content in real time, identifies the emotional connections you're leaving on the table, and helps you build the rituals, shared language, and community identity that turn viewers into superfans. They'll push you past the surface-level engagement tactics into the deeper primal branding work that creates lifetime loyalty. That transformation happens through guided practice, not information.`,
+        'analytics diagnosis': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a chess coach reviewing your games — they see the strategic errors you repeat without realizing it. A coach sits with you in YOUR analytics dashboard, teaches you to read the patterns that predict performance, and builds your diagnostic muscle until you can instantly spot whether a video failed because of discovery, packaging, or retention — and know exactly what to fix. They'll walk you through your real data, not hypothetical examples, and train you to make decisions based on evidence rather than gut feeling. That analytical instinct develops through guided practice with YOUR numbers, not generic tutorials.`,
+        'audience clarity & targeting': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a basketball coach studying game film of your opponents — they see defensive gaps you'd never notice from on the court. A coach helps you define YOUR specific viewer persona using real data from your channel, tests your assumptions against what's actually working, challenges your blind spots about who you're really serving, and refines your targeting until you can hear your audience's inner monologue before you create. They'll push you past the comfortable "I make content for everyone" mindset into the specific, defensible positioning that drives real growth. That clarity comes from an outside perspective examining YOUR unique situation.`,
+        'engagement architecture': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a swimming coach analyzing your stroke technique underwater — they see the drag you're creating that you can't feel. A coach watches YOUR full videos, marks exactly where attention drops, identifies the structural weaknesses in your pacing and payoff timing, and redesigns your approach section by section until every moment earns its place in the viewer's time. They'll show you where your open loops aren't landing, where your pattern interrupts come too late, and where your energy dips are costing you viewers. That level of granular feedback on YOUR content is what turns good videos into videos people can't stop watching.`,
+        'topic strategy': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a tennis coach watching your match footage — they see patterns you can't see from inside the game. A coach looks at your content grid, spots the strategic gaps across hundreds of channels in your niche, and helps you build the instinct for choosing topics that are strategic — not just interesting to you. They'll challenge your assumptions about what your audience wants versus what the data shows, help you balance search demand with your unique authority, and build a content system where every video serves a purpose. That's not something a tool or tutorial can teach. It's a skill that develops through real-time feedback on YOUR content decisions.`,
+        'channel positioning': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a Formula 1 engineer optimizing your car setup — they see the competitive dynamics and track conditions that the driver inside the cockpit can't fully process. A coach works with you to define what makes YOUR channel the only choice for your specific audience, pressure-tests your positioning against the competitive landscape, and sharpens every element — your value proposition, your visual identity, your content pillars — until your differentiation is undeniable. They bring an objective outside perspective to the question you're too close to answer alone: "Why should someone choose MY channel?" That strategic clarity compounds into every decision you make.`,
+        'monetization strategy': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a financial advisor reviewing your portfolio — they see the blind spots in your strategy that cost you money every month. A coach maps YOUR content to specific revenue opportunities you're currently missing, identifies the metrics that predict income growth, builds conversion paths into your content strategy, and helps you design a business model where views translate into sustainable revenue. They'll challenge your assumptions about how creators make money, show you the revenue levers available at your specific stage, and hold you accountable to actually implementing the monetization systems that separate hobbyists from businesses.`,
       };
       const pitchKey = (fb.primarySkill ? fb.primarySkill.name : '').toLowerCase();
-      const specificPitch = skillSpecificPitch[pitchKey] || `${p1NameCap} isn't a skill you can learn from a tutorial — it takes practice with feedback. A coach watches your actual content, gives you real-time input, and helps you build the muscle memory until it clicks.`;
+      const specificPitch = skillSpecificPitch[pitchKey] || `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. ${p1NameCap} isn't a skill you can learn from a tutorial — it takes practice with personalized feedback. A coach watches your actual content, gives you real-time input tailored to your specific situation, and helps you build the muscle memory until it clicks. The difference between knowing what to do and being able to consistently execute it is what coaching bridges.`;
       coachInsightCard.querySelector('h4').innerHTML = `🏆 Why ${p1NameCap} Needs a Coach`;
-      document.getElementById('coaching-insight-text').textContent = specificPitch;
+      document.getElementById('coaching-insight-text').innerHTML = specificPitch;
     }
 
     // 4. Full 10-skill overview (green/yellow/red dots)
@@ -954,17 +946,6 @@
     });
     overviewHtml += '</div>';
 
-    // ACTION PLAN — standalone checklist section (before skill overview)
-    let actionPlanHtml = '';
-    if (fb.primarySkill && fb.primarySkill.actionTip) {
-      actionPlanHtml = `<div class="action-plan-card"><h3>✅ Your Action Plan — Try These Before Your Next Video</h3>`;
-      actionPlanHtml += `<div class="action-item"><strong>Before your next video:</strong> ${fb.primarySkill.actionTip}</div>`;
-      if (fb.secondarySkill && fb.secondarySkill.actionTip) {
-        actionPlanHtml += `<div class="action-item"><strong>Before your next video:</strong> ${fb.secondarySkill.actionTip}</div>`;
-      }
-      actionPlanHtml += `</div>`;
-    }
-
     // Skill profile bookend — positive note + direction
     const strongestKey = bpKeys.find(k => answers[k] === 2) || bpKeys.find(k => answers[k] === 1);
     const strongestName = strongestKey ? skillNames[strongestKey] : null;
@@ -976,7 +957,12 @@
       bookendHtml = `<div class="skill-profile-bookend">Your biggest opportunity for growth is <strong>${priorityName}</strong>.</div>`;
     }
 
-    document.getElementById('skill-cards-container').innerHTML += actionPlanHtml + overviewHtml + bookendHtml;
+    // Collapsible skill profile
+    const collapsibleOverview = `
+      ${bookendHtml}
+      <button class="skill-profile-toggle" onclick="toggleSkillProfile(this)">See your full skill profile ▾</button>
+      <div class="skill-profile-list">${overviewHtml}</div>`;
+    document.getElementById('skill-cards-container').innerHTML += collapsibleOverview;
 
     // 5. Dynamic CTA based on Q11 (situation) × Q14 (learning style)
     const ctaH = document.getElementById('cta-headline');
@@ -1031,7 +1017,7 @@
             <div><div class="coach-match-name">${coach.name}</div><div class="coach-match-credential">${coach.credential}</div></div>
           </div>
           <div class="coach-match-reason">💬 <strong>Why ${coach.name}?</strong> ${coachPitch}</div>
-          <button class="coach-match-btn" onclick="window.open('https://vidiq.com/coaching','_blank')">Meet ${coach.name} →</button>
+          <button class="coach-match-btn" onclick="window.open('${coach.profileUrl}','_blank')">Meet ${coach.name} →</button>
         </div>`;
       // Hide the duplicate CTA block — coach card is the action
       nextStepsDiv.style.display = 'none';
@@ -1039,6 +1025,7 @@
       coachContainer.innerHTML += `<div class="soft-coaching" style="margin-top:12px;">Between sessions, your AI Coach keeps you on track — practicing ${p1Name} in real time as you create.</div>`;
     }
   }
+
   // ======= COACH MATCHING =======
   function getCoachMatch(score, tier, ans) {
     const situationIdx = ans.situation !== undefined ? ans.situation : 1;
@@ -1077,6 +1064,7 @@
         id: 'lucas',
         name: 'Lucas',
         initials: 'L',
+        profileUrl: 'https://vidiq.com/coaches/lucas-a1aaf6c1-7729-4937-b89e-268a36730129/',
         photo: 'https://vidiq.com/_next/image/?url=https%3A%2F%2Fhuman-coach-cdn.s3.us-east-1.amazonaws.com%2Fpublic%2FMVA7U28OtjuhlbSEfnETYHVbahW2vcTUVl2FEbLKKkmzx7I3eulnYr7TyAVTSi8k7FTPN8d0Rj2Z9U2Vy0Zm8fSTevQVgJokgIkzgJ1xOZUGLs9n5FSRO4uOaCj1VPLI8pLeC8k3DNtP4TWwJyrmRm6cfsMfjufwhjtnQcK1WWu54XaF1n5IFIEZIJf7DWfPBMUEYRl2yIBwnlCUDATOiyVUjLRJkAETLV4SyRAapOYT6Xj4pDLQX6pdzIxQjeIso72GNOPbBHqFmHTEHCB9fYkOUu6oSkrOmjxylaz5BMcIs9DidCFYD3HLyWKVybQyaMOtHGLS1mVPHfjwOFXfybuTn83uzWBCoP3UhUCvyKZhsSnQWCPVX38Mmgj345egPx0p6M1NAgE8w8QgIaIftyWEvCyqjlwpTqybsw96H97HHRcbL5yXltGKV90tDegVVZsNuUbR7IZtVDEtNaMCET4yqjkd3ue2xVfiVCQ1AMEt1cZRRPRDEEi34LOfu8UH%2FLucas.png&w=256&q=75',
         credential: 'Data-driven storyteller · 10+ yrs, 500 videos, 2M views',
         niches: ['gaming','health','entertainment','business','general'],
@@ -1089,6 +1077,7 @@
         id: 'jeffr',
         name: 'Jeff R',
         initials: 'JR',
+        profileUrl: 'https://vidiq.com/coaches/jeff-r-4fff1e8a-c842-470b-9298-c5e72732df7c/',
         photo: 'https://vidiq.com/_next/image/?url=https%3A%2F%2Fhuman-coach-cdn.s3.us-east-1.amazonaws.com%2Fpublic%2FbqaYBFuR2Uq6WCaw9g7tprWm66BOtdFKlkSMpGLgRwHSQ8JPqN98pFl1vA8VnK4mZ5QHJDgRTUGe2Lmkoe4iciYdBSjy6xfFVbgwEphNoOCrNALOd0DiMJaCfHukHRydCdfhhD5d6t5ROUpys0GgbfvZhdn770J3KifdCznCyAthyn4Jto75uWs6G5OsUcLC8qoFUJxvGXtv4O6yswmE2VwmpoQsTwyTVZH3uYenowt5R49WBAAxdeVlQdUTL5GwMee9jrz5K4JriHGAmp3uXOOt15jiF51PhYpbQKpJGXAPthc3Eo5NW26fJzfMSnsb3hmlMPGClX6IJ1eBT1fuxsCAyU6RGimDIHCNkRFi7pxU3OqlHurOFeCB0j2rmIsaMxVZubWoY6fydC3FY6VsqrMppL9W5rsDtDFup8EK6al0N8wwEyAyuGawHCmISaxRoPjv6i2dbBnhqrX0A28x17lwSzllkU8H7afEzV0Vnep7AxBCOaXIMvBqWKodxdrt%2FJeff_Rizza.png&w=256&q=75',
         credential: 'Expert strategist in competitive niches · packaging specialist',
         niches: ['health','business','gaming','general'],
@@ -1101,6 +1090,7 @@
         id: 'erich',
         name: 'Eric H',
         initials: 'EH',
+        profileUrl: 'https://vidiq.com/coaches/eric-h-a56caf76-15bc-4ed5-9e6a-4bd616cf5cda/',
         photo: 'https://vidiq.com/_next/image/?url=https%3A%2F%2Fhuman-coach-cdn.s3.us-east-1.amazonaws.com%2Fpublic%2Fu9OeJb9jrQcMVsu1KARcDFWlygTIaUtEzJMtT0PKMSmab5LobiWpSJdX34VY4T1ByBLcHB6z6yvJz9mpNQRCofXuS7g0B5IhDt8aNbKL4sg639elZY6zEf88mV3mSNNoZM8xnnLduKoAgqwQVpL99MPxRagTTBPGjHFFtQYpYcdhwnAXk89QTMhJakXdDQRcq2JaCSKGlyQfwOWvGngXJ4eKLLIuKDPm3nsYM09B2qr8mqrrQcd0Gly4Vxa14oJChXJ62bAh4A8NVO4si0Rx0NcXAFKOFKiRpXF9ymvo05X5TXxq5xuHwpp7zLUrBBXmKXUPlyAousXLU4pG3ZaTGCjZsVecKc2rLa4mrK5d2uD5QgSQO0ZK8PaXXcJYiZ9NB8jmSHukj7LFdzUtbi0tDdnHlm6kjqJwhQovY7BveaexrCrY6vEZTTT6siDL3e1v3iYykX2OmL0luGyrzjTJ7ih7QRAZEJLZylTnP4HGpQX4iiAJXPzwxkRRPbnEaMEu%2FEric%2520H.png&w=256&q=75',
         credential: 'Grew creators from 75K to 1M views · mission & message clarity',
         niches: ['lifestyle','entertainment','business','general'],
@@ -1113,6 +1103,7 @@
         id: 'nasr',
         name: 'Nasr',
         initials: 'N',
+        profileUrl: 'https://vidiq.com/coaches/nasr-e78eddaf-bab8-4213-9e9b-7534f433349e/',
         photo: 'https://vidiq.com/_next/image/?url=https%3A%2F%2Fhuman-coach-cdn.s3.us-east-1.amazonaws.com%2Fpublic%2FqqaJjOpp9ln62i34OkpRB54fCGIE0AILZiIRm3g1rTQzXTyeeN16NVt9Imsb3uxAGIfRXcxDQWjBkp1qp7UEP1ooPWavrIZI01dTDFiSxTG94UuiGqNbgr7TCkcDQQOJ8NVS8UfmvSaxfPHvYw2pJwU3VGJOgz4gOb4wjMbu8ft5uWSI4F2Rcm2cDpM3q6qVlQI2U3wc7rbJebyFuykkaNVF0JJTuJC0Si2ecAnXYDuwpZmPr2OeiY62k12TAIJt0SXrYYgDsFNOZpUbgjrTknNFIdaYElVsIOhOUojRBxP3mr0B8XsmcI27mIJvF9u9oxNSeGyu9xbYM5OvYX5gcGO25LzjFdwUnA4oXebsDxHAYwy9TUH0Ki7R7QI8hXrlUZ9bmShLzPceMBj7y1dI7jRq6sPvcLQMS6627ahLcALXiL18lMCjRoctjZxSR4QzwEHYJxLUiNWOqTOfJnG9ES3OGKzYbJRGEu6wRTa00WCmdCzCHDsukoQHWVFZoUNq%2Fnasr.png&w=256&q=75',
         credential: '170K community · featured by BuzzFeed · empathy + accountability',
         niches: ['lifestyle','health','travel','general'],
@@ -1125,6 +1116,7 @@
         id: 'anthonyo',
         name: 'Anthony O',
         initials: 'AO',
+        profileUrl: 'https://vidiq.com/coaches/anthony-o-59afe438-fe78-4f59-8d55-502860cc9777/',
         photo: 'https://vidiq.com/_next/image/?url=https%3A%2F%2Fhuman-coach-cdn.s3.us-east-1.amazonaws.com%2Fpublic%2F6gHXMVze9r8ar1n0bZ8giVylEZoMwJlhr9iVoWqchRk3E7IDrH31gyuBAPEYjYL3trGzIVWxMUyrky447TUNsXWykkOK1khuwBT4A7VHE4jPH2LTdCjMvYGzvEHS8cwXsRz6J8UB3OXTAmZRqOx2cF4rNgiX1gEA7RIJjH4F14zJ6AEcQhyza5wZPajdKknbCJQThnkceQ1rhoPD8Os3Gt95lWdcJzpvj6gsSivTcx3Dse6L1hM64plmaURi0MBE6XZ3RPnl8xVTgS5fJDmYF8EoLASptHZNHUPA5kzHgtzj0m32QW31Ob3eMdY9b3dyshKu8r4kyRQJvr91v8JSuuTChUdYwMQANGzFdNwBP5MJawOBYaQVQjIDvKdyBL9lhGXXEJmSz9KRuOxC7rqXSXjMUUj3t33G08IPJBPqDnUzzFMhSn1ohHVSGCFWFOL0YIzHQ6lFpAUB6vr0Nyk9EtnWX0daWIdE2YNUUvj2RP7bAxToYhqmGOOfff0dMUEf%2FAnthony%2520O.png&w=256&q=75',
         credential: '6 BILLION views · 10M+ followers · 0-to-1M growth specialist',
         niches: ['entertainment','lifestyle','health','general'],
@@ -1137,6 +1129,7 @@
         id: 'rhodes',
         name: 'Rhodes',
         initials: 'R',
+        profileUrl: 'https://vidiq.com/coaches/rhodes-7a6f2cd2-8079-4f57-839a-65986e0b7217/',
         photo: 'https://vidiq.com/_next/image/?url=https%3A%2F%2Fhuman-coach-cdn.s3.us-east-1.amazonaws.com%2Fpublic%2FWVo1rtF58u2oolTK3pJblVq10LvjZJLewbA6S8BcMuPjI9AlUOQPNk0NLA2xfWuG1XSj8HQ34EZVX9i1hazLqkktsnP5FGgg4b6PDzWhVos654DqRrmp0juqWNgFZ1jXTv08BMOTRI76Z2RwSwsl5zolG9gvyT1iObPK3UzOJR4ZRwiuSaAn2gQVfF3D2eyEWXldv73mMyZi3VkeDgxCGQrLRWa6de8YMoYItulgWBL5SFzDjto29UB8ANemTER8Yov5M9OtQFyoVWXOIJWwzlJyJVApyGzBjZSqhY65ELxBUUkfmpOin6PcHbZZqkhiM2qnGud1EGsSHRSthUd6FhSPYxR2cjtEFwBAdbyHc5WujYvOhKoxrgoLE7AXe42AwjtkTz6Dw4H1uF6cXgui4hO1aa9aygeCmuhqMvhuehA5UD3YjV0RVs29h54Bvv4HqAT0JhvhLBauocNHgHirUfuxPLp4RU4acc79TR6yCpUqFAqTFBHIJEE2JHPnu6HC%2FRhodes.png&w=256&q=75',
         credential: 'Storytelling strategist · emotional wellbeing focus',
         niches: ['lifestyle','health','gaming','general'],
@@ -1149,6 +1142,7 @@
         id: 'sara',
         name: 'Sara',
         initials: 'S',
+        profileUrl: 'https://vidiq.com/coaches/sara-20e19eed-e1b9-45cb-bc07-c9c60d124f0c/',
         photo: 'https://vidiq.com/_next/image/?url=https%3A%2F%2Fhuman-coach-cdn.s3.us-east-1.amazonaws.com%2Fpublic%2FXSakVYa5479JPRP21lH1XlrcWYsnon4h7VdFhoOjH9Ec1AOMhEmoROuKe7P78VLL8juJrJx7AHbOVL9n3jGmoVcTMOE5Up49AT5Gv1EwmKHcI7IPdnRG6hVaDvqudGMm6IctfLdy55ehuygjvgM4rwPBI9smvy3wL0EGn8THk4hMNM7IPISAOGDhOxVvg7vEUamFvcoNlJHCvgdqiId7gZZWOp1kwwGwwKiljnU4uPISee22mhokHJhKYJgRVILWiLlGqkOMw1DKO2phqtTms80IHAzEUt60XySU4Z4DhXVbkfdNJ0Xblc0i63KM9x7k3TYQ39czm2E14mlkghLyYl5Njct0ylZWBufzfYk8Nbjnetj6FXw5NfIVDJmQPVMie4QLa6JHWiBhAkMnzSdF36DY1foIYvSurc6MZKhkUNdQsq1kyrMCk4o6GtGHiOPeWShXGX2QbvknHDqm47vrUAM2rU9hnrkS8HS8B7JvKfsxlUTPNQhfRKDq1qvUR4oC%2FSara.png&w=256&q=75',
         credential: 'Profit-focused coaching · turns content into income',
         niches: ['travel','lifestyle','business','family','general'],
@@ -1161,6 +1155,7 @@
         id: 'antonio',
         name: 'Antonio',
         initials: 'A',
+        profileUrl: 'https://vidiq.com/coaches/antonio-994207d0-3c11-4c4b-8cae-b3444247a304/',
         photo: 'https://vidiq.com/_next/image/?url=https%3A%2F%2Fhuman-coach-cdn.s3.us-east-1.amazonaws.com%2Fpublic%2Fw8UFTrcnhwIQLJUQG57yugbfKrKjJLz0yat3bxQJnJVIu3jAF0trkYd10x1VjU5BM104gNJb2NP77bgXiBIx1g1Qs8Mbik9xWtZBu8eQXe1bF0InUea2tXIaxQ7VdnRdE7u3nGOVveilEg1BQKYliInO9KGWVUZbrdOuFr35nwGHru9jdVKWbROdfmlfIEzQFf66AdLsOKVXgGNP091tmrU5JuARQ9dJ1RCrVE3JJGf6dcUeuHzqCxsNcKqktI0jl5UpIroPnu5GOmCNCMmnTIKECyCYnhiFSxl72U7MZUqfcsLXpa3VFRMZovvJXRQTgeLXto2ChjY7lTq5SEqPy43pICYcAU1RA8IwHYN4j9Lfq1EHO0w7tUUEpjjHuedyJ71MNLVUuEkUjf1bDGYRkQBMehGsMKWJiiJV3GTOqIoNSuUA8REJQv9W8ZwinEp5q8wsUr1upVR2xZUJD9yLOuhNUblpjyNJkxiBXhdEEVPax9L1ZfSMCjDkZAx39lEZ%2Fantonio.png&w=256&q=75',
         credential: 'Ph.D. Psychology · 1.2M subs · 65M views',
         niches: ['lifestyle','health','entertainment','general'],
@@ -1173,6 +1168,7 @@
         id: 'david',
         name: 'David',
         initials: 'D',
+        profileUrl: 'https://vidiq.com/coaches/david-822f83f5-08ce-488f-814e-954c73680280/',
         photo: 'https://vidiq.com/_next/image/?url=https%3A%2F%2Fhuman-coach-cdn.s3.us-east-1.amazonaws.com%2Fpublic%2FKV3IksllNt88b959vOT87Ie9dnxBe6nDwrl4UhLtufO1KxOH74L17EX6nxYFYiBVOi0O17I8RlxNEe00ZWSXc0It0JSkbSuJSFigDkLsWY1VC5VG7wEJ05wQAP6e5psvDgCRoz7xHCCNg7E8DcvCF1n7ZiQd8fBspVQnRqBhCxIuf7dUTs9XujM2obz5yG9bJh2zXauKuDCaNF7Cgempezj5dUnTtxw6r6AImQJ5QXEL1ySqB0S82CRYfrMpnqx5P20xK7PWWIv3obVIXWZbu9y2PS8AF7phIvtLWekdE17YO6STVniP2HvBiHgvzMDE9CXKXZP4jgM4YQELZWcbLzT9nxGdCX0QcAll9e4JRdzu2rwoVehaI3p3jaLJt4n7TK199Cqw0I49sK3sYK0orSicHKcLMNMFPUjZ2crZArKBtvWvm1gI0Ox8SCT2fcEAeEIgqdaD9J00MYCwv21zJABqBgPP7z0JhSowPgFMjfEDKHc9WOwF2xR6revyl27W%2FDavid.png&w=256&q=75',
         credential: '15+ years on YouTube · multiple 30x growth stories',
         niches: ['lifestyle','health','business','family','general'],
@@ -1185,6 +1181,7 @@
         id: 'timr',
         name: 'Tim R',
         initials: 'TR',
+        profileUrl: 'https://vidiq.com/coaches/tim-r-303e4da0-3b79-45bb-960e-6f87cbf6678e/',
         photo: 'https://vidiq.com/_next/image/?url=https%3A%2F%2Fhuman-coach-cdn.s3.us-east-1.amazonaws.com%2Fpublic%2FlWqATkcNUs4bX7eMboDh3LhLKbi0nPUqNmKToN728x78AWWPwfXUvNQhOgklHwP5ZofGIy7up7QLFdox4uOdLPnJekV3VfrxyXmN6ETzfLByZaC2XVs1WtjE6SG2Si9DErD1KkG6PoeKKlRLISzejE4Dvki6KYfUkIG87EeRhjCJ7y2rTFNDf7cfdWVZEaksJAi5tyaQWhzSPe5biVzA5UkNJHdUVh14AvFCGVd8h4jze0RKtNnKTvn5S3IcaDCaMx1uws58lvDsfxvPhHgDunOGnxZ7wy8jnuPx3bjnXKlrP2wjo103XViMueZk8NgHcD7ZalMuDpbZDJ4b5YZEdpJxosN34pgrFsfIbLUyCXCKYz7q1AJcHLx4H3VMdChlkNoy9v2cQAIf767th1EHWkD1DD462RsllncFvmToTz3vF7lrQJ75zF68ejfdsScAvOVFymPDzTvg2FvyIwdYE59gkMksu3Pom4s6vRr97vZYd2LXOMuocwhGeEhZOCKd%2FTim.png&w=256&q=75',
         credential: '1.5M-view creator · viral storytelling specialist',
         niches: ['gaming','health','entertainment','general'],
@@ -1192,6 +1189,58 @@
         tiers: ['mid','high'],
         gaps: ['storytelling'],
         matchReason: (n, g) => `Tim R built his own 1.5M-view channel through viral storytelling techniques he now teaches his clients. If your biggest gap is making content that spreads and gets shared, his hands-on methodology is exactly what you need.`,
+      },
+      {
+        id: 'paul',
+        name: 'Paul',
+        initials: 'P',
+        profileUrl: 'https://vidiq.com/coaching',
+        photo: 'https://vidiq.com/_next/image/?url=https%3A%2F%2Fhuman-coach-cdn.s3.us-east-1.amazonaws.com%2Fpublic%2F4FENu4Scfc1HBfqyn5KKyojlezq1fLc2qnor8oRLXXUFUqdjMi9MABoNJqaWf3XYDUQiuvUlPvIRZ5ZkZcuVe1NSzUFllaJdH2DhcGUK1jnd4i8vQ8YaX8IqaIJFz92Yu85W51JLUnUXuJI1QYuhXBrSqw4UDwaLYxNETAbFtGp9yH3VMtlbsDqoCoHGfjP9H2L6wQAIzRH30xB5askRrMRGdhJdcKEXNmiIPJiruJEFCP3SyIo4wSy6nGSBdyHOfZ2uvBLsaz1vsfb89vcZJ972QcOxYJt1yRCr6sBsEn9gJLUBY880RrGRdaahB9YdmRcH8ZwTZlTqCzI5hmSulxJRZS4fj7CsHIXSp8aFFOLBNqwoNTDpFFKV6uU51z21r1GWY1qzoV7hH44dzsBFVP3exhjdJlY9MsElqByNvNMgihrAnwK6QY3fVkJ8zeAuMuAJ1o59B5TD6qaWIjxLYCSTEUrwjasC0A9kX67i818aEZbQSEs8o2xk0s5Tilra%2FPaul.png&w=256&q=75',
+        credential: 'YouTube Strategist · Growth Expert',
+        niches: ['general'],
+        excludes: [],
+        tiers: ['low','mid','high'],
+        gaps: ['storytelling','packaging','strategy','monetization'],
+        matchReason: (n, g) => `Paul is an expert at identifying exactly what's holding a channel back and providing a clear, actionable roadmap to fix your ${g} gaps and accelerate your growth.`,
+      },
+      {
+        id: 'marko',
+        name: 'Marko',
+        initials: 'M',
+        profileUrl: 'https://vidiq.com/coaching',
+        photo: 'https://vidiq.com/_next/image/?url=https%3A%2F%2Fhuman-coach-cdn.s3.us-east-1.amazonaws.com%2Fpublic%2F2F2dTRf6nRsSxeMdEGkib4x3wdkWZWoovb2tcatBGCboWRAEPZiGrvb9cuJUfYCUjzPihZ73jpjZ1JWxSgM3Lwsno0gKrXT0lHowjluJR2D58s2Fc7xiZss2wtSpAylVW8cIWC5J5KTlpg0kdcrtHDf5nfspHZMcDON2838M2nf4ZdJshxKUZyUUD3QTCbMbiOsGAl0lgYExbPe8p93FfYCGBzE4K5tvEKhbZ0buNglRvf9mtUhqza8qkhgHMUvKpDOvb1p0QV0TCHIYl5EGlRSU5rR0czXvUqKS55dOZXtGamsEC84UPyoLltUrF7kzud8Sg7MzcpEPVPYe3h3wuwagnnnudIqfyMgy0OrXmoEpy7PYp1MsEVCNwwI68bLQwWccEhI2ZUMjPB5UnmCQseM9BMYCYHXaHxdacKnmyacgVty0cTP24QBlvnlF7U6DOvBrnUHz4UgHugnlFol9ZB1idlHRRM4OaM0LlmVKcFbtsTNjGdKRfmhhIwVhSOYn%2FMarko.png&w=256&q=75',
+        credential: 'YouTube Strategist · Growth Expert',
+        niches: ['general'],
+        excludes: [],
+        tiers: ['low','mid','high'],
+        gaps: ['storytelling','packaging','strategy','monetization'],
+        matchReason: (n, g) => `Marko is an expert at identifying exactly what's holding a channel back and providing a clear, actionable roadmap to fix your ${g} gaps and accelerate your growth.`,
+      },
+      {
+        id: 'jeffm',
+        name: 'Jeff M',
+        initials: 'JM',
+        profileUrl: 'https://vidiq.com/coaching',
+        photo: 'https://vidiq.com/_next/image/?url=https%3A%2F%2Fhuman-coach-cdn.s3.us-east-1.amazonaws.com%2Fpublic%2F62HZA2kdAWaVt0SS2woIbpjTyCROrnaHPYoeAFlhBeIOLIQAHoB5d1bfAFLhqkVHVJMbZHBE5l5RFLo2id3LuoO9p3iYh2SMk8YJHDOFyIHpVwM0bz7pyFMNfEVFxToJLERbXXraIPcLxnCZ0VmQ6QWcnPQJwL4EqTdvhtyGOU8sT3nGapRMqfjgYHusoTg7EDZWbYRlMCUiX0XdXqGxeJOf7QavaCEmy118s4hIfmRrkKoSNj10FL13Rl0FSmhXm8QAFC4rjyccmsdYHAQw1v11IZHLaf9YLbZ74ICqI2H9ZpUKkZyc2TY2jAe0SikVQY2iA4jxAhR1ZVH24Jd32WneHSrnajibKp4FDZko4qFxOMGS71PGVkufnsmJwy9tmlIPxe5tUGVVhloQyrjc77bM07oLXKLTlLdlzfY8JHG0IuMjjumzc8ZCmXFixK200hFIzeEuS9vCJcPxEZRRx86b0Ba6sYfsXlTldaJbUjEY0FXb6yAr4nu67VvKQAph%2FJeff%2520M.png&w=256&q=75',
+        credential: 'YouTube Strategist · Growth Expert',
+        niches: ['general'],
+        excludes: [],
+        tiers: ['low','mid','high'],
+        gaps: ['storytelling','packaging','strategy','monetization'],
+        matchReason: (n, g) => `Jeff is an expert at identifying exactly what's holding a channel back and providing a clear, actionable roadmap to fix your ${g} gaps and accelerate your growth.`,
+      },
+      {
+        id: 'tyler',
+        name: 'Tyler',
+        initials: 'T',
+        profileUrl: 'https://vidiq.com/coaching',
+        photo: 'https://vidiq.com/_next/image/?url=https%3A%2F%2Fhuman-coach-cdn.s3.us-east-1.amazonaws.com%2Fpublic%2FlBbSmRSNSH8lusgrSFt0q5tZddJ6pDpPdw9cLv7PMXH0ZQPijrNRYGjuYf3spa9wxxpFTp5kXK0YAXxAIJCr2cienHzMDI70nB20cbIC0DkAtFCe6KWg9VaaAY48FhZxV7H8qWgRffCPWUKybk4HGoMWEcjiPBJBzwTZ04LVC3Pwq8lysk5Py7UXMmRWaVClz35w97me0NB7N76C4DQ6eFv6qVHjxNoneA2LxypEsE5ZQK6AFNpemUHUt9B7EJANsgKSavVMO3Z6qehteLuhSGL1utiafOsUYroKhypLB22MYXsHRUUtvETgbsWofDA53uKLioJruSdwrnoLmH6Xo8ADDquMwNvGjC5897e672OU02jIJu8Xjs3yi4K87Lr6wBPKLDxTkBnv0K2v4lSTKSUBIXNGMI9oZYreRd6KUdrWmC5HrLtHt2ppNXsE3VQ0fEaZRVpO6kaorCYwz8ufRrK2Fb2SbBSE8CxDRhk42TqaDqxnNACC7ShxEg3CJGme%2FTyler.png&w=256&q=75',
+        credential: 'YouTube Strategist · Growth Expert',
+        niches: ['general'],
+        excludes: [],
+        tiers: ['low','mid','high'],
+        gaps: ['storytelling','packaging','strategy','monetization'],
+        matchReason: (n, g) => `Tyler is an expert at identifying exactly what's holding a channel back and providing a clear, actionable roadmap to fix your ${g} gaps and accelerate your growth.`,
       },
     ];
 
@@ -1226,6 +1275,7 @@
       credential: best.credential,
       initials: best.initials,
       photo: best.photo,
+      profileUrl: best.profileUrl,
       reason: best.matchReason(niche, primaryGap),
     };
   }
@@ -1319,7 +1369,7 @@
           high: `At your scale, topic strategy shifts from "what should I make" to "what content ecosystem will drive my business goals." This is what separates 6-figure channels from 7-figure channels.`,
         },
         example: `A creator posts whatever feels interesting that week: a tutorial, then a vlog, then a review, then a rant. Views are inconsistent. Another creator maps out a content grid: 2 "search" videos per month (evergreen, high search volume), 1 "trending" video (timely topic in their niche), and 1 "community" video (responding to comments/requests). The second creator's channel grows 3x faster because every video serves a strategic purpose.`,
-        actionTip: `Before your next video, check vidIQ's keyword tool for 3 topics in your niche. Pick the one with the highest search volume where you have genuine expertise or a unique angle. Film that one — not the one you "feel like" making. Do this for 4 weeks straight and compare the results to your last 4 videos.`,
+        actionTip: `Before your next video, open vidIQ's Outliers feature — it shows you videos in your niche that are massively outperforming their channel's average. Find 3 outlier topics that overlap with your expertise. Pick the one where you have a unique angle or personal experience. Film that one — not the one you "feel like" making. Outliers reveals what audiences are hungry for right now, so you're choosing topics with proven demand instead of guessing.`,
       },
       positioning: {
         name: 'Channel Positioning & Differentiation',
@@ -1397,25 +1447,23 @@
     };
   }
 
-  // Copy assessment link to clipboard
-  function copyAssessmentLink(btn) {
-    const url = window.location.origin + window.location.pathname;
-    navigator.clipboard.writeText(url).then(() => {
-      const toast = document.getElementById('copied-toast');
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2000);
-    }).catch(() => {
-      // Fallback for older browsers
-      const input = document.createElement('input');
-      input.value = url;
-      document.body.appendChild(input);
-      input.select();
-      document.execCommand('copy');
-      document.body.removeChild(input);
-      const toast = document.getElementById('copied-toast');
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2000);
-    });
+  function goBack() {
+    if (current > 0) {
+      current--;
+      renderQuestion();
+      window.scrollTo(0, 0);
+    }
+  }
+
+  function toggleSkillProfile(btn) {
+    const list = btn.nextElementSibling;
+    if (list.classList.contains('expanded')) {
+      list.classList.remove('expanded');
+      btn.textContent = 'See your full skill profile ▾';
+    } else {
+      list.classList.add('expanded');
+      btn.textContent = 'Hide skill profile ▴';
+    }
   }
 </script>
 </body>
