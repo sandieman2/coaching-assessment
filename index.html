@@ -335,6 +335,46 @@
 
     }
 
+    /* COLLAPSIBLE EXAMPLES */
+    .example-toggle {
+      background: none; border: none; color: #2979ff; font-size: 14px;
+      font-weight: 600; cursor: pointer; padding: 8px 0; font-family: inherit;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .example-toggle:hover { text-decoration: underline; }
+    .skill-example-collapsible { display: none; }
+    .skill-example-collapsible.open { display: block; }
+
+    /* COACHING BENEFITS GRID */
+    .coaching-benefits-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .coaching-benefit-card {
+      background: rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.85);
+    }
+    .coaching-benefit-card .benefit-emoji {
+      font-size: 20px;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .coaching-benefit-card strong {
+      color: white;
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+    @media (max-width: 600px) {
+      .coaching-benefits-grid { grid-template-columns: 1fr; }
+    }
+
     /* PRINT STYLES */
     @media print {
       body { background: white; color: black; font-size: 12pt; }
@@ -497,7 +537,7 @@
       <div id="skill-cards-container"></div>
       <div class="coaching-insight" id="coaching-insight-card" style="display:none">
         <h4>🏆 Why This Skill Requires a Coach, Not Just Information</h4>
-        <p id="coaching-insight-text"></p>
+        <div id="coaching-insight-text"></div>
       </div>
     </div>
 
@@ -868,7 +908,7 @@
         <div class="skill-card">
           <h4><span class="skill-tag">#1 Priority</span> ${fb.primarySkill.name}</h4>
           <div class="why">🎯 ${fb.primarySkill.why}</div>
-          ${fb.primarySkill.example ? `<div class="skill-example"><strong>👀 What this looks like in practice:</strong> ${fb.primarySkill.example}</div>` : ''}
+          ${fb.primarySkill.example ? `<button class="example-toggle" onclick="toggleExample(this)">See example ▸</button><div class="skill-example-collapsible"><div class="skill-example"><strong>👀 What this looks like in practice:</strong> ${fb.primarySkill.example}</div></div>` : ''}
           ${fb.primarySkill.actionTip ? `<div class="skill-action"><strong>🚀 Try this on your next video:</strong> ${fb.primarySkill.actionTip}</div>` : ''}
         </div>`;
     }
@@ -877,7 +917,7 @@
         <div class="skill-card secondary">
           <h4><span class="skill-tag">#2 Priority</span> ${fb.secondarySkill.name}</h4>
           <div class="why">🎯 ${fb.secondarySkill.why}</div>
-          ${fb.secondarySkill.example ? `<div class="skill-example"><strong>👀 What this looks like in practice:</strong> ${fb.secondarySkill.example}</div>` : ''}
+          ${fb.secondarySkill.example ? `<button class="example-toggle" onclick="toggleExample(this)">See example ▸</button><div class="skill-example-collapsible"><div class="skill-example"><strong>👀 What this looks like in practice:</strong> ${fb.secondarySkill.example}</div></div>` : ''}
           ${fb.secondarySkill.actionTip ? `<div class="skill-action"><strong>🚀 Try this on your next video:</strong> ${fb.secondarySkill.actionTip}</div>` : ''}
         </div>`;
     }
@@ -904,30 +944,65 @@
       document.getElementById('skill-cards-container').innerHTML += planHtml;
 
     } else if (sol === 1) {
-      // Guided tools: lighter version — "How to accelerate this skill"
+      // Guided tools: lighter version with benefits grid
       coachInsightCard.style.display = 'block';
       coachInsightCard.querySelector('h4').innerHTML = '⚡ How to accelerate this skill';
-      document.getElementById('coaching-insight-text').innerHTML = `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. vidIQ's AI Coach is designed for exactly this — it works with you on ${p1Name} in real time, reviewing your drafts, suggesting improvements specific to your niche, and tracking your progress as you create. It's like having a knowledgeable practice partner available whenever you're working on content. For creators who want to go further and faster, a dedicated human coach provides the deeper feedback loop that turns knowledge into instinct — they see the patterns across your entire catalog that even great AI tools miss.`;
+      document.getElementById('coaching-insight-text').innerHTML = `
+        <p style="margin-bottom:16px;">You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. vidIQ's AI Coach is designed for exactly this — it works with you on ${p1Name} in real time.</p>
+        <div class="coaching-benefits-grid">
+          <div class="coaching-benefit-card"><span class="benefit-emoji">🤖</span><strong>AI-powered content review</strong>Get real-time feedback on your titles, thumbnails, and scripts before you publish</div>
+          <div class="coaching-benefit-card"><span class="benefit-emoji">📊</span><strong>Personalized analytics insights</strong>Understand exactly what's working and what to change, tailored to your channel</div>
+          <div class="coaching-benefit-card"><span class="benefit-emoji">🎯</span><strong>Guided skill development</strong>Step-by-step practice on ${p1Name} with progress tracking</div>
+        </div>
+        <p style="margin-top:12px;font-size:14px;color:rgba(255,255,255,0.65);">For creators who want to go further and faster, a dedicated human coach provides the deeper feedback loop that turns knowledge into instinct — they see the patterns across your entire catalog that even great AI tools miss.</p>`;
 
     } else {
-      // Direct feedback: skill-specific coaching pitch
+      // Direct feedback: benefits grid + coach card inline
       coachInsightCard.style.display = 'block';
-      const skillSpecificPitch = {
-        'storytelling & narrative structure': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a film director working with an actor — the actor can't see their own performance from the audience's perspective. A coach watches YOUR videos, spots the exact moments where narrative tension breaks and viewers leave, and works with you take after take until structuring compelling stories becomes muscle memory. They'll show you the patterns across your catalog that you can't see from inside the edit — where your hooks land flat, where your payoffs come too late, where you're telling when you should be showing. That's not something a tutorial can replicate. It's a skill that develops through real-time feedback on YOUR creative decisions.`,
-        'title copywriting & hooks': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a boxing coach studying your opponent's tape — they see openings you'd never spot on your own. A coach reviews YOUR titles against what's actually working in your niche right now, shows you exactly where the curiosity gap is weak or the pattern interrupt falls flat, and drills you on copywriting principles until writing click-worthy titles becomes automatic. They'll A/B test your instincts against data, challenge your assumptions about what your audience responds to, and build your title-writing muscle through hundreds of reps on YOUR content. That kind of personalized iteration is what separates good titles from irresistible ones.`,
-        'thumbnail psychology': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a golf coach analyzing your swing frame by frame — they see the micro-adjustments invisible to you. A coach reviews YOUR thumbnail designs against the competitive landscape in your niche, identifies which psychological triggers you're missing or misusing, and iterates with you version after version until creating click-worthy thumbnails becomes instinct. They'll show you why your composition choices are costing you clicks, which emotional triggers work specifically for YOUR audience, and how to test and refine systematically. That level of personalized visual feedback simply doesn't exist in any course or tool.`,
-        'viewer connection & primal branding': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a theater director shaping a performer's stage presence — they see how the audience experiences you in ways you can't feel from on stage. A coach analyzes YOUR viewer relationship, watches how your audience responds to your content in real time, identifies the emotional connections you're leaving on the table, and helps you build the rituals, shared language, and community identity that turn viewers into superfans. They'll push you past the surface-level engagement tactics into the deeper primal branding work that creates lifetime loyalty. That transformation happens through guided practice, not information.`,
-        'analytics diagnosis': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a chess coach reviewing your games — they see the strategic errors you repeat without realizing it. A coach sits with you in YOUR analytics dashboard, teaches you to read the patterns that predict performance, and builds your diagnostic muscle until you can instantly spot whether a video failed because of discovery, packaging, or retention — and know exactly what to fix. They'll walk you through your real data, not hypothetical examples, and train you to make decisions based on evidence rather than gut feeling. That analytical instinct develops through guided practice with YOUR numbers, not generic tutorials.`,
-        'audience clarity & targeting': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a basketball coach studying game film of your opponents — they see defensive gaps you'd never notice from on the court. A coach helps you define YOUR specific viewer persona using real data from your channel, tests your assumptions against what's actually working, challenges your blind spots about who you're really serving, and refines your targeting until you can hear your audience's inner monologue before you create. They'll push you past the comfortable "I make content for everyone" mindset into the specific, defensible positioning that drives real growth. That clarity comes from an outside perspective examining YOUR unique situation.`,
-        'engagement architecture': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a swimming coach analyzing your stroke technique underwater — they see the drag you're creating that you can't feel. A coach watches YOUR full videos, marks exactly where attention drops, identifies the structural weaknesses in your pacing and payoff timing, and redesigns your approach section by section until every moment earns its place in the viewer's time. They'll show you where your open loops aren't landing, where your pattern interrupts come too late, and where your energy dips are costing you viewers. That level of granular feedback on YOUR content is what turns good videos into videos people can't stop watching.`,
-        'topic strategy': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a tennis coach watching your match footage — they see patterns you can't see from inside the game. A coach looks at your content grid, spots the strategic gaps across hundreds of channels in your niche, and helps you build the instinct for choosing topics that are strategic — not just interesting to you. They'll challenge your assumptions about what your audience wants versus what the data shows, help you balance search demand with your unique authority, and build a content system where every video serves a purpose. That's not something a tool or tutorial can teach. It's a skill that develops through real-time feedback on YOUR content decisions.`,
-        'channel positioning': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a Formula 1 engineer optimizing your car setup — they see the competitive dynamics and track conditions that the driver inside the cockpit can't fully process. A coach works with you to define what makes YOUR channel the only choice for your specific audience, pressure-tests your positioning against the competitive landscape, and sharpens every element — your value proposition, your visual identity, your content pillars — until your differentiation is undeniable. They bring an objective outside perspective to the question you're too close to answer alone: "Why should someone choose MY channel?" That strategic clarity compounds into every decision you make.`,
-        'monetization strategy': `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. Think of it like a financial advisor reviewing your portfolio — they see the blind spots in your strategy that cost you money every month. A coach maps YOUR content to specific revenue opportunities you're currently missing, identifies the metrics that predict income growth, builds conversion paths into your content strategy, and helps you design a business model where views translate into sustainable revenue. They'll challenge your assumptions about how creators make money, show you the revenue levers available at your specific stage, and hold you accountable to actually implementing the monetization systems that separate hobbyists from businesses.`,
-      };
-      const pitchKey = (fb.primarySkill ? fb.primarySkill.name : '').toLowerCase();
-      const specificPitch = skillSpecificPitch[pitchKey] || `You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. That's exactly the kind of problem a coach solves. ${p1NameCap} isn't a skill you can learn from a tutorial — it takes practice with personalized feedback. A coach watches your actual content, gives you real-time input tailored to your specific situation, and helps you build the muscle memory until it clicks. The difference between knowing what to do and being able to consistently execute it is what coaching bridges.`;
+
+      // Build cross-skill pitch from weak skills
+      const weakSkills = bpKeys.filter(k => (answers[k] === 0 || answers[k] === 1) && k !== (fb.primarySkill ? bpKeys.find(bk => skillNames[bk] && fb.primarySkill.name.toLowerCase().includes(skillNames[bk].toLowerCase())) : null));
+      const weakSkillNames = weakSkills.slice(0, 3).map(k => skillNames[k]).filter(Boolean);
+      let crossSkillHtml = '';
+      if (weakSkillNames.length >= 2) {
+        crossSkillHtml = `<p style="margin-top:16px;font-size:15px;color:rgba(255,255,255,0.85);line-height:1.65;">Beyond ${p1NameCap}, your coach will also help you develop <strong>${weakSkillNames.slice(0, -1).join('</strong>, <strong>')}</strong> and <strong>${weakSkillNames[weakSkillNames.length - 1]}</strong> — areas where your profile shows room to grow. A coach works across all of these with you, not just one at a time.</p>`;
+      } else if (weakSkillNames.length === 1) {
+        crossSkillHtml = `<p style="margin-top:16px;font-size:15px;color:rgba(255,255,255,0.85);line-height:1.65;">Beyond ${p1NameCap}, your coach will also help you develop <strong>${weakSkillNames[0]}</strong> — an area where your profile shows room to grow.</p>`;
+      }
+
+      // Get coach match for inline rendering
+      const coachForGrid = getCoachMatch(score, tier, answers);
+      const coachGridPitch = isAdvanced
+        ? `At your level, you need more than skill basics — you need strategic coaching on business scaling, revenue optimization, and content ecosystem design. ${coachForGrid.name} works with advanced creators on exactly these challenges.`
+        : `${coachForGrid.name} will watch your content, give you real-time feedback on your execution, and help you build the muscle memory until ${p1Name} becomes instinct.`;
+
       coachInsightCard.querySelector('h4').innerHTML = `🏆 Why ${p1NameCap} Needs a Coach`;
-      document.getElementById('coaching-insight-text').innerHTML = specificPitch;
+      document.getElementById('coaching-insight-text').innerHTML = `
+        <p style="margin-bottom:16px;">You want to ${goalText.toLowerCase()}, but ${obstacleText.toLowerCase()}. ${p1NameCap} is the skill that bridges that gap — and it's one that develops fastest with a coach in your corner.</p>
+        <div class="coaching-benefits-grid">
+          <div class="coaching-benefit-card"><span class="benefit-emoji">🎯</span><strong>Custom channel audit</strong>Your coach digs into your channel to uncover what's working, what's holding you back, and the biggest opportunities for growth</div>
+          <div class="coaching-benefit-card"><span class="benefit-emoji">📋</span><strong>3-phase growth plan</strong>A step-by-step gameplan custom-tailored to your channel and goals</div>
+          <div class="coaching-benefit-card"><span class="benefit-emoji">🎬</span><strong>Video & thumbnail feedback</strong>Expert eyes on your content before you publish so you know it's going to perform</div>
+          <div class="coaching-benefit-card"><span class="benefit-emoji">💬</span><strong>Async video messaging</strong>Message your coach anytime, get responses within 24-48 hours on weekdays. No scheduled calls, works with any timezone</div>
+          <div class="coaching-benefit-card" style="grid-column: 1 / -1;"><span class="benefit-emoji">🏆</span><strong>Accountability & support</strong>Regular check-ins, goal setting, and someone in your corner when the creative grind gets tough</div>
+        </div>
+        ${crossSkillHtml}
+
+        <div class="coach-match-card" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);margin-top:24px;color:white;">
+          <div class="coach-match-label" style="color:#7aaeff;">🎯 Your Recommended Coach</div>
+          <div class="coach-match-header">
+            <div class="coach-match-avatar">${coachForGrid.photo ? `<img src="${coachForGrid.photo}" alt="${coachForGrid.name}">` : coachForGrid.initials}</div>
+            <div><div class="coach-match-name" style="color:white;">${coachForGrid.name}</div><div class="coach-match-credential" style="color:rgba(255,255,255,0.65);">${coachForGrid.credential}</div></div>
+          </div>
+          <div class="coach-match-reason" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.85);">💬 <strong style="color:white;">Why ${coachForGrid.name}?</strong> ${coachGridPitch}</div>
+          <button class="coach-match-btn" onclick="window.open('${coachForGrid.profileUrl}','_blank')">Meet ${coachForGrid.name} →</button>
+        </div>
+        <p style="margin-top:12px;font-size:14px;color:rgba(255,255,255,0.55);">Between sessions, your AI Coach keeps you on track — practicing ${p1Name} in real time as you create.</p>`;
+
+      // Hide separate coach container and next-steps — everything is inline above
+      document.getElementById('coach-match-container').style.display = 'none';
+      document.querySelector('.next-steps').style.display = 'none';
+
     }
 
     // 4. Full 10-skill overview (green/yellow/red dots)
@@ -1003,26 +1078,8 @@
         </div>`;
 
     } else {
-      // sol === 2 — "I learn best with direct feedback" — coach card IS the primary CTA
-      const coach = getCoachMatch(score, tier, answers);
-      const coachPitch = isAdvanced
-        ? `At your level, you need more than skill basics — you need strategic coaching on business scaling, revenue optimization, and content ecosystem design. ${coach.name} works with advanced creators on exactly these challenges.`
-        : `${coach.name} will watch your content, give you real-time feedback on your execution, and help you build the muscle memory until ${p1Name} becomes instinct.`;
-
-      coachContainer.innerHTML = `
-        <div class="coach-match-card">
-          <div class="coach-match-label">🎯 Your Recommended Coach</div>
-          <div class="coach-match-header">
-            <div class="coach-match-avatar">${coach.photo ? `<img src="${coach.photo}" alt="${coach.name}">` : coach.initials}</div>
-            <div><div class="coach-match-name">${coach.name}</div><div class="coach-match-credential">${coach.credential}</div></div>
-          </div>
-          <div class="coach-match-reason">💬 <strong>Why ${coach.name}?</strong> ${coachPitch}</div>
-          <button class="coach-match-btn" onclick="window.open('${coach.profileUrl}','_blank')">Meet ${coach.name} →</button>
-        </div>`;
-      // Hide the duplicate CTA block — coach card is the action
-      nextStepsDiv.style.display = 'none';
-      // Add secondary AI Coach mention below the coach card
-      coachContainer.innerHTML += `<div class="soft-coaching" style="margin-top:12px;">Between sessions, your AI Coach keeps you on track — practicing ${p1Name} in real time as you create.</div>`;
+      // sol === 2 — coach card + benefits grid already rendered inline in coaching-insight-card above
+      // No additional CTA needed here
     }
   }
 
@@ -1302,10 +1359,10 @@
         actionTip: `On your next video, try the "Open Loop" technique: start with a compelling question or teaser in the first 10 seconds that you don't resolve until the end. Write it out before you film. Even this one change can dramatically shift your retention curve.`,
       },
       connection: {
-        name: 'Viewer Connection & Primal Branding',
+        name: 'Viewer Connection & Channel Identity',
         why: {
-          low: `Your goal of "${goalText.toLowerCase()}" depends on people choosing YOUR channel over thousands of others. Primal Branding builds an emotional identity that makes viewers feel like they know you personally. Without it, you're just another channel covering the same topics.`,
-          mid: `The gap between "people watch my videos" and "people feel connected to me" is where subscriber loyalty lives. Primal Branding isn't personality — it's a learnable framework of rituals, beliefs, and shared language that turns viewers into community members.`,
+          low: `Your goal of "${goalText.toLowerCase()}" depends on people choosing YOUR channel over thousands of others. The creators who build loyal audiences don't just make good content — they create a feeling of belonging. A signature greeting, a recurring bit, a way of talking to viewers that makes them feel like insiders. That's the difference between someone who watches a video and someone who subscribes and never misses one.`,
+          mid: `The gap between "people watch my videos" and "people feel connected to me" is where subscriber loyalty lives. Channel identity isn't just personality — it's a learnable system of rituals, shared language, and community signals that turns viewers into members of something they don't want to leave.`,
           high: `At your level, deepening viewer connection is what turns a large audience into a movement. The creators who master this get defenders, evangelists, and customers for life.`,
         },
         example: `Compare two tech review channels with identical content quality. One opens every video with "Hey guys, let's look at this phone." The other has a signature greeting, running inside jokes, a "does it pass the pocket test" ritual, and regularly references viewer comments by name. The second channel has 3x the subscriber-to-view ratio because viewers feel like they belong to something.`,
@@ -1453,6 +1510,12 @@
       renderQuestion();
       window.scrollTo(0, 0);
     }
+  }
+
+  function toggleExample(btn) {
+    const container = btn.nextElementSibling;
+    const isOpen = container.classList.toggle('open');
+    btn.textContent = isOpen ? 'Hide example ▾' : 'See example ▸';
   }
 
   function toggleSkillProfile(btn) {
