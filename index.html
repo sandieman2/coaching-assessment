@@ -378,6 +378,7 @@
 
     .coaching-insight {
       background: #161922;
+      overflow: visible;
       border: 2px solid rgba(161, 174, 210, 0.24);
       border-radius: 16px; padding: 28px;
       color: #F7F7F7; margin-bottom: 16px;
@@ -580,6 +581,23 @@
       .coaching-benefits-grid { grid-template-columns: 1fr; }
     }
 
+
+    /* ICON BADGES */
+    .icon-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; background: #1E212B;
+      border: 1px solid rgba(61, 66, 78, 0.5); border-radius: 12px;
+      flex-shrink: 0; vertical-align: middle;
+    }
+    .icon-badge svg { width: 14px; height: 14px; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .icon-badge.sm { width: 24px; height: 24px; }
+    .icon-badge.sm svg { width: 12px; height: 12px; }
+    .icon-badge.xs { width: 20px; height: 20px; border-radius: 8px; }
+    .icon-badge.xs svg { width: 10px; height: 10px; }
+
+    /* SECTION DIVIDERS */
+    .section-divider { width: 100%; height: 1px; background: rgba(161, 174, 210, 0.12); max-width: 1140px; margin: 0 auto; }
+
     /* PRINT STYLES */
     @media print {
       body { background: white; color: black; font-size: 12pt; }
@@ -621,11 +639,13 @@
     <p class="subhead" style="margin-top: 0; font-size: 14px; color: #A2A7B8; letter-spacing: 0.3px; position: relative;">✓ Trusted by 5,000+ YouTube creators</p>
     <button class="cta-btn" onclick="startQuiz()">Find the One Skill Holding You Back</button>
     <div class="cta-meta">
-      <span>⏱ 3 minutes</span>
-      <span>✅ Free</span>
-      <span>⚡ Get your personalized skill + action plan</span>
+      <span><span class="icon-badge xs"><svg viewBox="0 0 24 24" stroke="#A2A7B8" fill="none"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> 3 minutes</span>
+      <span><span class="icon-badge xs"><svg viewBox="0 0 24 24" stroke="#5DC583" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span> Free</span>
+      <span><span class="icon-badge xs"><svg viewBox="0 0 24 24" stroke="#A2A7B8" fill="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span> Get your personalized skill + action plan</span>
     </div>
   </div>
+
+  <div class="section-divider"></div>
 
   <div class="value-section">
     <h2>The 3 areas that determine whether your channel grows or stalls</h2>
@@ -649,12 +669,16 @@
     </div>
   </div>
 
+  <div class="section-divider"></div>
+
   <div class="why-skills">
     <h2>Why you're stuck (even though you're doing everything right)</h2>
     <p>Most creators think they have an information problem — they just need the right tip, the right strategy, the right hack. But you've tried the tips. <span class="highlight">The gap isn't what you know. It's what you can consistently execute.</span></p>
     <p>A baseball tutorial can teach you mechanics, but developing professional-level skill takes a coach who watches your throw, corrects your form, and drills with you until it's instinct. YouTube works the same way.</p>
     <p>AI can analyze your channel and tell you what's underperforming. But it can't watch you create and coach you through the reps until a skill clicks. <span class="highlight">That's the difference between knowing what to do and being able to do it.</span></p>
   </div>
+
+  <div class="section-divider"></div>
 
   <div class="results-proof">
     <h2>What happens when creators develop these skills</h2>
@@ -668,34 +692,36 @@
     <div class="proof-compare">
       <div class="compare-card">
         <div class="duration">1 Month</div>
-        <div class="metric-row"><div class="metric-icon">👁️</div><div><div class="metric-val">1×</div><div class="metric-label">Baseline view growth</div></div></div>
-        <div class="bar-wrap"><div class="bar-fill" style="width:5%;background:#666"></div></div>
-        <div class="metric-row" style="margin-top:14px"><div class="metric-icon">👥</div><div><div class="metric-val">1×</div><div class="metric-label">Baseline subscriber growth</div></div></div>
-        <div class="bar-wrap"><div class="bar-fill" style="width:5%;background:#666"></div></div>
+        <div class="metric-row"><div class="metric-icon"><span class="icon-badge sm"><svg viewBox="0 0 24 24" stroke="#A2A7B8" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></div><div><div class="metric-val">1×</div><div class="metric-label">Baseline view growth</div></div></div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:5%;background:#3D424E"></div></div>
+        <div class="metric-row" style="margin-top:14px"><div class="metric-icon"><span class="icon-badge sm"><svg viewBox="0 0 24 24" stroke="#A2A7B8" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span></div><div><div class="metric-val">1×</div><div class="metric-label">Baseline subscriber growth</div></div></div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:5%;background:#3D424E"></div></div>
       </div>
       <div class="compare-card">
         <div class="duration">3 Months</div>
-        <div class="metric-row"><div class="metric-icon">👁️</div><div><div class="metric-val">150%</div><div class="metric-label">more view growth</div></div></div>
+        <div class="metric-row"><div class="metric-icon"><span class="icon-badge sm"><svg viewBox="0 0 24 24" stroke="#A2A7B8" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></div><div><div class="metric-val">150%</div><div class="metric-label">more view growth</div></div></div>
         <div class="bar-wrap"><div class="bar-fill" style="width:35%"></div></div>
-        <div class="metric-row" style="margin-top:14px"><div class="metric-icon">👥</div><div><div class="metric-val">538%</div><div class="metric-label">more subscriber growth</div></div></div>
+        <div class="metric-row" style="margin-top:14px"><div class="metric-icon"><span class="icon-badge sm"><svg viewBox="0 0 24 24" stroke="#A2A7B8" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span></div><div><div class="metric-val">538%</div><div class="metric-label">more subscriber growth</div></div></div>
         <div class="bar-wrap"><div class="bar-fill" style="width:45%"></div></div>
       </div>
       <div class="compare-card highlight">
-        <div class="duration">12 Months ⭐</div>
-        <div class="metric-row"><div class="metric-icon">👁️</div><div><div class="metric-val">1,398%</div><div class="metric-label">more view growth</div></div></div>
+        <div class="duration">12 Months <span class="icon-badge xs" style="margin-left:4px"><svg viewBox="0 0 24 24" stroke="#F2C01D" fill="#F2C01D"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span></div>
+        <div class="metric-row"><div class="metric-icon"><span class="icon-badge sm"><svg viewBox="0 0 24 24" stroke="#A2A7B8" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></div><div><div class="metric-val">1,398%</div><div class="metric-label">more view growth</div></div></div>
         <div class="bar-wrap"><div class="bar-fill" style="width:90%;background:#5bffb4"></div></div>
-        <div class="metric-row" style="margin-top:14px"><div class="metric-icon">👥</div><div><div class="metric-val">3,635%</div><div class="metric-label">more subscriber growth</div></div></div>
+        <div class="metric-row" style="margin-top:14px"><div class="metric-icon"><span class="icon-badge sm"><svg viewBox="0 0 24 24" stroke="#A2A7B8" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span></div><div><div class="metric-val">3,635%</div><div class="metric-label">more subscriber growth</div></div></div>
         <div class="bar-wrap"><div class="bar-fill" style="width:100%;background:#5bffb4"></div></div>
       </div>
     </div>
     <p style="color: #737A89; font-size: 14px; max-width: 640px; margin: 28px auto 0; line-height: 1.6; position: relative;">These results come from creators who worked with a vidIQ coach to develop the exact skills this assessment measures.</p>
   </div>
 
+  <div class="section-divider"></div>
+
   <div class="final-cta">
     <h2>Ready to discover what's really holding your channel back?</h2>
     <p>15 questions. 3 minutes. One skill that could change everything about how your channel grows.</p>
     <button class="cta-btn" onclick="startQuiz()">Start the Free Assessment →</button>
-    <div class="cta-meta" style="color:#737A89;"><span>⏱ 3 minutes</span><span>✅ Free</span><span>⚡ Get your personalized skill + action plan</span></div>
+    <div class="cta-meta" style="color:#737A89;"><span><span class="icon-badge xs"><svg viewBox="0 0 24 24" stroke="#A2A7B8" fill="none"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> 3 minutes</span><span><span class="icon-badge xs"><svg viewBox="0 0 24 24" stroke="#5DC583" fill="none"><polyline points="20 6 9 17 4 12"/></svg></span> Free</span><span><span class="icon-badge xs"><svg viewBox="0 0 24 24" stroke="#A2A7B8" fill="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span> Get your personalized skill + action plan</span></div>
   </div>
 
   <footer><div class="footer-inner"><img src="https://cdn.sanity.io/images/7g6d2cj1/production/a2bf9b53ebbd3c08a8b691276185b95f65a7ca85-131x44.svg" alt="vidIQ" style="height:22px;opacity:0.6;"> · <a href="https://vidiq.com/coaching">vidiq.com/coaching</a> · © 2026 vidIQ</div></footer>
@@ -719,10 +745,10 @@
     <h2>Discovering your growth unlock…</h2>
     <p>We're building your personalized skill report — here's what's happening.</p>
     <div class="loading-steps">
-      <div class="loading-step active" id="ls1"><span class="step-icon">⏳</span> Mapping your creator skill profile</div>
-      <div class="loading-step" id="ls2"><span class="step-icon">⏳</span> Finding your highest-leverage growth skill</div>
-      <div class="loading-step" id="ls3"><span class="step-icon">⏳</span> Building your personalized action plan</div>
-      <div class="loading-step" id="ls4"><span class="step-icon">⏳</span> Matching you with the right coach</div>
+      <div class="loading-step active" id="ls1"><span class="step-icon"><span class="icon-badge xs"><svg viewBox="0 0 24 24" stroke="#A2A7B8" fill="none"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span></span> Mapping your creator skill profile</div>
+      <div class="loading-step" id="ls2"><span class="step-icon"><span class="icon-badge xs"><svg viewBox="0 0 24 24" stroke="#A2A7B8" fill="none"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span></span> Finding your highest-leverage growth skill</div>
+      <div class="loading-step" id="ls3"><span class="step-icon"><span class="icon-badge xs"><svg viewBox="0 0 24 24" stroke="#A2A7B8" fill="none"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span></span> Building your personalized action plan</div>
+      <div class="loading-step" id="ls4"><span class="step-icon"><span class="icon-badge xs"><svg viewBox="0 0 24 24" stroke="#A2A7B8" fill="none"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span></span> Matching you with the right coach</div>
     </div>
   </div>
 </div>
@@ -746,7 +772,7 @@
       <div class="report-headline" id="report-headline"></div>
       <div id="skill-cards-container"></div>
       <div class="coaching-insight" id="coaching-insight-card" style="display:none">
-        <h4>🏆 Why This Skill Requires a Coach, Not Just Information</h4>
+        <h4><span class="icon-badge sm"><svg viewBox="0 0 24 24" stroke="#A2A7B8" fill="none"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span> Why This Skill Requires a Coach, Not Just Information</h4>
         <div id="coaching-insight-text"></div>
       </div>
     </div>
@@ -760,7 +786,7 @@
     </div>
 
     <div class="save-results-bottom">
-      <button onclick="window.print()">📥 Save Your Results</button>
+      <button onclick="window.print()"><span class="icon-badge sm"><svg viewBox="0 0 24 24" stroke="#A2A7B8" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span> Save Your Results</button>
     </div>
 
     <p style="text-align:center; color:#737A89; font-size:13px; margin-bottom:30px;">
@@ -771,6 +797,11 @@
 </div>
 
 <script>
+
+  // ======= ICON BADGE HELPER =======
+  const _icons={target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>','arrow-up':'<line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>',trophy:'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',mail:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',clipboard:'<rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>',zap:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',cpu:'<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/>',"bar-chart":'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',video:'<path d="M4 11v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8H4Z"/><path d="m4 11-.88-2.87a2 2 0 0 1 1.33-2.5l11.48-3.5a2 2 0 0 1 2.5 1.32l.87 2.87L4 11Z"/>',"message-circle":'<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>',eye:'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',clock:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',check:'<polyline points="20 6 9 17 4 12"/>'};
+  function _ib(n,c,s){var cl=c||'',sc=s||'#A2A7B8';return '<span class="icon-badge '+cl+'"><svg viewBox="0 0 24 24" stroke="'+sc+'">'+(_icons[n]||'')+'</svg></span>';}
+
   // ======= DYNAMIC GOAL OPTIONS BASED ON CHANNEL SIZE =======
   const goalsBySize = {
     0: [ // haven't started
@@ -911,7 +942,7 @@
     if (q.type === 'contact') {
       card.innerHTML = `
         ${backBtnHtml}
-        <h2>📬 ${q.heading}</h2>
+        <h2>${_ib('mail','sm')} ${q.heading}</h2>
         <p class="q-sub">${q.sub}</p>
         <input class="input-field" type="text" id="inp-name" placeholder="Your first name *" value="${answers.name||''}" />
         <input class="input-field" type="email" id="inp-email" placeholder="Email address *" value="${answers.email||''}" />
@@ -1016,11 +1047,11 @@
       if (si > 0) {
         document.getElementById(steps[si-1]).classList.remove('active');
         document.getElementById(steps[si-1]).classList.add('done');
-        document.getElementById(steps[si-1]).querySelector('.step-icon').textContent = '✅';
+        document.getElementById(steps[si-1]).querySelector('.step-icon').innerHTML = _ib('check','xs','#5DC583');
       }
       if (si < steps.length) {
         document.getElementById(steps[si]).classList.add('active');
-        document.getElementById(steps[si]).querySelector('.step-icon').textContent = '⏳';
+        document.getElementById(steps[si]).querySelector('.step-icon').innerHTML = _ib('clock','xs');
         si++;
       } else {
         clearInterval(interval);
@@ -1119,18 +1150,18 @@
       cardsHtml += `
         <div class="skill-card">
           <h4><span class="skill-tag">#1 Priority</span> ${fb.primarySkill.name}</h4>
-          <div class="why">🎯 ${fb.primarySkill.why}</div>
-          ${fb.primarySkill.example ? `<button class="example-toggle" onclick="toggleExample(this)">See example ▸</button><div class="skill-example-collapsible"><div class="skill-example"><strong>👀 What this looks like in practice:</strong> ${fb.primarySkill.example}</div></div>` : ''}
-          ${fb.primarySkill.actionTip ? `<div class="skill-action"><strong>🚀 Try this on your next video:</strong> ${fb.primarySkill.actionTip}</div>` : ''}
+          <div class="why">${_ib("target","sm")} ${fb.primarySkill.why}</div>
+          ${fb.primarySkill.example ? `<button class="example-toggle" onclick="toggleExample(this)">See example ▸</button><div class="skill-example-collapsible"><div class="skill-example"><strong>${_ib("eye","sm")} What this looks like in practice:</strong> ${fb.primarySkill.example}</div></div>` : ''}
+          ${fb.primarySkill.actionTip ? `<div class="skill-action"><strong>${_ib("arrow-up","sm")} Try this on your next video:</strong> ${fb.primarySkill.actionTip}</div>` : ''}
         </div>`;
     }
     if (fb.secondarySkill) {
       cardsHtml += `
         <div class="skill-card secondary">
           <h4><span class="skill-tag">#2 Priority</span> ${fb.secondarySkill.name}</h4>
-          <div class="why">🎯 ${fb.secondarySkill.why}</div>
-          ${fb.secondarySkill.example ? `<button class="example-toggle" onclick="toggleExample(this)">See example ▸</button><div class="skill-example-collapsible"><div class="skill-example"><strong>👀 What this looks like in practice:</strong> ${fb.secondarySkill.example}</div></div>` : ''}
-          ${fb.secondarySkill.actionTip ? `<div class="skill-action"><strong>🚀 Try this on your next video:</strong> ${fb.secondarySkill.actionTip}</div>` : ''}
+          <div class="why">${_ib("target","sm")} ${fb.secondarySkill.why}</div>
+          ${fb.secondarySkill.example ? `<button class="example-toggle" onclick="toggleExample(this)">See example ▸</button><div class="skill-example-collapsible"><div class="skill-example"><strong>${_ib("eye","sm")} What this looks like in practice:</strong> ${fb.secondarySkill.example}</div></div>` : ''}
+          ${fb.secondarySkill.actionTip ? `<div class="skill-action"><strong>${_ib("arrow-up","sm")} Try this on your next video:</strong> ${fb.secondarySkill.actionTip}</div>` : ''}
         </div>`;
     }
     document.getElementById('skill-cards-container').innerHTML = cardsHtml;
@@ -1145,7 +1176,7 @@
       coachInsightCard.style.display = 'none';
       const planHtml = `
         <div class="self-directed-plan">
-          <h4>📋 Your 4-Week ${p1NameCap} Development Plan</h4>
+          <h4>${_ib("clipboard","sm")} Your 4-Week ${p1NameCap} Development Plan</h4>
           <p style="font-size:14px;color:#555;margin-bottom:16px;line-height:1.6;">You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. This plan targets that exact gap through ${p1Name} — the skill with the highest leverage on your specific situation.</p>
           <div class="week-step"><div class="week-badge">1</div><div><strong>Study examples:</strong> Watch 5 top-performing videos in your niche. For each, note specifically how they use ${p1Name}. What makes it work? Save screenshots or timestamps.</div></div>
           <div class="week-step"><div class="week-badge">2</div><div><strong>Practice the basics:</strong> Apply one technique you observed to your next 2 videos. Don't try to master everything — pick ONE element of ${p1Name} and focus on it.</div></div>
@@ -1158,13 +1189,13 @@
     } else if (sol === 1) {
       // Guided tools: lighter version with benefits grid
       coachInsightCard.style.display = 'block';
-      coachInsightCard.querySelector('h4').innerHTML = '⚡ How to accelerate this skill';
+      coachInsightCard.querySelector('h4').innerHTML = _ib('zap','sm') + ' How to accelerate this skill';
       document.getElementById('coaching-insight-text').innerHTML = `
         <p style="margin-bottom:16px;">You said you're trying to ${goalText.toLowerCase()} but ${obstacleText.toLowerCase()}. vidIQ's AI Coach is designed for exactly this — it works with you on ${p1Name} in real time.</p>
         <div class="coaching-benefits-grid">
-          <div class="coaching-benefit-card"><span class="benefit-emoji">🤖</span><strong>AI-powered content review</strong>Get real-time feedback on your titles, thumbnails, and scripts before you publish</div>
-          <div class="coaching-benefit-card"><span class="benefit-emoji">📊</span><strong>Personalized analytics insights</strong>Understand exactly what's working and what to change, tailored to your channel</div>
-          <div class="coaching-benefit-card"><span class="benefit-emoji">🎯</span><strong>Guided skill development</strong>Step-by-step practice on ${p1Name} with progress tracking</div>
+          <div class="coaching-benefit-card"><span class="benefit-emoji">${_ib("cpu")}</span><strong>AI-powered content review</strong>Get real-time feedback on your titles, thumbnails, and scripts before you publish</div>
+          <div class="coaching-benefit-card"><span class="benefit-emoji">${_ib("bar-chart")}</span><strong>Personalized analytics insights</strong>Understand exactly what's working and what to change, tailored to your channel</div>
+          <div class="coaching-benefit-card"><span class="benefit-emoji">${_ib("target")}</span><strong>Guided skill development</strong>Step-by-step practice on ${p1Name} with progress tracking</div>
         </div>
         <p style="margin-top:12px;font-size:14px;color:rgba(255,255,255,0.65);">For creators who want to go further and faster, a dedicated human coach provides the deeper feedback loop that turns knowledge into instinct — they see the patterns across your entire catalog that even great AI tools miss.</p>`;
 
@@ -1188,25 +1219,25 @@
         ? `At your level, you need more than skill basics — you need strategic coaching on business scaling, revenue optimization, and content ecosystem design. ${coachForGrid.name} works with advanced creators on exactly these challenges.`
         : `${coachForGrid.name} will watch your content, give you real-time feedback on your execution, and help you build the muscle memory until ${p1Name} becomes instinct.`;
 
-      coachInsightCard.querySelector('h4').innerHTML = `🏆 Why ${p1NameCap} Needs a Coach`;
+      coachInsightCard.querySelector('h4').innerHTML = `${_ib('trophy','sm')} Why ${p1NameCap} Needs a Coach`;
       document.getElementById('coaching-insight-text').innerHTML = `
         <p style="margin-bottom:16px;">You want to ${goalText.toLowerCase()}, but ${obstacleText.toLowerCase()}. ${p1NameCap} is the skill that bridges that gap — and it's one that develops fastest with a coach in your corner.</p>
         <div class="coaching-benefits-grid">
-          <div class="coaching-benefit-card"><span class="benefit-emoji">🎯</span><strong>Custom channel audit</strong>Your coach digs into your channel to uncover what's working, what's holding you back, and the biggest opportunities for growth</div>
-          <div class="coaching-benefit-card"><span class="benefit-emoji">📋</span><strong>3-phase growth plan</strong>A step-by-step gameplan custom-tailored to your channel and goals</div>
-          <div class="coaching-benefit-card"><span class="benefit-emoji">🎬</span><strong>Video & thumbnail feedback</strong>Expert eyes on your content before you publish so you know it's going to perform</div>
-          <div class="coaching-benefit-card"><span class="benefit-emoji">💬</span><strong>Async video messaging</strong>Message your coach anytime, get responses within 24-48 hours on weekdays. No scheduled calls, works with any timezone</div>
-          <div class="coaching-benefit-card" style="grid-column: 1 / -1;"><span class="benefit-emoji">🏆</span><strong>Accountability & support</strong>Regular check-ins, goal setting, and someone in your corner when the creative grind gets tough</div>
+          <div class="coaching-benefit-card"><span class="benefit-emoji">${_ib("target")}</span><strong>Custom channel audit</strong>Your coach digs into your channel to uncover what's working, what's holding you back, and the biggest opportunities for growth</div>
+          <div class="coaching-benefit-card"><span class="benefit-emoji">${_ib("clipboard")}</span><strong>3-phase growth plan</strong>A step-by-step gameplan custom-tailored to your channel and goals</div>
+          <div class="coaching-benefit-card"><span class="benefit-emoji">${_ib("video")}</span><strong>Video & thumbnail feedback</strong>Expert eyes on your content before you publish so you know it's going to perform</div>
+          <div class="coaching-benefit-card"><span class="benefit-emoji">${_ib("message-circle")}</span><strong>Async video messaging</strong>Message your coach anytime, get responses within 24-48 hours on weekdays. No scheduled calls, works with any timezone</div>
+          <div class="coaching-benefit-card" style="grid-column: 1 / -1;"><span class="benefit-emoji">${_ib("trophy")}</span><strong>Accountability & support</strong>Regular check-ins, goal setting, and someone in your corner when the creative grind gets tough</div>
         </div>
         ${crossSkillHtml}
 
         <div class="coach-match-card" style="background:#1E212B;border:1px solid rgba(161,174,210,0.24);margin-top:24px;color:#F7F7F7;">
-          <div class="coach-match-label" style="color:#52B9FF;">🎯 Your Recommended Coach</div>
+          <div class="coach-match-label" style="color:#52B9FF;">${_ib("target","sm")} Your Recommended Coach</div>
           <div class="coach-match-header">
             <div class="coach-match-avatar">${coachForGrid.photo ? `<img src="${coachForGrid.photo}" alt="${coachForGrid.name}">` : coachForGrid.initials}</div>
             <div><div class="coach-match-name" style="color:white;">${coachForGrid.name}</div><div class="coach-match-credential" style="color:rgba(255,255,255,0.65);">${coachForGrid.credential}</div></div>
           </div>
-          <div class="coach-match-reason" style="background:#161922;color:#A2A7B8;">💬 <strong style="color:white;">Why ${coachForGrid.name}?</strong> ${coachGridPitch}</div>
+          <div class="coach-match-reason" style="background:#161922;color:#A2A7B8;">${_ib("message-circle","sm")} <strong style="color:white;">Why ${coachForGrid.name}?</strong> ${coachGridPitch}</div>
           <button class="coach-match-btn" onclick="window.open('${coachForGrid.profileUrl}','_blank')">Meet ${coachForGrid.name} →</button>
         </div>
         <p style="margin-top:12px;font-size:14px;color:rgba(255,255,255,0.55);">Between sessions, your AI Coach keeps you on track — practicing ${p1Name} in real time as you create.</p>`;
