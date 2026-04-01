@@ -518,7 +518,7 @@
 
     // Determine base archetype from score
     let archetype;
-    if (score <= 25) archetype = 'spark';
+    if (arch.score <= 25) archetype = 'spark';
     else if (score <= 45) archetype = 'builder';
     else if (score <= 65) archetype = 'strategist';
     else if (score <= 85) archetype = 'architect';
@@ -614,13 +614,13 @@
   function renderArchetypeHero(arch, name, presentCount, tier) {
     const meterColor = tier === 'high' ? '#5DC583' : tier === 'mid' ? '#F2C01D' : '#52B9FF';
     let summary;
-    if (score <= 25) {
+    if (arch.score <= 25) {
       summary = "You're just getting started \u2014 and that means every skill you build from here has massive impact.";
-    } else if (score <= 45) {
+    } else if (arch.score <= 45) {
       summary = "You've built some solid habits. The right focus will accelerate everything.";
-    } else if (score <= 65) {
+    } else if (arch.score <= 65) {
       summary = "You have a strong foundation. One or two skills will unlock your next level.";
-    } else if (score <= 85) {
+    } else if (arch.score <= 85) {
       summary = "You've developed real expertise. A few refinements will take you even further.";
     } else {
       summary = "You've mastered the fundamentals. It's about optimization from here.";
