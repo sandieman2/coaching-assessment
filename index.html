@@ -449,7 +449,7 @@
           curr.style.transform = 'translateY(0)';
         });
         si++;
-        setTimeout(advanceStep, 1100);
+        setTimeout(advanceStep, 1600);
       } else {
         // All steps done — fill progress to 100%
         progressFill.style.width = '100%';
@@ -489,7 +489,7 @@
     }
 
     // Ensure minimum loading time for UX
-    await new Promise(r => setTimeout(r, 4500));
+    await new Promise(r => setTimeout(r, 7500));
 
     showResults(score, tier, report);
   }
