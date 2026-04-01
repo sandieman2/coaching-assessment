@@ -151,7 +151,7 @@
   <nav class="quiz-nav"><div class="quiz-nav-logo"><img src="https://cdn.sanity.io/images/7g6d2cj1/production/a2bf9b53ebbd3c08a8b691276185b95f65a7ca85-131x44.svg" alt="vidIQ"> Your Skills Report</div></nav>
   <div class="results-wrap">
     <div class="archetype-hero" id="archetype-hero"></div>
-    <div class="score-hero">
+    <div class="score-hero" style="display:none;">
       <h2 id="score-greeting" style="display:none"></h2>
       <div class="score-number" id="score-number"></div>
       <div class="score-out">/ 100</div>
@@ -674,7 +674,7 @@
     const tierTextColor = tier === 'high' ? '#072713' : tier === 'mid' ? '#3D2E00' : '#F7F7F7';
     // Render archetype hero
     const arch = getArchetype(score, answers);
-    renderArchetypeHero(arch, name);
+    renderArchetypeHero(arch, name, present.length, tier);
 
     document.getElementById('score-label').innerHTML = `<span style="display:inline-block;background:${tierBadgeColor};color:${tierTextColor};padding:4px 16px;border-radius:9999px;font-size:14px;font-weight:660;">${tierLabel}</span>`;
     const fill = document.getElementById('meter-fill');
