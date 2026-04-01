@@ -151,7 +151,7 @@
   <nav class="quiz-nav"><div class="quiz-nav-logo"><img src="https://cdn.sanity.io/images/7g6d2cj1/production/a2bf9b53ebbd3c08a8b691276185b95f65a7ca85-131x44.svg" alt="vidIQ"> Your Skills Report</div></nav>
   <div class="results-wrap">
     <div class="archetype-hero" id="archetype-hero"></div>
-    <div class="share-section" id="share-section" style="display:none;"></div>
+    
     <div class="score-hero" style="display:none;">
       <h2 id="score-greeting" style="display:none"></h2>
       <div class="score-number" id="score-number"></div>
@@ -572,27 +572,27 @@
     const archetypes = {
       spark: {
         name: 'The Aspiring Creator',
-        tagline: 'You have the fire. Now you need the framework.',
+        tagline: 'You have the ambition. Now let\'s build the skills to match it.',
         description: "You're full of ideas and energy, but you haven't built the systems that turn raw creativity into consistent growth. That's actually exciting — every skill you develop from here has massive compound potential.",
       },
       builder: {
         name: 'The Dedicated Creator',
-        tagline: 'You\'re laying the foundation. The structure is coming together.',
+        tagline: 'You show up consistently. Now it\'s time to make that effort count.',
         description: "You've started building the habits that matter, and some of your skills are already taking shape. You're past the starting line — now it's about finding the specific lever that accelerates everything.",
       },
       strategist: {
         name: 'The Rising Creator',
-        tagline: 'You know what works. Now it\'s time to master why.',
+        tagline: 'Your channel is growing. One skill will accelerate everything.',
         description: "You've developed real skills and you're seeing results. You understand the basics of YouTube growth; now it's about depth, not breadth. One skill mastered beats ten skills dabbled in.",
       },
       architect: {
         name: 'The Pro Creator',
-        tagline: 'You\'ve built something real. Time to engineer the next level.',
+        tagline: 'You\'ve built something real. Time to take it to the next level.',
         description: "Your channel isn't an accident — it's the result of deliberate skill development. The gap between where you are and where you want to be is narrower than you think.",
       },
       catalyst: {
         name: 'The Elite Creator',
-        tagline: 'You\'re ready to multiply everything.',
+        tagline: 'You\'ve mastered the craft. Now optimize what matters most.',
         description: "You've mastered the fundamentals that most creators spend years trying to learn. At your level, small optimizations create outsized returns.",
       },
     };
@@ -641,7 +641,7 @@
           <div class="trait-value">${arch.growthEdge}</div>
         </div>
       </div>
-      <div style="margin-top:20px;opacity:0.35;"><img src="https://cdn.sanity.io/images/7g6d2cj1/production/a2bf9b53ebbd3c08a8b691276185b95f65a7ca85-131x44.svg" alt="vidIQ" style="height:16px;"></div>
+      <div id="share-in-card" style="margin-top:20px;"></div>
     `;
     setTimeout(() => { document.getElementById('arch-meter').style.width = arch.score + '%'; }, 100);
   }
@@ -722,7 +722,7 @@
     var assessmentUrl = 'https://vidiq.com/coaching';
     var shareMsg = 'I just took the vidIQ Creator Skills Assessment \u2014 I am ' + arch.name + '! Discover your creator type: ' + assessmentUrl;
     var encodedMsg = encodeURIComponent(shareMsg);
-    var ss = document.getElementById('share-section');
+    var ss = document.getElementById('share-in-card');
     ss.style.display = 'block';
     ss.innerHTML = '<div class="share-label">Share Your Creator Type</div>' +
       '<button class="share-copy-btn" onclick="copyShareText(this, \'' + shareMsg.replace(/'/g, "\\'") + '\')">\ud83d\udccb Copy to Clipboard</button>' +
