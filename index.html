@@ -906,7 +906,14 @@
       ctaB.innerHTML = `vidIQ's YouTube channel and podcast have in-depth guides on ${p1Name}. Start at your own pace.`;
       ctaBtn.textContent = "Watch vidIQ on YouTube →";
       ctaBtn.onclick = () => window.open('https://youtube.com/@vidiq','_blank');
-      coachContainer.innerHTML = `<div class="soft-coaching">Want to accelerate? <a href="https://vidiq.com/coaching" target="_blank">Learn about vidIQ coaching</a>.</div>`;
+      var selfCoach = getCoachMatch(score, tier, answers);
+      coachContainer.innerHTML = '<div class="soft-coaching" style="margin-bottom:20px;">When you\'re ready for direct feedback, here\'s who we\'d pair you with:</div>' +
+        '<div class="coach-match-card">' +
+        '<div class="coach-match-header"><div class="coach-match-avatar">' + (selfCoach.photo ? '<img src="' + selfCoach.photo + '" alt="' + selfCoach.name + '">' : selfCoach.initials) + '</div>' +
+        '<div><div class="coach-match-name">' + selfCoach.name + '</div><div class="coach-match-credential">' + selfCoach.credential + '</div></div></div>' +
+        '<div class="coach-match-reason">' + selfCoach.reason + '</div>' +
+        '<button class="coach-match-btn" onclick="window.open(\'' + selfCoach.profileUrl + '\',\'_blank\')">Meet ' + selfCoach.name + ' \u2192</button>' +
+        '</div>';
 
     } else if (sol === 0) {
       // Q14 = "I figure things out on my own" — free resources primary, text link for coaching
@@ -914,7 +921,14 @@
       ctaB.innerHTML = `vidIQ's YouTube channel and podcast have in-depth guides on ${p1Name}. Start at your own pace.`;
       ctaBtn.textContent = "Watch vidIQ on YouTube →";
       ctaBtn.onclick = () => window.open('https://youtube.com/@vidiq','_blank');
-      coachContainer.innerHTML = `<div class="soft-coaching">Want to accelerate? <a href="https://vidiq.com/coaching" target="_blank">Learn about vidIQ coaching</a>.</div>`;
+      var selfCoach = getCoachMatch(score, tier, answers);
+      coachContainer.innerHTML = '<div class="soft-coaching" style="margin-bottom:20px;">When you\'re ready for direct feedback, here\'s who we\'d pair you with:</div>' +
+        '<div class="coach-match-card">' +
+        '<div class="coach-match-header"><div class="coach-match-avatar">' + (selfCoach.photo ? '<img src="' + selfCoach.photo + '" alt="' + selfCoach.name + '">' : selfCoach.initials) + '</div>' +
+        '<div><div class="coach-match-name">' + selfCoach.name + '</div><div class="coach-match-credential">' + selfCoach.credential + '</div></div></div>' +
+        '<div class="coach-match-reason">' + selfCoach.reason + '</div>' +
+        '<button class="coach-match-btn" onclick="window.open(\'' + selfCoach.profileUrl + '\',\'_blank\')">Meet ' + selfCoach.name + ' \u2192</button>' +
+        '</div>';
 
     } else if (sol === 1) {
       // Q14 = "I like guided tools and resources" → AI Coach as primary CTA
@@ -924,10 +938,14 @@
       ctaBtn.onclick = () => window.open('https://vidiq.com/pricing','_blank');
       // Optional secondary coach mention
       const coach = getCoachMatch(score, tier, answers);
-      coachContainer.innerHTML = `
-        <div class="soft-coaching" style="margin-top:18px;">
-          If you ever want direct feedback on your content, we'd match you with <strong>${coach.name}</strong> — ${coach.credential.toLowerCase()}. <a href="https://vidiq.com/coaching" target="_blank">Learn more</a>.
-        </div>`;
+      var guidedCoach = getCoachMatch(score, tier, answers);
+      coachContainer.innerHTML = '<div class="soft-coaching" style="margin-bottom:20px;">Want to go further? Here\'s who we\'d match you with:</div>' +
+        '<div class="coach-match-card">' +
+        '<div class="coach-match-header"><div class="coach-match-avatar">' + (guidedCoach.photo ? '<img src="' + guidedCoach.photo + '" alt="' + guidedCoach.name + '">' : guidedCoach.initials) + '</div>' +
+        '<div><div class="coach-match-name">' + guidedCoach.name + '</div><div class="coach-match-credential">' + guidedCoach.credential + '</div></div></div>' +
+        '<div class="coach-match-reason">' + guidedCoach.reason + '</div>' +
+        '<button class="coach-match-btn" onclick="window.open(\'' + guidedCoach.profileUrl + '\',\'_blank\')">Meet ' + guidedCoach.name + ' \u2192</button>' +
+        '</div>';
 
     } else {
       // sol === 2 — coach card + benefits grid already rendered inline in coaching-insight-card above
