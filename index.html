@@ -118,7 +118,7 @@
   <nav class="quiz-nav"><div class="quiz-nav-logo"><img src="https://cdn.sanity.io/images/7g6d2cj1/production/a2bf9b53ebbd3c08a8b691276185b95f65a7ca85-131x44.svg" alt="vidIQ"> Creator Skills Assessment</div></nav>
   <div class="quiz-wrap">
     <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
-    <div class="progress-label" id="progress-label">Question 1 of 16</div>
+    <div class="progress-label" id="progress-label">Question 1 of 15</div>
     <div class="quiz-card" id="quiz-card"></div>
   </div>
 </div>
@@ -301,7 +301,7 @@
       ]
     },
     // 15: Contact info (was Q16, now Q15 after removing open text question)
-    { type: 'contact', heading: "Almost there — where should we send your report?", sub: "We'll email you a copy of your personalized skills report." },
+    { type: 'contact', heading: "Almost there — tell us who you are", sub: "Your personalized skills report is just one click away." },
   ];
   let current = 0;
   let answers = {};
@@ -411,12 +411,6 @@
     window.scrollTo(0, 0);
   }
 
-  function saveOpen() {
-    answers.anything_else = document.getElementById('inp-open').value.trim();
-    current++;
-    renderQuestion();
-    window.scrollTo(0, 0);
-  }
   function showLoading() {
     document.getElementById('quiz-section').style.display = 'none';
     document.getElementById('loading-section').style.display = 'block';
@@ -522,7 +516,7 @@
     document.getElementById('results-section').style.display = 'block';
     window.scrollTo(0, 0);
 
-    const name = answers.name || 'Creator';
+    const name = (answers.name && answers.name.length >= 2) ? answers.name : '';
     const sol = answers.solution; // 0=self-study, 1=guided, 2=direct feedback
     const sitIdx = answers.situation !== undefined ? answers.situation : 1;
     const obstacleText = answers.obstacle_text || '';
@@ -546,13 +540,13 @@
     let tierLabel, meterColor;
     if (tier === 'high') {
       tierLabel = 'Advanced Creator'; meterColor = '#5DC583';
-      document.getElementById('score-greeting').textContent = `Impressive, ${name}!`;
+      document.getElementById('score-greeting').textContent = name ? `Impressive, ${name}!` : 'Impressive!';
     } else if (tier === 'mid') {
       tierLabel = 'Building Momentum'; meterColor = '#F2C01D';
-      document.getElementById('score-greeting').textContent = `You're on the right track, ${name}`;
+      document.getElementById('score-greeting').textContent = name ? `You're on the right track, ${name}` : `You're on the right track`;
     } else {
       tierLabel = 'Clear Room to Grow'; meterColor = '#CC3352';
-      document.getElementById('score-greeting').textContent = `Here's your growth plan, ${name}`;
+      document.getElementById('score-greeting').textContent = name ? `Here's your growth plan, ${name}` : `Here's your growth plan`;
     }
     const tierBadgeColor = tier === 'high' ? '#5DC583' : tier === 'mid' ? '#F2C01D' : '#737A89';
     const tierTextColor = tier === 'high' ? '#072713' : tier === 'mid' ? '#3D2E00' : '#F7F7F7';
