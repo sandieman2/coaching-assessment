@@ -614,12 +614,16 @@
   function renderArchetypeHero(arch, name, presentCount, tier) {
     const meterColor = tier === 'high' ? '#5DC583' : tier === 'mid' ? '#F2C01D' : '#52B9FF';
     let summary;
-    if (tier === 'low') {
-      summary = "You're at the perfect starting point \u2014 every skill you develop from here will compound your growth.";
-    } else if (tier === 'mid') {
-      summary = "You've developed " + presentCount + " of 10 essential creator skills. The remaining ones are your biggest growth opportunities.";
+    if (score <= 25) {
+      summary = "You're just getting started \u2014 and that means every skill you build from here has massive impact.";
+    } else if (score <= 45) {
+      summary = "You've built some solid habits. The right focus will accelerate everything.";
+    } else if (score <= 65) {
+      summary = "You have a strong foundation. One or two skills will unlock your next level.";
+    } else if (score <= 85) {
+      summary = "You've developed real expertise. A few refinements will take you even further.";
     } else {
-      summary = "You've mastered " + presentCount + " of 10 essential creator skills \u2014 the areas below are where top creators separate from the pack.";
+      summary = "You've mastered the fundamentals. It's about optimization from here.";
     }
     const container = document.getElementById('archetype-hero');
     container.innerHTML = `
@@ -636,12 +640,7 @@
         </div>
       </div>
       <p style="font-size:15px;color:#A2A7B8;line-height:1.6;max-width:440px;margin:12px auto 0;">${summary}</p>
-      <div class="archetype-traits">
-        <div class="archetype-trait superpower" style="max-width:320px;margin:0 auto;">
-          <div class="trait-label">Your Superpower</div>
-          <div class="trait-value">${arch.superpower}</div>
-        </div>
-      </div>
+      <div style="margin-top:16px;font-size:15px;color:#737A89;">Your Superpower: <span style="color:#5DC583;font-weight:660;">${arch.superpower}</span></div>
       <div id="share-in-card" class="share-section" style="margin-top:20px;"></div>
     `;
     setTimeout(() => { document.getElementById('arch-meter').style.width = arch.score + '%'; }, 100);
