@@ -1110,6 +1110,14 @@
     const isCoachingSweet = sitIdx >= 2 && sitIdx <= 3;
     const isAdvanced = sitIdx === 4;
 
+    // Skill names (hoisted — used by cross-skill pitch before overview section)
+    const skillNames = {
+      storytelling: 'Storytelling & Narrative', audience: 'Audience Clarity', analytics: 'Analytics Diagnosis',
+      thumbnail_psych: 'Thumbnail Psychology', copywriting: 'Title Copywriting', connection: 'Viewer Connection',
+      structure: 'Engagement Architecture', topic_strategy: 'Topic Strategy', positioning: 'Channel Positioning',
+      monetization: 'Monetization Strategy',
+    };
+
     document.getElementById('score-number').textContent = score;
 
     let tierLabel, meterColor;
@@ -1249,12 +1257,6 @@
     }
 
     // 4. Full 10-skill overview (green/yellow/red dots)
-    const skillNames = {
-      storytelling: 'Storytelling & Narrative', audience: 'Audience Clarity', analytics: 'Analytics Diagnosis',
-      thumbnail_psych: 'Thumbnail Psychology', copywriting: 'Title Copywriting', connection: 'Viewer Connection',
-      structure: 'Engagement Architecture', topic_strategy: 'Topic Strategy', positioning: 'Channel Positioning',
-      monetization: 'Monetization Strategy',
-    };
     let overviewHtml = '<div class="skill-overview"><h4>Your Full Skill Profile</h4>';
     bpKeys.forEach(k => {
       const v = answers[k];
