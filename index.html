@@ -689,10 +689,6 @@
     }
     const tierBadgeColor = tier === 'high' ? '#5DC583' : tier === 'mid' ? '#F2C01D' : '#737A89';
     const tierTextColor = tier === 'high' ? '#072713' : tier === 'mid' ? '#3D2E00' : '#F7F7F7';
-    // Render archetype hero
-    const arch = getArchetype(score, answers);
-    renderArchetypeHero(arch, name, present.length, tier);
-
     document.getElementById('score-label').innerHTML = `<span style="display:inline-block;background:${tierBadgeColor};color:${tierTextColor};padding:4px 16px;border-radius:9999px;font-size:14px;font-weight:660;">${tierLabel}</span>`;
     const fill = document.getElementById('meter-fill');
     fill.style.background = meterColor;
@@ -708,6 +704,11 @@
     // 1. Short summary (2 sentences max)
     const bpKeys = ['storytelling','audience','analytics','thumbnail_psych','copywriting','connection','structure','topic_strategy','positioning','monetization'];
     const present = bpKeys.filter(k => answers[k] === 2);
+
+    // Render archetype hero
+    const arch = getArchetype(score, answers);
+    renderArchetypeHero(arch, name, present.length, tier);
+
     const summaryByTier = {
       low: `You're at the perfect starting point — every skill you develop from here will compound your growth. We've identified the ${10 - present.length} highest-leverage areas for your channel.`,
       mid: `You've developed ${present.length} of 10 essential creator skills — solid foundations. The remaining skills are your biggest growth opportunities.`,
