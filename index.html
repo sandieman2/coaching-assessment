@@ -140,7 +140,7 @@
       <div class="loading-step" id="ls4"><span class="step-icon"><span class="icon-badge xs"><svg viewBox="0 0 24 24" stroke="#A2A7B8" fill="none"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span></span> Matching you with the right coach</div>
     </div>
     <p style="margin-top:28px;font-size:14px;color:#737A89;line-height:1.6;position:relative;max-width:320px;margin-left:auto;margin-right:auto;">Creators who develop these skills see an average of <span style="color:#52B9FF;font-weight:660;">832% subscriber growth</span> and <span style="color:#52B9FF;font-weight:660;">2,828% view growth</span>.</p>
-    <div id="reveal-btn-wrap" style="display:none;margin-top:32px;position:relative;text-align:center;">
+    <div id="reveal-btn-wrap" style="display:none;margin-top:44px;position:relative;text-align:center;">
       <button id="reveal-results-btn" onclick="revealResults()" style="background:#0463FD;color:#F7F7F7;border:none;padding:16px 32px;font-size:18px;font-weight:660;border-radius:9999px;cursor:pointer;font-family:inherit;width:100%;max-width:400px;transition:background 0.2s,transform 0.1s,box-shadow 0.2s,opacity 0.5s;opacity:0;" onmouseover="this.style.background='#0084FF';this.style.boxShadow='0 8px 32px rgba(4,99,253,0.4)'" onmouseout="this.style.background='#0463FD';this.style.boxShadow='none'">See What's Holding Your Channel Back →</button>
     </div>
   </div>
@@ -454,13 +454,22 @@
         si++;
         setTimeout(advanceStep, 2200);
       } else {
-        // All steps done — fill progress to 100% and show reveal button
+        // All steps done
         progressFill.style.width = '100%';
+        progressFill.style.transition = 'none'; // snap to 100%, no animation
+
+        // Hide spinner
+        document.querySelector('.spinner').style.display = 'none';
+
+        // Change heading
+        document.querySelector('.loading-wrap h2').textContent = 'Your results are ready.';
+        document.querySelector('.loading-wrap > p').textContent = '';
+
+        // Show reveal button with fade-in after a beat
         const revealWrap = document.getElementById('reveal-btn-wrap');
         revealWrap.style.display = 'block';
         const revealBtn = document.getElementById('reveal-results-btn');
-        // Fade in the button after a short beat
-        setTimeout(() => { revealBtn.style.opacity = '1'; }, 300);
+        setTimeout(() => { revealBtn.style.opacity = '1'; }, 400);
       }
     }
 
