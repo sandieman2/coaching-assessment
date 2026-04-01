@@ -606,13 +606,13 @@
   }
 
   function renderArchetypeHero(arch, name) {
-    const greeting = name ? name + ', you\'re' : 'You\'re';
+    const greeting = name ? name + ', you are' : 'You are';
     const container = document.getElementById('archetype-hero');
     container.innerHTML = `
       <div class="archetype-label">Your Creator Type</div>
       <div class="archetype-name">${arch.name}</div>
       <div class="archetype-tagline">"${arch.tagline}"</div>
-      <div class="archetype-score">${greeting} a <span>${arch.name}</span> with a skill score of <span>${arch.score}/100</span></div>
+      <div class="archetype-score">${greeting} <span>${arch.name}</span> with a skill score of <span>${arch.score}/100</span></div>
       <div class="archetype-traits">
         <div class="archetype-trait superpower">
           <div class="trait-label">Your Superpower</div>
