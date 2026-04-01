@@ -542,11 +542,16 @@
       monetization: 'Revenue Strategy',
     };
 
+    // Superpower = most impressive skill they said "Yes" to
+    // Ranked by rarity/difficulty (monetization > positioning > analytics > etc.)
+    var superpowerRank = ['monetization','positioning','analytics','topic_strategy','thumbnail_psych','copywriting','structure','storytelling','connection','audience'];
     let superpower = 'Creative Ambition';
-    if (present.length > 0) {
-      superpower = superpowerMap[present[0]] || 'Creative Ambition';
-    } else if (working.length > 0) {
-      superpower = superpowerMap[working[0]] || 'Consistency';
+    var bestYes = superpowerRank.find(function(k) { return present.includes(k); });
+    var bestWorking = superpowerRank.find(function(k) { return working.includes(k); });
+    if (bestYes) {
+      superpower = superpowerMap[bestYes] || 'Creative Ambition';
+    } else if (bestWorking) {
+      superpower = superpowerMap[bestWorking] || 'Consistency';
     }
 
     // Growth edge (top missing skill based on priority)
