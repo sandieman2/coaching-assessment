@@ -605,14 +605,31 @@
     };
   }
 
-  function renderArchetypeHero(arch, name) {
-    const greeting = name ? name + ', you are' : 'You are';
+  function renderArchetypeHero(arch, name, presentCount, tier) {
+    const meterColor = tier === 'high' ? '#5DC583' : tier === 'mid' ? '#F2C01D' : '#52B9FF';
+    let summary;
+    if (tier === 'low') {
+      summary = "You're at the perfect starting point \u2014 every skill you develop from here will compound your growth.";
+    } else if (tier === 'mid') {
+      summary = "You've developed " + presentCount + " of 10 essential creator skills. The remaining ones are your biggest growth opportunities.";
+    } else {
+      summary = "You've mastered " + presentCount + " of 10 essential creator skills \u2014 the areas below are where top creators separate from the pack.";
+    }
     const container = document.getElementById('archetype-hero');
     container.innerHTML = `
       <div class="archetype-label">Your Creator Type</div>
       <div class="archetype-name">${arch.name}</div>
       <div class="archetype-tagline">"${arch.tagline}"</div>
-      <div class="archetype-score">${greeting} <span>${arch.name}</span> with a skill score of <span>${arch.score}/100</span></div>
+      <div style="max-width:320px;margin:16px auto;">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">
+          <span style="font-size:13px;color:#737A89;">Skill Score</span>
+          <span style="font-size:20px;font-weight:660;background:linear-gradient(115deg,#A091FF 9.66%,#52B9FF 87.27%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">${arch.score}/100</span>
+        </div>
+        <div style="background:#1E212B;border-radius:20px;height:8px;overflow:hidden;">
+          <div id="arch-meter" style="height:100%;border-radius:20px;background:${meterColor};width:0%;transition:width 1.2s ease;"></div>
+        </div>
+      </div>
+      <p style="font-size:15px;color:#A2A7B8;line-height:1.6;max-width:440px;margin:12px auto 0;">${summary}</p>
       <div class="archetype-traits">
         <div class="archetype-trait superpower">
           <div class="trait-label">Your Superpower</div>
@@ -623,8 +640,8 @@
           <div class="trait-value">${arch.growthEdge}</div>
         </div>
       </div>
-      
     `;
+    setTimeout(() => { document.getElementById('arch-meter').style.width = arch.score + '%'; }, 100);
   }
 
   function revealResults() {
