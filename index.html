@@ -1465,7 +1465,7 @@
     document.body.appendChild(container);
     var el = document.getElementById('pdf-report');
 
-    html2canvas(el, { backgroundColor: '#0A0D15', scale: 1.0 }).then(function(canvas) {
+    html2canvas(el, { backgroundColor: '#0A0D15', scale: 2 }).then(function(canvas) {
       var { jsPDF } = window.jspdf;
       var imgData = canvas.toDataURL('image/jpeg', 0.95);
       var imgW = 210;
@@ -1474,14 +1474,20 @@
       var pageH = 297;
       var position = 0;
 
-      // Fit to page — if content is taller than A4, scale it down to fit one page
-      if (imgH > pageH) {
-        var scaleFactor = pageH / imgH;
-        var scaledW = imgW * scaleFactor;
-        var offsetX = (210 - scaledW) / 2; // center horizontally
-        doc.addImage(imgData, 'JPEG', offsetX, 0, scaledW, pageH);
+      // Always scale to fill A4 width, then fit height
+      var imgRatio = canvas.width / canvas.height;
+      var pdfW = 210;
+      var pdfH = pdfW / imgRatio;
+      if (pdfH > 297) {
+        // Content too tall — scale to fit height, center horizontally
+        pdfH = 297;
+        pdfW = pdfH * imgRatio;
+        doc.addImage(imgData, 'JPEG', (210 - pdfW) / 2, 0, pdfW, pdfH);
       } else {
-        doc.addImage(imgData, 'JPEG', 0, 0, imgW, imgH);
+        // Content fits — fill width, dark bg fills rest
+        doc.setFillColor(10, 13, 21);
+        doc.rect(0, 0, 210, 297, 'F');
+        doc.addImage(imgData, 'JPEG', 0, 0, pdfW, pdfH);
       }
 
       var safeName = name.replace(/[^a-zA-Z0-9]/g, '-');
