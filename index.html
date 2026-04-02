@@ -1465,7 +1465,7 @@
     document.body.appendChild(container);
     var el = document.getElementById('pdf-report');
 
-    html2canvas(el, { backgroundColor: '#0A0D15', scale: 2 }).then(function(canvas) {
+    html2canvas(el, { backgroundColor: '#0A0D15', scale: 1.5 }).then(function(canvas) {
       var { jsPDF } = window.jspdf;
       var imgData = canvas.toDataURL('image/jpeg', 0.95);
       var imgW = 210;
@@ -1474,17 +1474,14 @@
       var pageH = 297;
       var position = 0;
 
-      doc.addImage(imgData, 'JPEG', 0, position, imgW, imgH);
-
-      // If content is taller than one page, add pages
+      // Fit to page — if content is taller than A4, scale it down to fit one page
       if (imgH > pageH) {
-        var remaining = imgH - pageH;
-        while (remaining > 0) {
-          position -= pageH;
-          doc.addPage();
-          doc.addImage(imgData, 'JPEG', 0, position, imgW, imgH);
-          remaining -= pageH;
-        }
+        var scaleFactor = pageH / imgH;
+        var scaledW = imgW * scaleFactor;
+        var offsetX = (210 - scaledW) / 2; // center horizontally
+        doc.addImage(imgData, 'JPEG', offsetX, 0, scaledW, pageH);
+      } else {
+        doc.addImage(imgData, 'JPEG', 0, 0, imgW, imgH);
       }
 
       var safeName = name.replace(/[^a-zA-Z0-9]/g, '-');
