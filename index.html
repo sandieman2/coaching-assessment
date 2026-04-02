@@ -1418,7 +1418,7 @@
       return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #1E212B;"><div style="width:10px;height:10px;border-radius:50%;background:' + color + ';flex-shrink:0;"></div><span style="flex:1;font-size:11px;color:#F7F7F7;">' + (skillNames[k]||k) + '</span><span style="font-size:10px;color:#737A89;">' + label + '</span></div>';
     }).join('');
 
-    var reportHtml = '<div id="pdf-report" style="width:595px;min-height:842px;background:#0A0D15;color:#F7F7F7;font-family:Helvetica,Arial,sans-serif;padding:40px;box-sizing:border-box;">' +
+    var reportHtml = '<div id="pdf-report" style="width:595px;background:#0A0D15;color:#F7F7F7;font-family:Helvetica,Arial,sans-serif;padding:40px;box-sizing:border-box;">' +
       // Header
       '<div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #3D424E;padding-bottom:16px;margin-bottom:24px;">' +
       '<div style="font-size:14px;color:#A2A7B8;font-weight:bold;">vidIQ Creator Skills Report</div>' +
@@ -1474,11 +1474,16 @@
       var pageH = 297;
       var position = 0;
 
-      // Fill dark background on entire page first
+      // Fill dark background on entire page first — eliminates any white margins
       doc.setFillColor(10, 13, 21);
       doc.rect(0, 0, 210, 297, 'F');
-      // Place image at full A4 width, no margins
-      doc.addImage(imgData, 'JPEG', 0, 0, 210, 297);
+      // Scale image to full A4 width, maintain aspect ratio
+      var imgRatio = canvas.width / canvas.height;
+      var pdfW = 210;
+      var pdfH = pdfW / imgRatio;
+      // If taller than A4, scale to fit height instead
+      if (pdfH > 297) { pdfH = 297; pdfW = pdfH * imgRatio; }
+      doc.addImage(imgData, 'JPEG', 0, 0, pdfW, pdfH);
 
       var safeName = name.replace(/[^a-zA-Z0-9]/g, '-');
       doc.save('vidIQ-Creator-Skills-Report-' + safeName + '.pdf');
