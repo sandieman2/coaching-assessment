@@ -659,8 +659,12 @@
 
   function revealResults() {
     if (!window._pendingResults) return;
+    var resultsEl = document.getElementById('results-section');
+    resultsEl.style.opacity = '0';
+    resultsEl.style.transition = 'opacity 0.3s ease';
     const { score, tier, report } = window._pendingResults;
     showResults(score, tier, report);
+    requestAnimationFrame(function() { resultsEl.style.opacity = '1'; });
   }
 
   function showResults(score, tier, report) {
@@ -825,7 +829,7 @@
         ? `At your level, you need more than skill basics — you need strategic coaching on business scaling, revenue optimization, and content ecosystem design. ${coachForGrid.name} works with advanced creators on exactly these challenges.`
         : `${coachForGrid.name} will watch your content, give you real-time feedback on your execution, and help you build the muscle memory until ${p1Name} becomes instinct.`;
 
-      coachInsightCard.querySelector('h4').innerHTML = `${_ib('trophy','sm')} Why ${p1NameCap} Needs a Coach`;
+      coachInsightCard.querySelector('h4').innerHTML = `${_ib('trophy','sm')} How a Coach Accelerates Your ${p1NameCap} Development`;
       document.getElementById('coaching-insight-text').innerHTML = `
         <p style="font-size:16px;color:#A2A7B8;line-height:1.6;margin-bottom:20px;">You've identified your biggest growth lever — <strong style="color:#F7F7F7;">${p1NameCap}</strong>. Here's why a coach is the fastest way to develop it:</p>
         <p style="margin-bottom:16px;">You want to ${goalText.toLowerCase()}, but ${obstacleText.toLowerCase()}. ${p1NameCap} is the skill that bridges that gap — and it's one that develops fastest with a coach in your corner.</p>
