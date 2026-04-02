@@ -1418,15 +1418,15 @@
       return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #1E212B;"><div style="width:10px;height:10px;border-radius:50%;background:' + color + ';flex-shrink:0;"></div><span style="flex:1;font-size:11px;color:#F7F7F7;">' + (skillNames[k]||k) + '</span><span style="font-size:10px;color:#737A89;">' + label + '</span></div>';
     }).join('');
 
-    var reportHtml = '<div id="pdf-report" style="width:794px;background:#0A0D15;color:#F7F7F7;font-family:Helvetica,Arial,sans-serif;padding:40px;box-sizing:border-box;">' +
+    var reportHtml = '<div id="pdf-report" style="width:595px;background:#0A0D15;color:#F7F7F7;font-family:Helvetica,Arial,sans-serif;padding:40px;box-sizing:border-box;">' +
       // Header
       '<div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #3D424E;padding-bottom:16px;margin-bottom:24px;">' +
       '<div style="font-size:14px;color:#A2A7B8;font-weight:bold;">vidIQ Creator Skills Report</div>' +
       '<div style="font-size:10px;color:#737A89;">Prepared for ' + name + ' \u2022 ' + dateStr + '</div></div>' +
       // Archetype Hero
-      '<div style="text-align:center;background:#161922;border:2px solid rgba(161,174,210,0.24);border-radius:12px;padding:28px 24px;margin-bottom:24px;">' +
+      '<div style="text-align:center;background:#161922;border:2px solid rgba(161,174,210,0.24);border-radius:12px;padding:20px 20px;margin-bottom:16px;">' +
       '<div style="font-size:10px;color:#737A89;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px;">Your Creator Type</div>' +
-      '<div style="font-size:36px;font-weight:bold;color:#8876ED;margin-bottom:6px;">' + arch.name + '</div>' +
+      '<div style="font-size:28px;font-weight:bold;color:#8876ED;margin-bottom:6px;">' + arch.name + '</div>' +
       '<div style="font-size:13px;color:#A2A7B8;font-style:italic;margin-bottom:12px;">"' + arch.tagline + '"</div>' +
       '<div style="font-size:12px;color:#737A89;">Skill Score: ' + score + '/100</div>' +
       '<div style="max-width:240px;margin:8px auto;background:#1E212B;border-radius:3px;height:6px;overflow:hidden;"><div style="width:' + score + '%;height:100%;border-radius:3px;background:linear-gradient(138deg,#8876ED,#0E8BFF);"></div></div>' +
@@ -1434,12 +1434,12 @@
       // Skill #1
       '<div style="border-left:3px solid #0463FD;padding-left:16px;margin-bottom:20px;">' +
       '<div style="font-size:14px;font-weight:bold;color:#52B9FF;margin-bottom:6px;">#1 Priority: ' + (fb.primarySkill ? fb.primarySkill.name : '') + '</div>' +
-      '<div style="font-size:11px;color:#A2A7B8;line-height:1.5;">' + (fb.primarySkill ? fb.primarySkill.why : '').substring(0, 400) + '</div>' +
-      (fb.primarySkill && fb.primarySkill.actionTip ? '<div style="font-size:11px;color:#5DC583;margin-top:8px;padding:8px;background:#1E212B;border-radius:6px;line-height:1.4;"><strong>Try this:</strong> ' + fb.primarySkill.actionTip.substring(0, 300) + '</div>' : '') + '</div>' +
+      '<div style="font-size:11px;color:#A2A7B8;line-height:1.5;">' + (fb.primarySkill ? fb.primarySkill.why : '') + '</div>' +
+      (fb.primarySkill && fb.primarySkill.actionTip ? '<div style="font-size:11px;color:#5DC583;margin-top:8px;padding:8px;background:#1E212B;border-radius:6px;line-height:1.4;"><strong>Try this:</strong> ' + fb.primarySkill.actionTip + '</div>' : '') + '</div>' +
       // Skill #2
       (fb.secondarySkill ? '<div style="border-left:3px solid #52B9FF;padding-left:16px;margin-bottom:20px;">' +
       '<div style="font-size:14px;font-weight:bold;color:#52B9FF;margin-bottom:6px;">#2 Priority: ' + fb.secondarySkill.name + '</div>' +
-      '<div style="font-size:11px;color:#A2A7B8;line-height:1.5;">' + fb.secondarySkill.why.substring(0, 400) + '</div></div>' : '') +
+      '<div style="font-size:11px;color:#A2A7B8;line-height:1.5;">' + fb.secondarySkill.why + '</div></div>' : '') +
       // Divider
       '<div style="border-top:1px solid #3D424E;margin:20px 0;"></div>' +
       // Skill Profile
@@ -1450,7 +1450,7 @@
       // Coach
       '<div style="font-size:14px;font-weight:bold;color:#52B9FF;margin-bottom:8px;">Your Matched Coach: ' + coach.name + '</div>' +
       '<div style="font-size:11px;color:#A2A7B8;margin-bottom:4px;">' + coach.credential + '</div>' +
-      '<div style="font-size:11px;color:#737A89;line-height:1.4;">' + (coach.reason || '').substring(0, 300) + '</div>' +
+      '<div style="font-size:11px;color:#737A89;line-height:1.4;">' + (coach.reason || '') + '</div>' +
       // Footer
       '<div style="border-top:1px solid #3D424E;margin-top:24px;padding-top:12px;display:flex;justify-content:space-between;">' +
       '<span style="font-size:9px;color:#737A89;">vidiq.com/coaching</span>' +
@@ -1465,7 +1465,7 @@
     document.body.appendChild(container);
     var el = document.getElementById('pdf-report');
 
-    html2canvas(el, { backgroundColor: '#0A0D15', scale: 1.5 }).then(function(canvas) {
+    html2canvas(el, { backgroundColor: '#0A0D15', scale: 1.0 }).then(function(canvas) {
       var { jsPDF } = window.jspdf;
       var imgData = canvas.toDataURL('image/jpeg', 0.95);
       var imgW = 210;
