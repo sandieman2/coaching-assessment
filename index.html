@@ -1483,7 +1483,7 @@
       var pdfH = pdfW / imgRatio;
       // If taller than A4, scale to fit height instead
       if (pdfH > 297) { pdfH = 297; pdfW = pdfH * imgRatio; }
-      doc.addImage(imgData, 'JPEG', 0, 0, pdfW, pdfH);
+      var offsetY = (297 - pdfH) / 2; doc.addImage(imgData, 'JPEG', 0, offsetY, pdfW, pdfH);
 
       var safeName = name.replace(/[^a-zA-Z0-9]/g, '-');
       doc.save('vidIQ-Creator-Skills-Report-' + safeName + '.pdf');
